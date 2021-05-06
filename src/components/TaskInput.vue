@@ -4,13 +4,21 @@
             <input class="v-spacer" type="text" name="task-info" id="task-input" placeholder="Write the task here">
             <label class="v-spacer" for="birthdaytime">Birthday (date and time):</label>
             <input class="v-spacer" type="datetime-local" id="birthdaytime" name="birthdaytime">
-            <button class="v-spacer" type="submit">Submit</button>
+            <label for="reminder">Set Reminder?</label>
+            <input v-model="checked" type="checkbox" id="checkbox">
+            <button class="v-spacer" type="submit">Save Task</button>
         </form>
     </div>
 </template>
 <script>
 export default {
-    name: "TaskInput"
+    name: "TaskInput",
+    data: function(){
+        return {
+            checked: false,
+        }
+    },
+
 }
 </script>
 

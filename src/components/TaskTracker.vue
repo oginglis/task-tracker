@@ -1,8 +1,8 @@
 <template>
     <div class="task-tracker-wrap">
         <Header title="Task Tracker"/>
-        <Button buttonText="submitButtonText"/>
-        <TaskInput />
+        <Button @changeButton="changeTheButton" :buttonText="submitButtonText"/>
+        <TaskInput v-show="submitButtonText !== 'Add Task'"/>
     </div>
 </template>
 
@@ -20,6 +20,11 @@ export default {
     data: function(){
         return {
             submitButtonText: "Add Task"
+        }
+    },
+    methods: {
+        changeTheButton: function(){
+            this.submitButtonText == "Add Task" ? this.submitButtonText = "Hide Task Adder" : this.submitButtonText =  "Add Task";
         }
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <button>{{buttonText}}</button>
+    <button @click="toggleButton">{{buttonText}}</button>
 </template>
 
 <script>
@@ -9,6 +9,11 @@ export default {
         buttonText: {
             type: String,
             default: "Add Task"
+        }
+    },
+    methods: {
+        toggleButton: function(){
+            this.$emit('changeButton', this.buttonText);
         }
     }
 }
