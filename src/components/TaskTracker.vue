@@ -1,7 +1,7 @@
 <template>
     <div class="task-tracker-wrap">
         <Header title="Task Tracker"/>
-        <Button buttonText="Add Task"/>
+        <Button buttonText="submitButtonText"/>
         <TaskInput />
     </div>
 </template>
@@ -16,6 +16,11 @@ export default {
         Header,
         Button,
         TaskInput
+    },
+    data: function(){
+        return {
+            submitButtonText: "Add Task"
+        }
     }
 }
 </script>
