@@ -2,7 +2,9 @@
     <div class="task-tracker-wrap">
         <Header title="Task Tracker"/>
         <Button @changeButton="changeTheButton" :buttonText="submitButtonText"/>
-        <TaskInput v-show="submitButtonText !== 'Add Task'"/>
+        <transition name="fade">
+          <TaskInput v-show="submitButtonText !== 'Add Task'"/>
+        </transition>
         <TaskList />
     </div>
 </template>
@@ -35,5 +37,10 @@ export default {
 </script>
 
 <style scoped>
-
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>
