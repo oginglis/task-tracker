@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Task v-for="task in info" :title="task.title" :date="task.date" :key="task.id"/>
+        <Task v-for="task in info" :title="task.title" :date="task.date" :reminder="task.reminder" :key="task.id"/>
     </div>
 </template>
 

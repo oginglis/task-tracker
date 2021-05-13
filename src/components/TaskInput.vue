@@ -1,9 +1,9 @@
 <template>
     <div>
-        <form action="POST">
-            <input class="v-spacer" type="text" name="task-info" id="task-input" placeholder="Write the task here">
-            <label class="v-spacer" for="birthdaytime">Birthday (date and time):</label>
-            <input class="v-spacer" type="datetime-local" id="birthdaytime" name="birthdaytime">
+        <form action="http://localhost:3000/tasks" method="POST">
+            <input class="v-spacer" type="text" name="title" id="title" placeholder="Write the task here">
+            <label class="v-spacer" for="date">Birthday (date and time):</label>
+            <input class="v-spacer" type="datetime-local" id="date" name="date">
             <label for="reminder">Set Reminder?</label>
             <input v-model="checked" type="checkbox" id="checkbox">
             <button class="v-spacer" type="submit">Save Task</button>

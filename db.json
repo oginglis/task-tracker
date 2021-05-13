@@ -1,13 +1,47 @@
 {
   "tasks": [
-    { "id": 1, "title": "Pick up kids from School", "date": "10-11-2020" },
-    { "id": 2, "title": "Buy dinnner", "date": "02-09-2020" },
-    { "id": 3, "title": "Draw a drawing", "date": "1-09-2019" }
+    {
+      "id": 1,
+      "title": "Pick up kids from School",
+      "date": "10-11-2020",
+      "reminder": "true"
+    },
+    {
+      "id": 2,
+      "title": "Buy dinnner",
+      "date": "02-09-2020",
+      "reminder": "true"
+    },
+    {
+      "id": 3,
+      "title": "Draw a drawing",
+      "date": "1-09-2019",
+      "reminder": "false"
+    },
+    {
+      "title": "This is a test task",
+      "date": "1233-12-02T12:12",
+      "id": 4
+    }
   ],
   "comments": [
-    { "id": 1, "body": "some comment", "postId": 1 },
-    { "id": 2, "body": "some comment", "postId": 2 },
-    { "id": 3, "body": "some comment", "postId": 3 }
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    },
+    {
+      "id": 2,
+      "body": "some comment",
+      "postId": 2
+    },
+    {
+      "id": 3,
+      "body": "some comment",
+      "postId": 3
+    }
   ],
-  "profile": { "name": "typicode" }
+  "profile": {
+    "name": "typicode"
+  }
 }
