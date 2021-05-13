@@ -3,6 +3,7 @@
         <Header title="Task Tracker"/>
         <Button @changeButton="changeTheButton" :buttonText="submitButtonText"/>
         <TaskInput v-show="submitButtonText !== 'Add Task'"/>
+        <TaskList />
     </div>
 </template>
 
@@ -10,12 +11,15 @@
 import Header from './Header.vue'
 import Button from './Button.vue'
 import TaskInput from './TaskInput.vue'
+import TaskList from './TaskList.vue'
+
 export default {
     name: 'TaskTracker',
     components: {
         Header,
         Button,
-        TaskInput
+        TaskInput,
+        TaskList
     },
     data: function(){
         return {
