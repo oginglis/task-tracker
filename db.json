@@ -7,20 +7,15 @@
       "reminder": "true"
     },
     {
-      "id": 2,
-      "title": "Buy dinnner",
-      "date": "02-09-2020",
-      "reminder": "true"
+      "title": "Some more tasks to add",
+      "date": "12311-03-12T12:03",
+      "reminder": true,
+      "id": 3
     },
     {
-      "id": 3,
-      "title": "Draw a drawing",
-      "date": "1-09-2019",
-      "reminder": "false"
-    },
-    {
-      "title": "This is a test task",
-      "date": "1233-12-02T12:12",
+      "title": "Ollie it is working well",
+      "date": "0123-03-12T12:31",
+      "reminder": false,
       "id": 4
     }
   ],

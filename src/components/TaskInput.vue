@@ -1,23 +1,41 @@
 <template>
     <div>
-        <form action="http://localhost:3000/tasks" method="POST">
-            <input class="v-spacer" type="text" name="title" id="title" placeholder="Write the task here">
+        <form  >
+            <input class="v-spacer" type="text" name="title" id="title" placeholder="Write the task here" v-model="taskInfo">
             <label class="v-spacer" for="date">Birthday (date and time):</label>
-            <input class="v-spacer" type="datetime-local" id="date" name="date">
+            <input class="v-spacer" type="datetime-local" id="date" name="date" v-model="dateTime">
             <label for="reminder">Set Reminder?</label>
             <input v-model="checked" type="checkbox" id="checkbox">
-            <button class="v-spacer" type="submit">Save Task</button>
+            <button @click="submitForm" class="v-spacer" >Save Task</button>
         </form>
     </div>
 </template>
 <script>
+import axios from 'axios';
 export default {
     name: "TaskInput",
     data: function(){
         return {
             checked: false,
+            dateTime: Date,
+            taskInfo: ""
         }
     },
+    methods: {
+      submitForm: function(){
+        axios.post('http://localhost:3000/tasks', {
+          title: this.taskInfo,
+          date: this.dateTime,
+          reminder: this.checked
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      }
+    }
 
 }
 </script>
