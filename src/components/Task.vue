@@ -1,5 +1,5 @@
 <template>
-    <div class="task-wrapper" :class="{reminder: isTrueSet}">
+    <div class="task-wrapper" :style="style" :class="{reminder: isTrueSet}">
         <h1>{{title}}</h1>
         <h2>{{date}}</h2>
         <font-awesome-icon class="fa-spacer" icon="edit"></font-awesome-icon>
@@ -33,7 +33,8 @@ export default {
         reminder: {
           type: Boolean,
           default: false
-        }
+        },
+        taskColor: String
     },
     computed: {
       isTrueSet: function(){
@@ -42,6 +43,9 @@ export default {
         } else {
           return false
         }
+      },
+      style: function() {
+        return 'background-color: ' + this.taskColor ;
       }
     },
     methods: {
@@ -50,6 +54,7 @@ export default {
 
       }
     }
+
 
 }
 </script>

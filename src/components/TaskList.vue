@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Task v-for="task in info" :title="task.title" :date="task.date" :reminder="toBool(task.reminder)" :key="task.id" :id="task.id" v-on:askToDeleteTask2="deleteTask"/>
+        <Task v-for="(task, index) in info" :title="task.title" :date="task.date" :reminder="toBool(task.reminder)" :key="task.id" :id="task.id" v-on:askToDeleteTask2="deleteTask" :taskColor="colours[index]"/>
     </div>
 </template>
 
@@ -8,6 +8,9 @@
 
 import Task from './Task.vue'
 import axios from 'axios'
+import Gradient from 'javascript-color-gradient'
+
+
 export default {
     name: "TaskList",
     components: {
@@ -16,6 +19,7 @@ export default {
     data(){
       return {
         info: null,
+        colours: [],
       }
     },
     props: {
@@ -24,7 +28,18 @@ export default {
     mounted(){
         axios
         .get('http://localhost:3000/tasks')
-        .then(response => (this.info = response.data));
+        .then((response) => {
+          this.info = response.data
+          let colorGradient = new Gradient();
+          const color1 = "#3F2CAF";
+          const color2 = "#8BC2E3";
+
+          colorGradient.setMidpoint(this.info.length);
+          colorGradient.setGradient(color1, color2);
+          this.colours = colorGradient.getArray();
+          console.log(this.colours)
+          });
+
 
     },
     beforeUpdate(){
