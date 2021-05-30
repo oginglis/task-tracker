@@ -3,9 +3,9 @@
         <Header title="Task Tracker"/>
         <Button @changeButton="changeTheButton" :buttonText="submitButtonText"/>
         <transition name="fade">
-          <TaskInput v-show="submitButtonText !== 'Add Task'"/>
+          <TaskInput v-show="submitButtonText !== 'Add Task'" :taskInfoUpdate="taskInfo" :taskIdUpdate="taskId" :taskDateUpdate="taskDate" :taskReminderUpdate="taskReminder" :isUpdate="isPatch" @finishUpdate="finishedPatch"/>
         </transition>
-        <TaskList />
+        <TaskList @askToUpdateTask4="openFormWithTask"/>
     </div>
 </template>
 
@@ -24,15 +24,35 @@ export default {
         TaskList
     },
     data: function(){
-        return {
-            submitButtonText: "Add Task"
-        }
+      return {
+        submitButtonText: "Add Task",
+        taskInfo: "",
+        taskDate: "",
+        taskReminder: "",
+        taskId: "",
+        isPatch: 'false',
+      }
     },
     methods: {
-        changeTheButton: function(){
-            this.submitButtonText == "Add Task" ? this.submitButtonText = "Hide Task Adder" : this.submitButtonText =  "Add Task";
-        }
-    }
+      changeTheButton: function(){
+        this.submitButtonText == "Add Task" ? this.submitButtonText = "Hide Task Adder" : this.submitButtonText =  "Add Task";
+        this.isPatch = 'false';
+      },
+      openFormWithTask: function(task){
+
+        this.submitButtonText =  "Hide Task Adder";
+        this.taskDate = task[0].date;
+        this.taskReminder = task[0].reminder;
+        this.taskInfo = task[0].title;
+        this.taskId = task[0].id
+        this.isPatch = 'true'
+        console.log(this.taskDate, this.taskReminder, this.taskInfo)
+      },
+      finishedPatch: function (){
+        this.isPatch = false;
+      },
+    },
+
 }
 </script>
 

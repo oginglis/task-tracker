@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Task v-for="(task, index) in info" :title="task.title" :date="task.date" :reminder="toBool(task.reminder)" :key="task.id" :id="task.id" v-on:askToDeleteTask2="deleteTask" :taskColor="colours[index]"/>
+        <Task v-for="(task, index) in info" :title="task.title" :date="task.date" :reminder="toBool(task.reminder)" :key="task.id" :id="task.id" v-on:askToDeleteTask2="deleteTask" v-on:askToUpdateTask2="askToUpdateTask3" :taskColor="colours[index]"/>
     </div>
 </template>
 
@@ -31,23 +31,21 @@ export default {
         .then((response) => {
           this.info = response.data
           let colorGradient = new Gradient();
-          const color1 = "#3F2CAF";
-          const color2 = "#8BC2E3";
+          const color1 = "#FFC300";
+          const color2 = "#C7003A";
 
           colorGradient.setMidpoint(this.info.length);
-          colorGradient.setGradient(color1, color2);
+          colorGradient.setGradient(color1,  color2);
           this.colours = colorGradient.getArray();
-          console.log(this.colours)
+
           });
 
 
     },
     beforeUpdate(){
-      console.log("Data has about to change")
     },
     methods: {
       deleteTask: function(id){
-        console.log("yeah boiii")
         axios.delete(`http://localhost:3000/tasks/${id}`)
         .then(() => {
 
@@ -62,6 +60,10 @@ export default {
       },
       toBool: function(bool){
         bool == "true" || bool == true ? true : false
+      },
+      askToUpdateTask3: function(id){
+        let taskToUpdate = this.info.filter(task => task.id == id)
+        this.$emit('askToUpdateTask4', taskToUpdate)
       }
     }
 }
