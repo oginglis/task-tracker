@@ -37,6 +37,9 @@ export default {
       changeTheButton: function(){
         this.submitButtonText == "Add Task" ? this.submitButtonText = "Hide Task Adder" : this.submitButtonText =  "Add Task";
         this.isPatch = 'false';
+        this.taskInfo = "",
+        this.taskDate =  "",
+        this.taskReminder= ""
       },
       openFormWithTask: function(task){
 

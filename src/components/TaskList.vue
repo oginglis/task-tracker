@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Task v-for="(task, index) in info" :title="task.title" :date="task.date" :reminder="toBool(task.reminder)" :key="task.id" :id="task.id" v-on:askToDeleteTask2="deleteTask" v-on:askToUpdateTask2="askToUpdateTask3" :taskColor="colours[index]"/>
+        <Task v-for="(task, index) in info" :title="task.title" :date="task.date" :reminder="task.reminder.toString()" :key="task.id" :id="task.id" v-on:askToDeleteTask2="deleteTask" v-on:askToUpdateTask2="askToUpdateTask3" :taskColor="colours[index]"/>
     </div>
 </template>
 
@@ -57,9 +57,6 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
-      },
-      toBool: function(bool){
-        bool == "true" || bool == true ? true : false
       },
       askToUpdateTask3: function(id){
         let taskToUpdate = this.info.filter(task => task.id == id)

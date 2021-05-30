@@ -8,14 +8,12 @@
 </template>
 
 <script>
-// this is must have
+
 import { library } from '@fortawesome/fontawesome-svg-core';
-// import { name of your icon in camelCase } from "@fortawesome/free-solid-svg-icons";
-// For example, I want to use fa-enveloper-open-text, then it's faEnvelopeOpenText
 import { faTimesCircle, faEdit } from "@fortawesome/free-solid-svg-icons";
-// Then add it to library
-library.add([faTimesCircle, faEdit])
-import moment from 'moment'
+import moment from 'moment';
+library.add([faTimesCircle, faEdit]);
+
 
 export default {
     name: "Task",
@@ -32,14 +30,14 @@ export default {
         date: String,
         id: Number,
         reminder: {
-          type: Boolean,
-          default: false
+          type: String,
+          default: 'false'
         },
         taskColor: String
     },
     computed: {
       isTrueSet: function(){
-        if(this.reminder == true ){
+        if(this.reminder == 'true' ){
           return true
         } else {
           return false
@@ -58,7 +56,8 @@ export default {
 
       },
       askToUpdateTask: function(id){
-        this.$emit('askToUpdateTask2', id)
+        this.$emit('askToUpdateTask2', id);
+
       }
     }
 
