@@ -1,18 +1,23 @@
 <template>
-    <div class="task-wrapper" :style="style" :class="{reminder: isTrueSet}">
-        <h1>{{title}}</h1>
-        <h2>{{momentDate}}</h2>
-        <font-awesome-icon @click="askToUpdateTask(id)" class="fa-spacer" icon="edit"></font-awesome-icon>
-        <font-awesome-icon @click="askToDeleteTask(id)" class="fa-spacer" icon="times-circle"></font-awesome-icon>
+    <div class="task-wrapper" :style="style" :class="{reminder: isTrueSet, editTask: editTask}">
+        <div class="left-task-content">
+          <h1>{{title}}</h1>
+          <h2>{{momentDate}}</h2>
+        </div>
+        <div class="right-task-content">
+          <font-awesome-icon @click="toggleRemider" class="fa-spacer" icon="bell"></font-awesome-icon>
+          <font-awesome-icon @click="askToUpdateTask(id)" class="fa-spacer" icon="edit"></font-awesome-icon>
+          <font-awesome-icon @click="askToDeleteTask(id)" class="fa-spacer" icon="times-circle"></font-awesome-icon>
+        </div>
     </div>
 </template>
 
 <script>
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTimesCircle, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faTimesCircle, faEdit, faBell } from "@fortawesome/free-solid-svg-icons";
 import moment from 'moment';
-library.add([faTimesCircle, faEdit]);
+library.add([faTimesCircle, faEdit, faBell]);
 
 
 export default {
@@ -21,19 +26,19 @@ export default {
 
     },
     data(){
-        return {
-
-        }
+      return {
+        editTask: false,
+      }
     },
     props: {
-        title: String,
-        date: String,
-        id: Number,
-        reminder: {
-          type: String,
-          default: 'false'
-        },
-        taskColor: String
+      title: String,
+      date: String,
+      id: Number,
+      reminder: {
+        type: String,
+        default: 'false'
+      },
+      taskColor: String
     },
     computed: {
       isTrueSet: function(){
@@ -57,7 +62,19 @@ export default {
       },
       askToUpdateTask: function(id){
         this.$emit('askToUpdateTask2', id);
+        if(this.editTask == false) {
+          this.editTask = true;
+        } else {
+          this.editTask = false;
+        }
 
+      },
+      toggleRemider: function(){
+        if (this.reminder == 'false'){
+          this.reminder = 'true'
+        } else {
+          this.reminder = 'false'
+        }
       }
     }
 
@@ -70,9 +87,33 @@ export default {
 .task-wrapper{
   width: 500px;
   margin: 0 auto;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 40px;
+  padding-right: 40px;
+  box-sizing: border-box;
+}
+
+.left-task-content{
+  text-align: left;
+  color: black;
+
+
+}
+.right-task-content{
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  height: 100%;
 }
 .reminder{
   border-left: 10px solid green ;
+}
+
+.edit-task {
+  border: 10px solid yellow;
 }
 
 .fa-spacer {
@@ -82,6 +123,5 @@ export default {
 .fa-spacer:hover {
   color: green;
   cursor: pointer;
-
 }
 </style>

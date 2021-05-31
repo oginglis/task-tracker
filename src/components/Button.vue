@@ -12,9 +12,9 @@ export default {
         }
     },
     methods: {
-        toggleButton: function(){
-            this.$emit('changeButton', this.buttonText);
-        }
+      toggleButton: function(){
+          this.$emit('changeButton', this.buttonText);
+      }
     }
 }
 </script>
