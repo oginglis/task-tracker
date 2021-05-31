@@ -1,7 +1,7 @@
 <template>
     <div>
       <form  >
-        <input class="v-spacer" type="text" name="title" id="title" placeholder="Write the task here" v-model="taskInfo">
+        <input class="v-spacer task-box-input" type="text" name="title" id="title" placeholder="Write the task here" v-model="taskInfo">
         <label class="v-spacer" for="date">Birthday (date and time):</label>
         <input class="v-spacer" type="datetime-local" id="date" name="date" v-model="dateTime">
         <label for="reminder">Set Reminder?</label>
@@ -106,6 +106,12 @@ form {
     margin: 0 auto;
 }
 
+.task-box-input{
+  width: 80%;
+  height: 50px;
+  margin: 100px;
+
+}
 .v-spacer{
     margin: 5px;
 }

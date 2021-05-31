@@ -42,14 +42,18 @@ export default {
         this.taskReminder= ""
       },
       openFormWithTask: function(task){
+        if(this.submitButtonText == "Add Task" ) {
+          this.submitButtonText =  "Hide Task Adder";
+          this.taskDate = task[0].date;
+          this.taskReminder = task[0].reminder;
+          this.taskInfo = task[0].title;
+          this.taskId = task[0].id
+          this.isPatch = 'true'
+        } else if (this.submitButtonText == "Hide Task Adder") {
+          this.submitButtonText =  "Add Task";
+        }
 
-        this.submitButtonText =  "Hide Task Adder";
-        this.taskDate = task[0].date;
-        this.taskReminder = task[0].reminder;
-        this.taskInfo = task[0].title;
-        this.taskId = task[0].id
-        this.isPatch = 'true'
-        console.log(this.taskDate, this.taskReminder, this.taskInfo)
+
       },
       finishedPatch: function (){
         this.isPatch = false;
@@ -65,5 +69,14 @@ export default {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+
+.task-tracker-wrap{
+  background-color: rgb(255, 228, 179);
+  padding: 20px;
+  width: 700px;
+  margin: 0px auto;
+  border-radius: 25px;
+  box-sizing: border-box;
 }
 </style>

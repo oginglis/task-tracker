@@ -1,7 +1,7 @@
 <template>
     <div class="task-wrapper" :style="style" :class="{reminder: isTrueSet, editTask: editTask}">
         <div class="left-task-content">
-          <h1>{{title}}</h1>
+          <h1 class="task-height">{{title}}</h1>
           <h2>{{momentDate}}</h2>
         </div>
         <div class="right-task-content">
@@ -70,11 +70,8 @@ export default {
 
       },
       toggleRemider: function(){
-        if (this.reminder == 'false'){
-          this.reminder = 'true'
-        } else {
-          this.reminder = 'false'
-        }
+        this.$emit('toggleReminda')
+
       }
     }
 
@@ -99,7 +96,15 @@ export default {
 .left-task-content{
   text-align: left;
   color: black;
+}
 
+.task-height{
+  max-height:  3.6em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: normal;
+  font-size: 32px;
+  line-height: 1.2em;
 
 }
 .right-task-content{
@@ -117,11 +122,13 @@ export default {
 }
 
 .fa-spacer {
-  margin-left: 15px;
+  margin: 5px;
+  color: black;
 
 }
 .fa-spacer:hover {
   color: green;
   cursor: pointer;
 }
+
 </style>
