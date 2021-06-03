@@ -49,6 +49,9 @@ export default {
           this.taskInfo = task[0].title;
           this.taskId = task[0].id
           this.isPatch = 'true'
+          var element = this.$refs["inputForm"];
+          var top = element.offsetTop;
+          window.scrollTo(0, top);
         } else if (this.submitButtonText == "Hide Task Adder") {
           this.submitButtonText =  "Add Task";
         }

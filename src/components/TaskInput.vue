@@ -1,6 +1,6 @@
 <template>
     <div>
-      <form  >
+      <form ref="inputForm" >
         <input class="v-spacer task-box-input" type="text" name="title" id="title" placeholder="Write the task here" v-model="taskInfo">
         <label class="v-spacer" for="date">Birthday (date and time):</label>
         <input class="v-spacer" type="datetime-local" id="date" name="date" v-model="dateTime">
