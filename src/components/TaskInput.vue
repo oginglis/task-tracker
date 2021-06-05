@@ -97,13 +97,14 @@ export default {
     width: 100%;
 }
 form {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    padding: 10px;
-    align-items: center;
-    background-color: lightblue;
-    margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  align-items: center;
+  background-color: #ffc72a;
+  margin: 0 auto;
+  border-radius: 25px;
+  width: 470px;
 }
 
 .task-box-input{
