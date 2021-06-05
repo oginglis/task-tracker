@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "vue-cli-service serve json-server --watch db.json"
+    "start": "concurrently --kill-others \"npm run serve\" \"json-server --watch db.json\""
+
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
@@ -24,6 +25,7 @@
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
+    "concurrently": "^6.2.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "vue-template-compiler": "^2.6.11"

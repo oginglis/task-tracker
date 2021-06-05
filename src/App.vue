@@ -5,32 +5,30 @@
 </template>
 
 <script>
-import TaskTracker from './components/TaskTracker.vue'
+import TaskTracker from "./components/TaskTracker.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    TaskTracker
-  }
-}
+    TaskTracker,
+  },
+};
 </script>
 
 <style>
 @font-face {
   font-family: "MonumentGrotesk";
-  src: url(/fonts/MonumentGrotesk-Medium.otf) format('font-opentype') ;
+  src: url("assets/fonts/MonumentGrotesk-Medium.woff") format("woff");
   font-weight: medium;
-
 }
 
 @font-face {
   font-family: "MonumentGrotesk";
-  src: url(/fonts/MonumentGrotesk-Regular.otf) format('font-opentype') ;
+  src: url("assets/fonts/MonumentGrotesk-Regular.woff") format("woff");
   font-weight: normal;
-
 }
 #app {
-  font-family: MonumentGrotesk-Regular, Helvetica, Arial, sans-serif;
+  font-family: MonumentGrotesk;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
