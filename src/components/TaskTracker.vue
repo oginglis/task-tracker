@@ -1,5 +1,6 @@
 <template>
   <div class="task-tracker-wrap">
+    <EditModal :isOpen="isModalOpen"> </EditModal>
     <Header title="Task Tracker" />
     <Button @changeButton="changeTheButton" :buttonText="submitButtonText" />
     <transition name="fade">
@@ -25,6 +26,7 @@ import Header from "./Header.vue";
 import Button from "./Button.vue";
 import TaskInput from "./TaskInput.vue";
 import TaskList from "./TaskList.vue";
+import EditModal from "./EditModal.vue";
 
 export default {
   name: "TaskTracker",
@@ -33,6 +35,7 @@ export default {
     Button,
     TaskInput,
     TaskList,
+    EditModal,
   },
   data: function () {
     return {
@@ -42,6 +45,7 @@ export default {
       taskReminder: "",
       taskId: "",
       isPatch: "false",
+      isModalOpen: false,
     };
   },
   methods: {
@@ -54,6 +58,7 @@ export default {
     },
     openFormWithTask: function (task) {
       if (this.submitButtonText == "Add Task") {
+        this.isModalOpen = true;
         this.submitButtonText = "Hide Task Adder";
         this.taskDate = task[0].date;
         this.taskReminder = task[0].reminder;
@@ -65,6 +70,7 @@ export default {
         window.scrollTo(0, top);
       } else if (this.submitButtonText == "Hide Task Adder") {
         this.submitButtonText = "Add Task";
+        this.isModalOpen = false;
       }
     },
     finishedPatch: function () {
