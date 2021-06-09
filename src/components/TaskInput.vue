@@ -1,57 +1,74 @@
 <template>
-    <div>
-      <form ref="inputForm" >
-        <input class="v-spacer task-box-input" type="text" name="title" id="title" placeholder="Write the task here" v-model="taskInfo">
-        <label class="v-spacer" for="date">Birthday (date and time):</label>
-        <input class="v-spacer" type="datetime-local" id="date" name="date" v-model="dateTime">
-        <label for="reminder">Set Reminder?</label>
-        <input v-model="checked" type="checkbox" id="checkbox">
-        <button @click="submitForm" class="v-spacer" >{{updateOrSave}}</button>
-      </form>
-    </div>
+  <div>
+    <form ref="inputForm">
+      <input
+        class="v-spacer task-box-input"
+        type="text"
+        name="title"
+        id="title"
+        placeholder="Write the task here"
+        v-model="taskInfo"
+      />
+      <label class="v-spacer" for="date">Birthday (date and time):</label>
+      <input
+        class="v-spacer"
+        type="datetime-local"
+        id="date"
+        name="date"
+        v-model="dateTime"
+      />
+      <label for="reminder">Set Reminder?</label>
+      <input v-model="checked" type="checkbox" id="checkbox" />
+      <button @click="submitForm" class="v-spacer">{{ updateOrSave }}</button>
+    </form>
+  </div>
 </template>
 <script>
-import axios from 'axios';
+import axios from "axios";
 export default {
-    name: "TaskInput",
-    data: function(){
-      return {
-        checked: false,
-        dateTime: Date,
-        taskInfo: ""
-      }
+  name: "TaskInput",
+  data: function () {
+    return {
+      checked: false,
+      dateTime: Date,
+      taskInfo: "",
+    };
+  },
+  watch: {
+    taskInfoUpdate: function (newVal, oldVal) {
+      // watch it
+      console.log("Prop changed: ", newVal, " | was: ", oldVal);
+      this.taskInfo = this.taskInfoUpdate;
     },
-    watch: {
-      taskInfoUpdate: function(newVal, oldVal) { // watch it
-        console.log('Prop changed: ', newVal, ' | was: ', oldVal);
-        this.taskInfo = this.taskInfoUpdate;
-      },
-      taskDateUpdate: function(newVal, oldVal) { // watch it
-        console.log('Prop changed: ', newVal, ' | was: ', oldVal);
-        this.dateTime = this.taskDateUpdate;
-      },
-      taskReminderUpdate: function(newVal, oldVal) { // watch it
-        console.log('Prop changed: ', newVal, ' | was: ', oldVal);
-        this.checked = this.taskReminderUpdate;
-      },
+    taskDateUpdate: function (newVal, oldVal) {
+      // watch it
+      console.log("Prop changed: ", newVal, " | was: ", oldVal);
+      this.dateTime = this.taskDateUpdate;
     },
-    props: {
-      taskInfoUpdate: String,
-      taskDateUpdate: String,
-      taskReminderUpdate: Boolean,
-      taskIdUpdate: String,
-      isUpdate: {
-        default: 'false',
-        type: String
-      }
+    taskReminderUpdate: function (newVal, oldVal) {
+      // watch it
+      console.log("Prop changed: ", newVal, " | was: ", oldVal);
+      this.checked = this.taskReminderUpdate;
     },
-    methods: {
-      submitForm: function(){
-        if(this.isUpdate == 'false'){
-          axios.post('http://localhost:3000/tasks', {
+  },
+  props: {
+    taskInfoUpdate: String,
+    taskDateUpdate: String,
+    taskReminderUpdate: Boolean,
+    taskIdUpdate: String,
+    isUpdate: {
+      default: "false",
+      type: String,
+    },
+  },
+  methods: {
+    submitForm: function () {
+      if (this.isUpdate == "false") {
+        axios
+          .post("http://localhost:3000/tasks", {
             title: this.taskInfo,
             date: this.dateTime,
-            reminder: this.checked
+            reminder: this.checked,
           })
           .then(function (response) {
             console.log(response);
@@ -59,11 +76,12 @@ export default {
           .catch(function (error) {
             console.log(error);
           });
-        } else if (this.isUpdate == 'true') {
-          axios.patch(`http://localhost:3000/tasks/${this.taskIdUpdate}`, {
+      } else if (this.isUpdate == "true") {
+        axios
+          .patch(`http://localhost:3000/tasks/${this.taskIdUpdate}`, {
             title: this.taskInfo,
             date: this.dateTime,
-            reminder: this.checked
+            reminder: this.checked,
           })
           .then(function (response) {
             console.log(response);
@@ -71,30 +89,30 @@ export default {
           .catch(function (error) {
             console.log(error);
           });
-          this.taskInfoUpdate= ""
-          this.taskDateUpdate= ""
-          this.taskReminderUpdate= ""
-          this.taskIdUpdate= ""
-          this.finishUpdate;
-        }
-      },
-      finishUpdate: function(){
-        this.$emit('finishUpdate')
+        this.taskInfoUpdate = "";
+        this.taskDateUpdate = "";
+        this.taskReminderUpdate = "";
+        this.taskIdUpdate = "";
+        this.finishUpdate;
       }
     },
-    computed: {
-      updateOrSave: function() {
-        return this.isUpdate == 'true' ? "Update Task" : "Save Task"
-      }
-    }
-
-}
+    finishUpdate: function () {
+      this.$emit("finishUpdate");
+    },
+  },
+  computed: {
+    updateOrSave: function () {
+      return this.isUpdate == "true" ? "Update Task" : "Save Task";
+    },
+  },
+};
 </script>
 
 <style scoped>
-#task-input{
-    display: inline;
-    width: 100%;
+#task-input {
+  display: inline;
+  width: 100%;
+  align-self: end;
 }
 form {
   display: flex;
@@ -107,13 +125,13 @@ form {
   width: 470px;
 }
 
-.task-box-input{
+.task-box-input {
   width: 80%;
   height: 50px;
   margin: 100px;
-
+  align-self: end;
 }
-.v-spacer{
-    margin: 5px;
+.v-spacer {
+  margin: 5px;
 }
 </style>
