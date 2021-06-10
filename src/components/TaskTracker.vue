@@ -1,6 +1,13 @@
 <template>
   <div class="task-tracker-wrap">
-    <EditModal :isOpen="isModalOpen"> </EditModal>
+    <EditModal
+      @toggleOpenModal="toggleModal"
+      :isOpen="isModalOpen"
+      :task="taskInfo"
+      :date="taskDate"
+      :reminder="taskReminder"
+    >
+    </EditModal>
     <Header title="Task Tracker" />
     <Button @changeButton="changeTheButton" :buttonText="submitButtonText" />
     <transition name="fade">
@@ -14,9 +21,9 @@
         @finishUpdate="finishedPatch"
       />
     </transition>
-    <div>
+    <!-- <div>
       <Button :buttonText="`change order`"></Button>
-    </div>
+    </div> -->
     <TaskList @askToUpdateTask4="openFormWithTask" />
   </div>
 </template>
@@ -46,6 +53,7 @@ export default {
       taskId: "",
       isPatch: "false",
       isModalOpen: false,
+      isInputOpen: false,
     };
   },
   methods: {
@@ -65,9 +73,6 @@ export default {
         this.taskInfo = task[0].title;
         this.taskId = task[0].id;
         this.isPatch = "true";
-        var element = this.$refs["inputForm"];
-        var top = element.offsetTop;
-        window.scrollTo(0, top);
       } else if (this.submitButtonText == "Hide Task Adder") {
         this.submitButtonText = "Add Task";
         this.isModalOpen = false;
@@ -75,6 +80,9 @@ export default {
     },
     finishedPatch: function () {
       this.isPatch = false;
+    },
+    toggleModal: function () {
+      this.isModalOpen = !this.isModalOpen;
     },
   },
 };

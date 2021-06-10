@@ -1,6 +1,10 @@
 <template>
-  <div v-show="isOpen" class="modal-wrapper center" :style="style">
-    <font-awesome-icon icon="times-circle"></font-awesome-icon>
+  <div v-show="isOpen" class="modal-wrapper center" :style="[style, styles]">
+    <font-awesome-icon
+      class="close-icon"
+      icon="times-circle"
+      @click="toggleOpenModal"
+    ></font-awesome-icon>
     <h3>{{ task }}</h3>
     <p>{{ date }}</p>
   </div>
@@ -13,7 +17,12 @@ library.add([faTimesCircle]);
 export default {
   name: "EditModal",
   data: function () {
-    return {};
+    return {
+      bgColor: {
+        backgroundImage: `linearGradient(${this.taskColor[0]},${this.taskColor[1]})`,
+        backgroundSize: "cover",
+      },
+    };
   },
   props: {
     isOpen: {
@@ -28,13 +37,20 @@ export default {
       default: "20-July 101",
       type: String,
     },
+    reminder: {
+      default: false,
+      type: Boolean,
+    },
     taskColor: {
       type: Array,
+      default: () => {
+        return ["#FFC300", "#C7003A"];
+      },
     },
   },
   methods: {
     toggleOpenModal: function () {
-      this.isOpen == true;
+      this.$emit("toggleOpenModal");
     },
     style: function () {
       return `background-image: linear-gradient(${this.taskColor[0]}, ${this.taskColor[1]}); background-size: cover; `;
@@ -50,11 +66,27 @@ export default {
   width: 40vw;
   z-index: 1;
   background-color: pink;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 100px 30px black;
 }
 .center {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.close-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.close-icon:hover {
+  color: grey;
+  cursor: pointer;
 }
 </style>
