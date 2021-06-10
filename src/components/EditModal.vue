@@ -1,11 +1,15 @@
 <template>
   <div v-show="isOpen" class="modal-wrapper center" :style="style">
+    <font-awesome-icon icon="times-circle"></font-awesome-icon>
     <h3>{{ task }}</h3>
     <p>{{ date }}</p>
   </div>
 </template>
 
 <script>
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+library.add([faTimesCircle]);
 export default {
   name: "EditModal",
   data: function () {
