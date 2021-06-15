@@ -10,3 +10,8 @@ TO DO APP
 [] Clean up code in each component
 [] Write tests for each component
 [] Clean up event names
+[] Add authentication
+[] Add login
+[X] Add Vue Meta
+[] Add Favicon
+[] Button Hovering Effects
