@@ -1,5 +1,5 @@
 <template>
-  <div v-show="isOpen" class="modal-wrapper center" :style="[style, styles]">
+  <div v-show="isOpen" class="modal-wrapper center" :style="bgColor">
     <font-awesome-icon
       class="close-icon"
       icon="times-circle"
@@ -19,7 +19,7 @@ export default {
   data: function () {
     return {
       bgColor: {
-        backgroundImage: `linearGradient(${this.taskColor[0]},${this.taskColor[1]})`,
+        backgroundImage: `linear-gradient(${this.taskColor[0]}, ${this.taskColor[1]})`,
         backgroundSize: "cover",
       },
     };
@@ -53,7 +53,7 @@ export default {
       this.$emit("toggleOpenModal");
     },
     style: function () {
-      return `background-image: linear-gradient(${this.taskColor[0]}, ${this.taskColor[1]}); background-size: cover; `;
+      return `background-color: linear-gradient(${this.taskColor[0]}, ${this.taskColor[1]}); background-size: cover; `;
     },
   },
   computed: {},
@@ -64,12 +64,14 @@ export default {
 .modal-wrapper {
   height: 40vh;
   width: 40vw;
+  min-width: 400px;
+  min-height: 200px;
   z-index: 1;
-  background-color: pink;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   box-shadow: 0px 0px 100px 30px black;
 }
 .center {

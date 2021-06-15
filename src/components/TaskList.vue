@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="padding-end">
     <Task
       v-for="(task, index) in info"
       @toggleReminda="convertRemind(task)"
@@ -64,7 +64,7 @@ export default {
     },
     askToUpdateTask3: function (id) {
       let taskToUpdate = this.info.filter((task) => task.id == id);
-      this.$emit("askToUpdateTask4", taskToUpdate);
+      this.$emit("askToUpdateTask4", [taskToUpdate]);
     },
     convertRemind: function (task) {
       if (task.reminder == "false") {
@@ -77,7 +77,6 @@ export default {
       while (this.colours.length > 0) {
         this.colourPairs.push(this.colours.splice(0, 2));
       }
-      console.log(this.colourPairs);
       return this.colourPairs[index];
     },
     sortList: function () {
@@ -86,3 +85,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.padding-end:last-child {
+  padding-bottom: 10px;
+}
+</style>

@@ -1,15 +1,16 @@
 <template>
   <div>
     <form ref="inputForm">
+      <label for="title">Task</label>
       <input
         class="v-spacer task-box-input"
         type="text"
         name="title"
         id="title"
-        placeholder="Write the task here"
+        placeholder="Add task"
         v-model="taskInfo"
       />
-      <label class="v-spacer" for="date">Birthday (date and time):</label>
+      <label class="v-spacer" for="date">Date & Time:</label>
       <input
         class="v-spacer"
         type="datetime-local"
@@ -35,19 +36,19 @@ export default {
     };
   },
   watch: {
-    taskInfoUpdate: function (newVal, oldVal) {
+    taskInfoUpdate: function () {
       // watch it
-      console.log("Prop changed: ", newVal, " | was: ", oldVal);
+
       this.taskInfo = this.taskInfoUpdate;
     },
-    taskDateUpdate: function (newVal, oldVal) {
+    taskDateUpdate: function () {
       // watch it
-      console.log("Prop changed: ", newVal, " | was: ", oldVal);
+
       this.dateTime = this.taskDateUpdate;
     },
-    taskReminderUpdate: function (newVal, oldVal) {
+    taskReminderUpdate: function () {
       // watch it
-      console.log("Prop changed: ", newVal, " | was: ", oldVal);
+
       this.checked = this.taskReminderUpdate;
     },
   },
@@ -55,10 +56,9 @@ export default {
     taskInfoUpdate: String,
     taskDateUpdate: String,
     taskReminderUpdate: Boolean,
-    taskIdUpdate: String,
-    isUpdate: {
-      default: "false",
-      type: String,
+    taskIdUpdate: {
+      default: 0,
+      type: Number,
     },
   },
   methods: {
@@ -96,9 +96,6 @@ export default {
         this.finishUpdate;
       }
     },
-    finishUpdate: function () {
-      this.$emit("finishUpdate");
-    },
   },
   computed: {
     updateOrSave: function () {
@@ -118,10 +115,10 @@ form {
   display: flex;
   flex-direction: column;
   padding: 10px;
-  align-items: center;
-  background-color: #ffc72a;
+  align-items: flex-start;
+  border: 1px black solid;
   margin: 0 auto;
-  border-radius: 25px;
+  border-radius: 10px;
   width: 470px;
 }
 
@@ -133,5 +130,9 @@ form {
 }
 .v-spacer {
   margin: 5px;
+}
+
+#checkbox {
+  display: inline-block;
 }
 </style>

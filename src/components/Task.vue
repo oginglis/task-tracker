@@ -93,8 +93,8 @@ export default {
 <style scoped>
 .task-wrapper {
   width: 500px;
-  margin: 0 auto;
-  border-radius: 25px;
+  margin: 5px auto;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;

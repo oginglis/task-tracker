@@ -21,15 +21,14 @@ export default {
 
 <style scoped>
 button {
-  width: 200px;
-  margin-bottom: 20px;
-  background-color: #4caf50; /* Green */
+  width: 100px;
+  background-color: rgb(192, 29, 29); /* Green */
   border: none;
   color: white;
-  padding: 15px 32px;
-  text-align: center;
+  border-radius: 10px;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  height: 50px;
 }
 </style>

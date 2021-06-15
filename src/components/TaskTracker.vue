@@ -8,8 +8,10 @@
       :reminder="taskReminder"
     >
     </EditModal>
-    <Header title="Task Tracker" />
-    <Button @changeButton="changeTheButton" :buttonText="submitButtonText" />
+    <div class="text-inline">
+      <Header title="Task Tracker" />
+      <Button @changeButton="changeTheButton" :buttonText="submitButtonText" />
+    </div>
     <transition name="fade">
       <TaskInput
         v-show="submitButtonText !== 'Add Task'"
@@ -51,6 +53,7 @@ export default {
       taskDate: "",
       taskReminder: "",
       taskId: "",
+      taskColor: [],
       isPatch: "false",
       isModalOpen: false,
       isInputOpen: false,
@@ -65,16 +68,14 @@ export default {
       (this.taskInfo = ""), (this.taskDate = ""), (this.taskReminder = "");
     },
     openFormWithTask: function (task) {
-      if (this.submitButtonText == "Add Task") {
+      if (this.isModalOpen == false) {
         this.isModalOpen = true;
-        this.submitButtonText = "Hide Task Adder";
         this.taskDate = task[0].date;
         this.taskReminder = task[0].reminder;
         this.taskInfo = task[0].title;
         this.taskId = task[0].id;
-        this.isPatch = "true";
-      } else if (this.submitButtonText == "Hide Task Adder") {
-        this.submitButtonText = "Add Task";
+        this.taskColor = task[0].this.isPatch = "true";
+      } else if (this.isModalOpen == true) {
         this.isModalOpen = false;
       }
     },
@@ -98,11 +99,24 @@ export default {
 }
 
 .task-tracker-wrap {
-  background-color: rgb(255, 228, 179);
-  padding: 20px;
-  width: 700px;
+  padding: 0px 20px;
+  border-radius: 10px;
+  width: 500px;
   margin: 0px auto;
-  border-radius: 25px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: content-box;
+  border: 1px black solid;
+}
+
+.text-inline {
+  display: flex;
+  align-items: center;
+  align-content: space-between;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  width: 100%;
 }
 </style>
