@@ -1,24 +1,12 @@
-# task-tracker
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+TO DO APP
+[] Implement editing functionality in Module
+[] Remove Axios in Services Folder
+[] Fix reminder indent issue
+[] Fix console log Type error
+[] Fix large messages
+[] Smooth transitions
+[] Implement Vue Router
+[] Clean up date formatting and input
+[] Clean up code in each component
+[] Write tests for each component
+[] Clean up event names
