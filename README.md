@@ -13,5 +13,6 @@ TO DO APP
 [] Add authentication
 [] Add login
 [X] Add Vue Meta
-[] Add Favicon
+[X] Add Favicon
 [] Button Hovering Effects
+[] Fix sidebar jiggling

@@ -2,9 +2,9 @@
   <div
     class="task-wrapper"
     :style="style"
-    :class="{ reminder: isTrueSet, editTask: editTask }"
+    :class="[isTrueSet ? 'adjust reminder' : '', editTask ? 'editTask' : '']"
   >
-    <div class="left-task-content" :class="{ adjust: itTrueSet }">
+    <div class="left-task-content" :class="{ adjust: isTrueSet }">
       <h1 class="task-height task-title">
         {{ title }}
       </h1>
@@ -39,7 +39,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 library.add([faTimesCircle, faEdit, faBell]);
-
 export default {
   name: "Task",
   components: {},

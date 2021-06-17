@@ -30,5 +30,10 @@ button {
   display: inline-block;
   font-size: 16px;
   height: 50px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: rgb(192, 85, 85);
 }
 </style>

@@ -6,7 +6,7 @@
       @click="toggleOpenModal"
     ></font-awesome-icon>
     <h3 class="modal-title">Task:</h3>
-    <h3 class="modal-info">{{ task }}</h3>
+    <input v-modalclass="modal-info">{{ task }}</input>
     <h3 class="modal-title">Date:</h3>
     <p class="modal-info">{{ momentDate2 }}</p>
     <button @click="updateTaskCloseModal">Update Task</button>
@@ -26,6 +26,8 @@ export default {
         backgroundImage: `linear-gradient(${this.taskColor[0]}, ${this.taskColor[1]})`,
         backgroundSize: "cover",
       },
+      modalTitle: "",
+      modalDate: Date,
     };
   },
   props: {
@@ -69,6 +71,7 @@ export default {
       return moment(this.date).format("MMM Do YYYY");
     },
   },
+  watch: {},
 };
 </script>
 

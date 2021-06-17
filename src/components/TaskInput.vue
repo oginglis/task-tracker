@@ -129,7 +129,7 @@ form {
   align-self: end;
 }
 .v-spacer {
-  margin: 5px;
+  margin: 5px 0px;
 }
 
 #checkbox {
