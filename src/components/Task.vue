@@ -4,8 +4,10 @@
     :style="style"
     :class="{ reminder: isTrueSet, editTask: editTask }"
   >
-    <div class="left-task-content">
-      <h1 class="task-height task-title">{{ title }}</h1>
+    <div class="left-task-content" :class="{ adjust: itTrueSet }">
+      <h1 class="task-height task-title">
+        {{ title }}
+      </h1>
       <h2 class="task-date">{{ momentDate }}</h2>
     </div>
     <div class="right-task-content">
@@ -130,7 +132,9 @@ export default {
 .reminder {
   border-left: 10px solid green;
 }
-
+.adjust {
+  margin-left: -5px;
+}
 .edit-task {
   border: 10px solid yellow;
 }

@@ -64,7 +64,7 @@ export default {
     },
     askToUpdateTask3: function (id) {
       let taskToUpdate = this.info.filter((task) => task.id == id);
-      this.$emit("askToUpdateTask4", [taskToUpdate]);
+      this.$emit("askToUpdateTask4", taskToUpdate);
     },
     convertRemind: function (task) {
       if (task.reminder == "false") {

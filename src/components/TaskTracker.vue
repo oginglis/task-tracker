@@ -54,7 +54,7 @@ export default {
       taskReminder: "",
       taskId: "",
       taskColor: [],
-      isPatch: "false",
+      isPatch: false,
       isModalOpen: false,
       isInputOpen: false,
     };
@@ -64,7 +64,7 @@ export default {
       this.submitButtonText == "Add Task"
         ? (this.submitButtonText = "Hide Task Adder")
         : (this.submitButtonText = "Add Task");
-      this.isPatch = "false";
+      this.isPatch = false;
       (this.taskInfo = ""), (this.taskDate = ""), (this.taskReminder = "");
     },
     openFormWithTask: function (task) {
@@ -74,7 +74,6 @@ export default {
         this.taskReminder = task[0].reminder;
         this.taskInfo = task[0].title;
         this.taskId = task[0].id;
-        this.taskColor = task[0].this.isPatch = "true";
       } else if (this.isModalOpen == true) {
         this.isModalOpen = false;
       }

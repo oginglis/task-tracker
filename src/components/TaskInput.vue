@@ -57,8 +57,8 @@ export default {
     taskDateUpdate: String,
     taskReminderUpdate: Boolean,
     taskIdUpdate: {
-      default: 0,
-      type: Number,
+      default: "",
+      type: [String, Number],
     },
   },
   methods: {
