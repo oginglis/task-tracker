@@ -16,3 +16,4 @@ TO DO APP
 [X] Add Favicon
 [] Button Hovering Effects
 [] Fix sidebar jiggling
+[] Finish the update modal functionality

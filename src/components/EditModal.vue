@@ -6,15 +6,26 @@
       @click="toggleOpenModal"
     ></font-awesome-icon>
     <h3 class="modal-title">Task:</h3>
-    <input v-modalclass="modal-info">{{ task }}</input>
+    {{ taskId }}
+    <p
+      class="modal-info"
+      contenteditable="true"
+      @input="update"
+      @focus="focus"
+      @blur="blur"
+    >
+      {{ modalTitle }}
+    </p>
     <h3 class="modal-title">Date:</h3>
-    <p class="modal-info">{{ momentDate2 }}</p>
-    <button @click="updateTaskCloseModal">Update Task</button>
+    {{ momentDate2 }}
+    <input class="modal-date" v-model="date" type="date" />
+    <button @click="updateTaskCloseModal(taskId)">Update Task</button>
   </div>
 </template>
 
 <script>
 import moment from "moment";
+import axios from "axios";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 library.add([faTimesCircle]);
@@ -28,6 +39,9 @@ export default {
       },
       modalTitle: "",
       modalDate: Date,
+      focusIn: false,
+      taskId: null,
+      modalReminder: false,
     };
   },
   props: {
@@ -53,6 +67,10 @@ export default {
         return ["#FFC300", "#C7003A"];
       },
     },
+    id: {
+      type: Number,
+      default: null,
+    },
   },
   methods: {
     toggleOpenModal: function () {
@@ -61,17 +79,58 @@ export default {
     style: function () {
       return `background-color: linear-gradient(${this.taskColor[0]}, ${this.taskColor[1]}); background-size: cover; `;
     },
-    updateTaskCloseModal: function () {
+    updateTaskCloseModal: function (id) {
       this.toggleOpenModal();
+      console.log(id);
+      let update = {
+        title: this.modalTitle,
+        date: this.modalDate,
+        reminder: this.modalReminder,
+        id: id,
+      };
       // Make Axios request with the data from the task
+      axios
+        .patch(`http://localhost:3000/tasks/${id}`, update)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+      this.$emit("rerender-list", update);
+    },
+    update: function (e) {
+      this.modalTitle = e.target.innerHTML;
+    },
+    focus() {
+      this.focusIn = true;
+    },
+    blur() {
+      this.focusIn = false;
+    },
+    created() {
+      this.modalTitle = this.task;
     },
   },
   computed: {
     momentDate2: function () {
-      return moment(this.date).format("MMM Do YYYY");
+      return moment(this.date).format("yyyy MM dd");
     },
   },
-  watch: {},
+  watch: {
+    task: function () {
+      this.modalTitle = this.task;
+    },
+    modalTitle: function (newVal) {
+      if (!this.focusIn) {
+        this.modalTitle = newVal;
+      }
+    },
+    id: function () {
+      this.taskId = this.id;
+    },
+  },
 };
 </script>
 
@@ -114,5 +173,13 @@ export default {
 }
 .modal-info {
   font-size: 15px;
+  background: rgba(105, 24, 24, 0);
+  border: none;
+}
+
+.modal-info:focus,
+.modal-info:hover {
+  outline: none;
+  background: rgba(105, 24, 24, 0.1);
 }
 </style>

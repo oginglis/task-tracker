@@ -6,6 +6,8 @@
       :task="taskInfo"
       :date="taskDate"
       :reminder="taskReminder"
+      :id="taskId"
+      @rerenderList="updateList"
     >
     </EditModal>
     <div class="text-inline">
@@ -26,7 +28,10 @@
     <!-- <div>
       <Button :buttonText="`change order`"></Button>
     </div> -->
-    <TaskList @askToUpdateTask4="openFormWithTask" />
+    <TaskList
+      :updateWithThisTask="taskPassUpdate"
+      @askToUpdateTask4="openFormWithTask"
+    />
   </div>
 </template>
 
@@ -52,7 +57,7 @@ export default {
       taskInfo: "",
       taskDate: "",
       taskReminder: "",
-      taskId: "",
+      taskId: null,
       taskColor: [],
       isPatch: false,
       isModalOpen: false,
@@ -73,7 +78,7 @@ export default {
         this.taskDate = task[0].date;
         this.taskReminder = task[0].reminder;
         this.taskInfo = task[0].title;
-        this.taskId = task[0].id;
+        this.taskId = parseInt(task[0].id);
       } else if (this.isModalOpen == true) {
         this.isModalOpen = false;
       }
@@ -83,6 +88,9 @@ export default {
     },
     toggleModal: function () {
       this.isModalOpen = !this.isModalOpen;
+    },
+    updateList: function (task) {
+      this.taskPassUpdate = task;
     },
   },
 };

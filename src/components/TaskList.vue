@@ -34,6 +34,7 @@ export default {
   },
   props: {
     taskData: Object,
+    updateWithThisTask: Object,
   },
   mounted() {
     axios.get("http://localhost:3000/tasks").then((response) => {
@@ -49,6 +50,12 @@ export default {
   },
   computed: {},
   beforeUpdate() {},
+  watch: {
+    updateWithThisTask: function () {
+      this.info.filter((task) => task.id == this.updateWithThisTask.id);
+      console.log(this.info);
+    },
+  },
   methods: {
     deleteTask: function (id) {
       axios
