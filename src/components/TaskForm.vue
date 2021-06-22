@@ -27,7 +27,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "TaskInput",
+  name: "TaskForm",
   data: function () {
     return {
       checked: false,

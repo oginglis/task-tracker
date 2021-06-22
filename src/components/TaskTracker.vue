@@ -1,6 +1,6 @@
 <template>
   <div class="task-tracker-wrap">
-    <EditModal
+    <Modal
       @toggleOpenModal="toggleModal"
       :isOpen="isModalOpen"
       :task="taskInfo"
@@ -9,13 +9,13 @@
       :id="taskId"
       @rerender="updateList"
     >
-    </EditModal>
+    </Modal>
     <div class="text-inline">
       <Header title="Task Tracker" />
       <Button @changeButton="changeTheButton" :buttonText="submitButtonText" />
     </div>
     <transition name="fade">
-      <TaskInput
+      <TaskForm
         v-show="submitButtonText !== 'Add Task'"
         :taskInfoUpdate="taskInfo"
         :taskIdUpdate="taskId"
@@ -25,9 +25,6 @@
         @finishUpdate="finishedPatch"
       />
     </transition>
-    <!-- <div>
-      <Button :buttonText="`change order`"></Button>
-    </div> -->
     <TaskList
       :updateWithThisTask="taskPassUpdate"
       @askToUpdateTask4="openFormWithTask"
@@ -38,18 +35,18 @@
 <script>
 import Header from "./Header.vue";
 import Button from "./Button.vue";
-import TaskInput from "./TaskInput.vue";
+import TaskForm from "./TaskForm.vue";
 import TaskList from "./TaskList.vue";
-import EditModal from "./EditModal.vue";
+import Modal from "./Modal.vue";
 
 export default {
   name: "TaskTracker",
   components: {
     Header,
     Button,
-    TaskInput,
+    TaskForm,
     TaskList,
-    EditModal,
+    Modal,
   },
   data: function () {
     return {
