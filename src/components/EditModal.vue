@@ -6,7 +6,6 @@
       @click="toggleOpenModal"
     ></font-awesome-icon>
     <h3 class="modal-title">Task:</h3>
-    {{ taskId }}
     <p
       class="modal-info"
       contenteditable="true"
@@ -17,8 +16,7 @@
       {{ modalTitle }}
     </p>
     <h3 class="modal-title">Date:</h3>
-    {{ momentDate2 }}
-    <input class="modal-date" v-model="date" type="date" />
+    <input class="modal-date" v-model="modalDate" type="datetime-local" />
     <button @click="updateTaskCloseModal(taskId)">Update Task</button>
   </div>
 </template>
@@ -91,14 +89,12 @@ export default {
       // Make Axios request with the data from the task
       axios
         .patch(`http://localhost:3000/tasks/${id}`, update)
-        .then((res) => {
-          console.log(res);
-        })
+        .then(() => {})
         .catch(function (error) {
           console.log(error);
         });
 
-      this.$emit("rerender-list", update);
+      this.$emit("rerender", update);
     },
     update: function (e) {
       this.modalTitle = e.target.innerHTML;
@@ -115,10 +111,13 @@ export default {
   },
   computed: {
     momentDate2: function () {
-      return moment(this.date).format("yyyy MM dd");
+      return moment(this.date).format("yyyy-MM-dd");
     },
   },
   watch: {
+    date: function () {
+      this.modalDate = this.date;
+    },
     task: function () {
       this.modalTitle = this.task;
     },
@@ -175,10 +174,24 @@ export default {
   font-size: 15px;
   background: rgba(105, 24, 24, 0);
   border: none;
+  direction: ltr;
+  unicode-bidi: bidi-override;
 }
 
 .modal-info:focus,
 .modal-info:hover {
+  outline: none;
+  background: rgba(105, 24, 24, 0.1);
+}
+
+.modal-date {
+  background: rgba(105, 24, 24, 0.3);
+  border: none;
+  margin: 15px;
+}
+
+.modal-date:focus,
+.modal-date:hover {
   outline: none;
   background: rgba(105, 24, 24, 0.1);
 }

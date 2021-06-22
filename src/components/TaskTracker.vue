@@ -7,7 +7,7 @@
       :date="taskDate"
       :reminder="taskReminder"
       :id="taskId"
-      @rerenderList="updateList"
+      @rerender="updateList"
     >
     </EditModal>
     <div class="text-inline">
@@ -62,6 +62,7 @@ export default {
       isPatch: false,
       isModalOpen: false,
       isInputOpen: false,
+      taskPassUpdate: {},
     };
   },
   methods: {
