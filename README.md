@@ -17,3 +17,5 @@ TO DO APP
 [] Button Hovering Effects
 [] Fix sidebar jiggling
 [] Finish the update modal functionality
+[] Modal Size restraining
+[] Catch invalid dates

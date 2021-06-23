@@ -6,13 +6,7 @@
       @click="toggleOpenModal"
     ></font-awesome-icon>
     <h3 class="modal-title">Task:</h3>
-    <p
-      class="modal-info"
-      contenteditable="true"
-      @input="update"
-      @focus="focus"
-      @blur="blur"
-    >
+    <p class="modal-info" contenteditable="true" @blur="update">
       {{ modalTitle }}
     </p>
     <h3 class="modal-title">Date:</h3>
@@ -40,6 +34,7 @@ export default {
       focusIn: false,
       taskId: null,
       modalReminder: false,
+      dataChanged: false,
     };
   },
   props: {
@@ -79,7 +74,6 @@ export default {
     },
     updateTaskCloseModal: function (id) {
       this.toggleOpenModal();
-      console.log(id);
       let update = {
         title: this.modalTitle,
         date: this.modalDate,
@@ -97,13 +91,7 @@ export default {
       this.$emit("rerender", update);
     },
     update: function (e) {
-      this.modalTitle = e.target.innerHTML;
-    },
-    focus() {
-      this.focusIn = true;
-    },
-    blur() {
-      this.focusIn = false;
+      this.modalTitle = e.target.innerText;
     },
     created() {
       this.modalTitle = this.task;
@@ -176,6 +164,7 @@ export default {
   border: none;
   direction: ltr;
   unicode-bidi: bidi-override;
+  max-width: 80%;
 }
 
 .modal-info:focus,

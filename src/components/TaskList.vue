@@ -52,13 +52,10 @@ export default {
   beforeUpdate() {},
   watch: {
     updateWithThisTask: function () {
-      this.info.filter((task) => task.id == this.updateWithThisTask.id);
-      console.log(this.info);
       var foundIndex = this.info.findIndex(
         (x) => x.id == this.updateWithThisTask.id
       );
-      this.info[foundIndex] = this.updateWithThisTask;
-      this.updateWithThisTask = {};
+      this.info.splice(foundIndex, 1, this.updateWithThisTask);
     },
   },
   methods: {
