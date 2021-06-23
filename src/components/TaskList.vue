@@ -42,7 +42,6 @@ export default {
       let colorGradient = new Gradient();
       const color1 = "#FFC300";
       const color2 = "#C7003A";
-
       colorGradient.setMidpoint(this.info.length * 2);
       colorGradient.setGradient(color1, color2);
       this.colours = colorGradient.getArray();
