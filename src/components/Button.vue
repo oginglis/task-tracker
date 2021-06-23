@@ -1,5 +1,5 @@
 <template>
-  <button @click="toggleButton">{{ buttonText }}</button>
+  <button class="btn btn--red" @click="toggleButton">{{ buttonText }}</button>
 </template>
 
 <script>
@@ -20,20 +20,23 @@ export default {
 </script>
 
 <style scoped>
-button {
+.btn {
   width: 100px;
-  background-color: rgb(192, 29, 29); /* Green */
   border: none;
-  color: white;
   border-radius: 10px;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
   height: 50px;
   cursor: pointer;
 }
 
-button:hover {
+.btn--red {
+  background-color: rgb(192, 29, 29);
+  color: white;
+  font-size: 16px;
+}
+
+.btn:hover {
   background-color: rgb(192, 85, 85);
 }
 </style>

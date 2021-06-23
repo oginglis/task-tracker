@@ -8,6 +8,8 @@
       :reminder="taskReminder"
       :id="taskId"
       @rerender="updateList"
+      v-click-outside="onClickOutside"
+      v-show="isModalOpen"
     >
     </Modal>
     <div class="text-inline">
@@ -38,6 +40,7 @@ import Button from "./Button.vue";
 import TaskForm from "./TaskForm.vue";
 import TaskList from "./TaskList.vue";
 import Modal from "./Modal.vue";
+import vClickOutside from "v-click-outside";
 
 export default {
   name: "TaskTracker",
@@ -48,12 +51,15 @@ export default {
     TaskList,
     Modal,
   },
+  directives: {
+    clickOutside: vClickOutside.directive,
+  },
   data: function () {
     return {
       submitButtonText: "Add Task",
       taskInfo: "",
       taskDate: "",
-      taskReminder: "",
+      taskReminder: false,
       taskId: null,
       taskColor: [],
       isPatch: false,
@@ -68,13 +74,13 @@ export default {
         ? (this.submitButtonText = "Hide Task Adder")
         : (this.submitButtonText = "Add Task");
       this.isPatch = false;
-      (this.taskInfo = ""), (this.taskDate = ""), (this.taskReminder = "");
+      (this.taskInfo = ""), (this.taskDate = ""), (this.taskReminder = false);
     },
     openFormWithTask: function (task) {
       if (this.isModalOpen == false) {
         this.isModalOpen = true;
         this.taskDate = task[0].date;
-        this.taskReminder = task[0].reminder;
+        this.taskReminder = task[0].reminder === "true";
         this.taskInfo = task[0].title;
         this.taskId = parseInt(task[0].id);
       } else if (this.isModalOpen == true) {
@@ -89,6 +95,11 @@ export default {
     },
     updateList: function (task) {
       this.taskPassUpdate = task;
+    },
+    onClickOutside() {
+      if (this.isModalOpen) {
+        this.isModalOpen = false;
+      }
     },
   },
 };

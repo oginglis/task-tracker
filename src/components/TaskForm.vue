@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     submitForm: function () {
-      if (this.isUpdate == "false") {
+      if (this.isUpdate == false) {
         axios
           .post("http://localhost:3000/tasks", {
             title: this.taskInfo,
@@ -76,7 +76,7 @@ export default {
           .catch(function (error) {
             console.log(error);
           });
-      } else if (this.isUpdate == "true") {
+      } else if (this.isUpdate == true) {
         axios
           .patch(`http://localhost:3000/tasks/${this.taskIdUpdate}`, {
             title: this.taskInfo,
@@ -91,7 +91,7 @@ export default {
           });
         this.taskInfoUpdate = "";
         this.taskDateUpdate = "";
-        this.taskReminderUpdate = "";
+        this.taskReminderUpdate = false;
         this.taskIdUpdate = "";
         this.finishUpdate;
       }
@@ -99,7 +99,7 @@ export default {
   },
   computed: {
     updateOrSave: function () {
-      return this.isUpdate == "true" ? "Update Task" : "Save Task";
+      return this.isUpdate == true ? "Update Task" : "Save Task";
     },
   },
 };
@@ -120,6 +120,8 @@ form {
   margin: 0 auto;
   border-radius: 10px;
   width: 470px;
+  background-color: linear-gradient("#FFC300", "#C7003A");
+  background-size: cover;
 }
 
 .task-box-input {
