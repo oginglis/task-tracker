@@ -1,5 +1,5 @@
 <template>
-  <button class="btn btn--red" @click="toggleButton">{{ buttonText }}</button>
+  <button class="btn btn--red" @click="clickButton">{{ buttonText }}</button>
 </template>
 
 <script>
@@ -12,8 +12,8 @@ export default {
     },
   },
   methods: {
-    toggleButton: function () {
-      this.$emit("changeButton", this.buttonText);
+    clickButton: function () {
+      this.$emit("clickButton", this.buttonText);
     },
   },
 };

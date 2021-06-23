@@ -53,12 +53,23 @@ export default {
     },
   },
   props: {
-    taskInfoUpdate: String,
-    taskDateUpdate: String,
-    taskReminderUpdate: Boolean,
-    taskIdUpdate: {
-      default: "",
-      type: [String, Number],
+    task: {
+      title: {
+        default: " This is a task to tesk",
+        type: String,
+      },
+      date: {
+        default: "20-July 101",
+        type: String,
+      },
+      reminder: {
+        default: false,
+        type: Boolean,
+      },
+      id: {
+        type: Number,
+        default: null,
+      },
     },
   },
   methods: {

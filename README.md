@@ -1,8 +1,8 @@
 TO DO APP
-[] Implement editing functionality in Module
+[X] Implement editing functionality in Module
 [] Remove Axios in Services Folder
 [] Fix reminder indent issue
-[] Fix console log Type error
+[X] Fix console log Type error
 [] Fix large messages
 [] Smooth transitions
 [] Implement Vue Router
@@ -16,6 +16,6 @@ TO DO APP
 [X] Add Favicon
 [] Button Hovering Effects
 [] Fix sidebar jiggling
-[] Finish the update modal functionality
+[X] Finish the update modal functionality
 [] Modal Size restraining
 [] Catch invalid dates

@@ -2,27 +2,21 @@
   <div class="task-tracker-wrap">
     <Modal
       @toggleOpenModal="toggleModal"
-      :isOpen="isModalOpen"
-      :task="taskInfo"
-      :date="taskDate"
-      :reminder="taskReminder"
-      :id="taskId"
       @rerender="updateList"
+      :isOpen="isModalOpen"
+      :task="task"
       v-click-outside="onClickOutside"
       v-show="isModalOpen"
     >
     </Modal>
     <div class="text-inline">
       <Header title="Task Tracker" />
-      <Button @changeButton="changeTheButton" :buttonText="submitButtonText" />
+      <Button @clickButton="changeButton" :buttonText="buttonText" />
     </div>
     <transition name="fade">
       <TaskForm
-        v-show="submitButtonText !== 'Add Task'"
-        :taskInfoUpdate="taskInfo"
-        :taskIdUpdate="taskId"
-        :taskDateUpdate="taskDate"
-        :taskReminderUpdate="taskReminder"
+        v-show="buttonText !== 'Add Task'"
+        :task="task"
         :isUpdate="isPatch"
         @finishUpdate="finishedPatch"
       />
@@ -56,11 +50,13 @@ export default {
   },
   data: function () {
     return {
-      submitButtonText: "Add Task",
-      taskInfo: "",
-      taskDate: "",
-      taskReminder: false,
-      taskId: null,
+      buttonText: "Add Task",
+      task: {
+        title: null,
+        date: null,
+        id: null,
+        reminder: null,
+      },
       taskColor: [],
       isPatch: false,
       isModalOpen: false,
@@ -69,20 +65,22 @@ export default {
     };
   },
   methods: {
-    changeTheButton: function () {
-      this.submitButtonText == "Add Task"
-        ? (this.submitButtonText = "Hide Task Adder")
-        : (this.submitButtonText = "Add Task");
+    changeButton: function () {
+      this.buttonText == "Add Task"
+        ? (this.buttonText = "Hide Task Adder")
+        : (this.buttonText = "Add Task");
       this.isPatch = false;
-      (this.taskInfo = ""), (this.taskDate = ""), (this.taskReminder = false);
+      (this.task.title = ""),
+        (this.task.date = ""),
+        (this.task.reminder = false);
     },
     openFormWithTask: function (task) {
       if (this.isModalOpen == false) {
         this.isModalOpen = true;
-        this.taskDate = task[0].date;
-        this.taskReminder = task[0].reminder === "true";
-        this.taskInfo = task[0].title;
-        this.taskId = parseInt(task[0].id);
+        this.task.date = task[0].date;
+        this.task.reminder = task[0].reminder === "true";
+        this.task.title = task[0].title;
+        this.task.id = parseInt(task[0].id);
       } else if (this.isModalOpen == true) {
         this.isModalOpen = false;
       }
