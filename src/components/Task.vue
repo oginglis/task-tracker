@@ -1,16 +1,22 @@
 <template>
   <div
-    class="task-wrapper"
+    class="task"
     :style="style"
-    :class="[isTrueSet ? 'adjust reminder' : '', editTask ? 'editTask' : '']"
+    :class="[
+      isTrueSet ? 'task--green-reminder' : '',
+      editTask ? 'editTask' : '',
+    ]"
   >
-    <div class="left-task-content" :class="{ adjust: isTrueSet }">
-      <h1 class="task-height task-title">
+    <div
+      class="task__lhs"
+      :class="{ 'task__lhs--compensate-margin': isTrueSet }"
+    >
+      <h1 class="task__lhs__title task__lhs__title--restrict">
         {{ title }}
       </h1>
-      <h2 class="task-date">{{ momentDate }}</h2>
+      <h2 class="task__lhs__date">{{ momentDate }}</h2>
     </div>
-    <div class="right-task-content">
+    <div class="task__rhs">
       <font-awesome-icon
         @click="toggleRemider"
         class="fa-spacer"
@@ -92,8 +98,7 @@ export default {
 </script>
 
 <style scoped>
-.task-wrapper {
-  width: 500px;
+.task {
   margin: 5px auto;
   border-radius: 10px;
   display: flex;
@@ -104,38 +109,45 @@ export default {
   box-sizing: border-box;
 }
 
-.left-task-content {
-  text-align: left;
-  color: black;
+.task:hover {
+  cursor: pointer;
+  filter: brightness(95%);
 }
 
-.task-title {
+.task--green-reminder {
+  border-left: 10px solid green;
+}
+
+.task__lhs {
+  text-align: left;
+  color: black;
+  margin-left: 0px;
+}
+
+.task__lhs__title {
   font-size: 1.2em;
 }
 
-.task-date {
+.task__lhs__date {
   font-size: 10px;
 }
-.task-height {
+
+.task__lhs__title--restrict {
   max-height: 3.6em;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: normal;
   line-height: 1.2em;
 }
-.right-task-content {
+
+.task__lhs--compensate-margin {
+  margin-left: -10px;
+}
+
+.task__rhs {
   display: flex;
   align-content: space-between;
   height: 100%;
-}
-.reminder {
-  border-left: 10px solid green;
-}
-.adjust {
-  margin-left: -5px;
-}
-.edit-task {
-  border: 10px solid yellow;
 }
 
 .fa-spacer {

@@ -1,7 +1,7 @@
 {
   "tasks": [
     {
-      "title": "This is the first task WORKING in the list to update",
+      "title": "This is the first task  in the list to update",
       "date": "0032-12-13T12:12",
       "reminder": false,
       "id": 8
