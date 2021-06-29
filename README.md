@@ -19,3 +19,4 @@ TO DO APP
 [X] Finish the update modal functionality
 [] Modal Size restraining
 [] Catch invalid dates
+[] Draggable list

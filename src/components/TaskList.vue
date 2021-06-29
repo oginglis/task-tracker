@@ -1,17 +1,27 @@
 <template>
   <div class="padding-end">
-    <Task
-      v-for="(task, index) in info"
-      @toggleReminda="convertRemind(task)"
-      :title="task.title"
-      :date="task.date"
-      :reminder="task.reminder.toString()"
-      :key="task.id"
-      :id="task.id"
-      v-on:askToDeleteTask2="deleteTask"
-      v-on:askToUpdateTask2="askToUpdateTask3"
-      :taskColor="getGradientColors(index)"
-    />
+    <draggable
+      v-model="info"
+      group="people"
+      @start="drag = true"
+      @end="drag = false"
+      v-bind="dragOptions"
+    >
+      <transition-group type="transition" :name="!drag ? 'flip-list' : null">
+        <Task
+          v-for="(task, index) in info"
+          @toggleReminda="convertRemind(task)"
+          :title="task.title"
+          :date="task.date"
+          :reminder="task.reminder.toString()"
+          :key="task.id"
+          :id="task.id"
+          v-on:askToDeleteTask2="deleteTask"
+          v-on:askToUpdateTask2="askToUpdateTask3"
+          :taskColor="getGradientColors(index)"
+        />
+      </transition-group>
+    </draggable>
   </div>
 </template>
 
@@ -19,17 +29,20 @@
 import Task from "./Task.vue";
 import axios from "axios";
 import Gradient from "javascript-color-gradient";
+import draggable from "vuedraggable";
 
 export default {
   name: "TaskList",
   components: {
     Task,
+    draggable,
   },
   data() {
     return {
       info: null,
       colours: [],
       colourPairs: [],
+      drag: false,
     };
   },
   props: {
@@ -47,7 +60,16 @@ export default {
       this.colours = colorGradient.getArray();
     });
   },
-  computed: {},
+  computed: {
+    dragOptions() {
+      return {
+        animation: 200,
+        group: "description",
+        disabled: false,
+        ghostClass: "ghost",
+      };
+    },
+  },
   beforeUpdate() {},
   watch: {
     updateWithThisTask: function () {
@@ -97,5 +119,11 @@ export default {
 <style scoped>
 .padding-end:last-child {
   padding-bottom: 10px;
+}
+.flip-list-move {
+  transition: transform 0.5s;
+}
+.no-move {
+  transition: transform 0s;
 }
 </style>
