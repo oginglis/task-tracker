@@ -20,3 +20,6 @@ TO DO APP
 [] Modal Size restraining
 [] Catch invalid dates
 [] Draggable list
+[] Persist Draggable List
+[] Sort what colours retain colours
+[] Fix updating list

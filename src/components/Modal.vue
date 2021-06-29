@@ -1,5 +1,9 @@
 <template>
-  <div class="modal modal--center" :style="bgColor">
+  <div
+    v-click-outside="clickOutsideHandler"
+    class="modal modal--center"
+    :style="bgColor"
+  >
     <font-awesome-icon
       class="modal__close-icon"
       icon="times-circle"
@@ -7,10 +11,10 @@
     ></font-awesome-icon>
     <h3 class="modal__title">Task:</h3>
     <p class="modal__info" contenteditable="true" @blur="update">
-      {{ modalTitle }}
+      {{ modalTask.title }}
     </p>
     <h3 class="modal__title">Date:</h3>
-    <input class="modal__date" v-model="modalDate" type="datetime-local" />
+    <input class="modal__date" v-model="modalTask.date" type="datetime-local" />
     <button @click="updateTaskCloseModal(taskId)">Update Task</button>
   </div>
 </template>
@@ -20,6 +24,7 @@ import moment from "moment";
 import axios from "axios";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import vClickOutside from "v-click-outside";
 library.add([faTimesCircle]);
 export default {
   name: "Modal",
@@ -35,12 +40,12 @@ export default {
         id: null,
         reminder: false,
       },
-      modalTitle: "",
-      modalDate: Date,
-      taskId: null,
       focusIn: false,
       dataChanged: false,
     };
+  },
+  directives: {
+    clickOutside: vClickOutside.directive,
   },
   props: {
     task: {
@@ -67,6 +72,12 @@ export default {
         return ["#FFC300", "#C7003A"];
       },
     },
+  },
+  created() {
+    this.modalTask.title = this.task.title;
+    this.modalTask.date = this.task.date;
+    this.modalTask.id = this.task.id;
+    this.modalTask.reminder = this.task.reminder;
   },
   methods: {
     toggleOpenModal: function () {
@@ -96,8 +107,11 @@ export default {
     update: function (e) {
       this.modalTask.title = e.target.innerText;
     },
-    created() {
-      this.modalTask.title = this.task;
+    clickOutsideHandler() {
+      this.$emit("clickOutside");
+    },
+    mounted() {
+      console.log("mounted");
     },
   },
   computed: {

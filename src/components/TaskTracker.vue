@@ -5,8 +5,8 @@
       @rerender="updateList"
       :isOpen="isModalOpen"
       :task="task"
-      v-click-outside="onClickOutside"
-      v-show="isModalOpen"
+      @clickOutside="onClickOutside"
+      v-if="isModalOpen"
     >
     </Modal>
     <div class="text-inline">
@@ -34,7 +34,6 @@ import Button from "./Button.vue";
 import TaskForm from "./TaskForm.vue";
 import TaskList from "./TaskList.vue";
 import Modal from "./Modal.vue";
-import vClickOutside from "v-click-outside";
 
 export default {
   name: "TaskTracker",
@@ -45,9 +44,7 @@ export default {
     TaskList,
     Modal,
   },
-  directives: {
-    clickOutside: vClickOutside.directive,
-  },
+
   data: function () {
     return {
       buttonText: "Add Task",
@@ -65,6 +62,11 @@ export default {
     };
   },
   methods: {
+    clickOutsideHandler: function () {
+      if (this.isModalOpen) {
+        this.onClickOutside();
+      }
+    },
     changeButton: function () {
       this.buttonText == "Add Task"
         ? (this.buttonText = "Hide Task Adder")
@@ -96,6 +98,7 @@ export default {
     },
     onClickOutside() {
       if (this.isModalOpen) {
+        console.log("Clicked outside");
         this.isModalOpen = false;
       }
     },

@@ -6,6 +6,7 @@
       @start="drag = true"
       @end="drag = false"
       v-bind="dragOptions"
+      @change="onChange"
     >
       <transition-group type="transition" :name="!drag ? 'flip-list' : null">
         <Task
@@ -111,6 +112,9 @@ export default {
     },
     sortList: function () {
       this.info.reverse();
+    },
+    onChange: function (e) {
+      console.log(e);
     },
   },
 };

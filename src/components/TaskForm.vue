@@ -73,41 +73,28 @@ export default {
     },
   },
   methods: {
-    submitForm: function () {
-      if (this.isUpdate == false) {
-        axios
-          .post("http://localhost:3000/tasks", {
-            title: this.taskInfo,
-            date: this.dateTime,
-            reminder: this.checked,
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      } else if (this.isUpdate == true) {
-        axios
-          .patch(`http://localhost:3000/tasks/${this.taskIdUpdate}`, {
-            title: this.taskInfo,
-            date: this.dateTime,
-            reminder: this.checked,
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        this.taskInfoUpdate = "";
-        this.taskDateUpdate = "";
-        this.taskReminderUpdate = false;
-        this.taskIdUpdate = "";
-        this.finishUpdate;
-      }
+    submitForm: function (e) {
+      e.preventDefault();
+      axios
+        .post("http://localhost:3000/tasks", {
+          title: this.taskInfo,
+          date: this.dateTime,
+          reminder: this.checked,
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      this.taskInfoUpdate = "";
+      this.taskDateUpdate = "";
+      this.taskReminderUpdate = false;
+      this.taskIdUpdate = "";
+      this.finishUpdate;
     },
   },
+
   computed: {
     updateOrSave: function () {
       return this.isUpdate == true ? "Update Task" : "Save Task";
