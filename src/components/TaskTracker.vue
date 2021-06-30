@@ -51,8 +51,8 @@ export default {
   },
   created() {
     axios.get("http://localhost:3000/tasks").then((response) => {
-      console.log("created called");
       this.tasks = response.data;
+      this.sortIndexes(this.tasks);
     });
   },
   data: function () {
@@ -74,6 +74,11 @@ export default {
     };
   },
   methods: {
+    sortIndexes: function (elems) {
+      elems.sort(function (a, b) {
+        return a.position - b.position;
+      });
+    },
     clickOutsideHandler: function () {
       if (this.isModalOpen) {
         this.onClickOutside();
@@ -129,7 +134,11 @@ export default {
   },
   computed: {
     totalTaskCount: function () {
-      return null;
+      var length;
+      if (this.tasks) {
+        length = this.tasks.length;
+      }
+      return length;
     },
   },
 };

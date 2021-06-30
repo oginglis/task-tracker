@@ -1,7 +1,7 @@
 TO DO APP
 [X] Implement editing functionality in Module
 [] Remove Axios in Services Folder
-[] Fix reminder indent issue
+[X] Fix reminder indent issue
 [X] Fix console log Type error
 [] Fix large messages
 [] Smooth transitions
@@ -15,11 +15,11 @@ TO DO APP
 [X] Add Vue Meta
 [X] Add Favicon
 [] Button Hovering Effects
-[] Fix sidebar jiggling
+[X] Fix sidebar jiggling
 [X] Finish the update modal functionality
 [] Modal Size restraining
 [] Catch invalid dates
-[] Draggable list
+[X] Draggable list
 [] Persist Draggable List
 [] Sort what colours retain colours
-[] Fix updating list
+[] Fix the 'date' console error when typing a new task

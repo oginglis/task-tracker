@@ -70,7 +70,6 @@ export default {
     },
   },
   created() {
-    console.log("Child created ", this.tasks);
     let colorGradient = new Gradient();
     const color1 = "#FFC300";
     const color2 = "#C7003A";
@@ -110,11 +109,25 @@ export default {
     sortList: function () {
       this.info.reverse();
     },
-    onChange: function (e) {
-      console.log(e);
+    onChange: function () {
+      console.log("CHANGE");
+      console.log("before ", this.tasksModel);
+      this.tasksModel.forEach((task, index) => {
+        task.position = index;
+      });
+      console.log("after ", this.tasksModel);
     },
     deleteTask2: function (id) {
       this.$emit("askToDeleteTask", id);
+    },
+    updatePositons: function () {
+      this.tasks.forEach((task) => {
+        task.positon = 0;
+      });
+    },
+    saveOrder: function (array) {
+      // TO DO: Make patch requests on all tasks that have had their position updated using their id
+      return array;
     },
   },
 };
