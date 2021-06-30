@@ -21,7 +21,7 @@
 
 <script>
 import moment from "moment";
-import axios from "axios";
+import TaskService from "@/services/TaskService.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import vClickOutside from "v-click-outside";
@@ -95,8 +95,7 @@ export default {
         id: id,
       };
       // Make Axios request with the data from the task
-      axios
-        .patch(`http://localhost:3000/tasks/${id}`, update)
+      TaskService.patchTask(id, update)
         .then(() => {})
         .catch(function (error) {
           console.log(error);

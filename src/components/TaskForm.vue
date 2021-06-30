@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import TaskService from "@/services/TaskService.js";
 export default {
   name: "TaskForm",
   data: function () {
@@ -76,19 +76,20 @@ export default {
   methods: {
     submitForm: function (e) {
       e.preventDefault();
-      axios
-        .post("http://localhost:3000/tasks", {
-          title: this.taskInfo,
-          date: this.dateTime,
-          reminder: this.checked,
-          position: this.taskCount,
-        })
+      let newTask = {
+        title: this.taskInfo,
+        date: this.dateTime,
+        reminder: this.checked,
+        position: this.taskCount,
+      };
+      TaskService.postTask(newTask)
         .then(function (response) {
           console.log(response);
         })
         .catch(function (error) {
           console.log(error);
         });
+      this.$emit("newTaskCreated", newTask);
       this.taskInfoUpdate = "";
       this.taskDateUpdate = "";
       this.taskReminderUpdate = false;

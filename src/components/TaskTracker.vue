@@ -15,11 +15,12 @@
     </div>
     <transition name="fade">
       <TaskForm
-        v-show="buttonText !== 'Add Task'"
+        v-if="buttonText !== 'Add Task'"
         :task="task"
         :isUpdate="isPatch"
         @finishUpdate="finishedPatch"
         :taskCount="totalTaskCount"
+        @newTaskCreated="addNewTaskToTasks"
       />
     </transition>
     <TaskList
@@ -38,7 +39,7 @@ import Button from "./Button.vue";
 import TaskForm from "./TaskForm.vue";
 import TaskList from "./TaskList.vue";
 import Modal from "./Modal.vue";
-import axios from "axios";
+import TaskService from "@/services/TaskService.js";
 
 export default {
   name: "TaskTracker",
@@ -50,7 +51,7 @@ export default {
     Modal,
   },
   created() {
-    axios.get("http://localhost:3000/tasks").then((response) => {
+    TaskService.getTasks().then((response) => {
       this.tasks = response.data;
       this.sortIndexes(this.tasks);
     });
@@ -74,6 +75,10 @@ export default {
     };
   },
   methods: {
+    addNewTaskToTasks: function (task) {
+      this.tasks.push(task);
+      this.buttonText = "Add Task";
+    },
     sortIndexes: function (elems) {
       elems.sort(function (a, b) {
         return a.position - b.position;
@@ -120,8 +125,7 @@ export default {
       }
     },
     deleteTask: function (id) {
-      axios
-        .delete(`http://localhost:3000/tasks/${id}`)
+      TaskService.deleteTask(id)
         .then(() => {
           this.tasks = this.tasks.filter((task) => {
             return task.id !== id;
