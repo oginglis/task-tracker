@@ -30,6 +30,7 @@
 import Task from "./Task.vue";
 import draggable from "vuedraggable";
 import Gradient from "javascript-color-gradient";
+import TaskService from "@/services/TaskService.js";
 
 export default {
   name: "TaskList",
@@ -77,9 +78,7 @@ export default {
     colorGradient.setGradient(color1, color2);
     this.colours = colorGradient.getArray();
   },
-  mounted() {
-    console.log("Child mounted ", this.tasks);
-  },
+
   watch: {
     updateWithThisTask: function () {
       var foundIndex = this.info.findIndex(
@@ -109,13 +108,29 @@ export default {
     sortList: function () {
       this.info.reverse();
     },
-    onChange: function () {
-      console.log("CHANGE");
-      console.log("before ", this.tasksModel);
+    onChange: function (e) {
+      const {
+        moved: { oldIndex, newIndex },
+      } = e;
       this.tasksModel.forEach((task, index) => {
         task.position = index;
       });
-      console.log("after ", this.tasksModel);
+      const largestIndex = Math.max(oldIndex, newIndex);
+      const serviceArray = [];
+      this.tasksModel.forEach((task) => {
+        if (task.position <= largestIndex) {
+          serviceArray.push(function () {
+            return TaskService.patchTask(task.id, task);
+          });
+        }
+      });
+      TaskService.processAll(serviceArray)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
     },
     deleteTask2: function (id) {
       this.$emit("askToDeleteTask", id);
