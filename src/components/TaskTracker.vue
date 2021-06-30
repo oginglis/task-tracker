@@ -66,12 +66,10 @@ export default {
         id: null,
         reminder: null,
       },
-      taskColor: [],
       isPatch: false,
       isModalOpen: false,
       isInputOpen: false,
       taskPassUpdate: {},
-      colours: [],
     };
   },
   methods: {
@@ -102,7 +100,7 @@ export default {
       if (this.isModalOpen == false) {
         this.isModalOpen = true;
         this.task.date = task[0].date;
-        this.task.reminder = task[0].reminder === "true";
+        this.task.reminder = task[0].reminder;
         this.task.title = task[0].title;
         this.task.id = parseInt(task[0].id);
       } else if (this.isModalOpen == true) {
@@ -124,6 +122,7 @@ export default {
         this.isModalOpen = false;
       }
     },
+
     deleteTask: function (id) {
       TaskService.deleteTask(id)
         .then(() => {
@@ -136,6 +135,7 @@ export default {
         });
     },
   },
+
   computed: {
     totalTaskCount: function () {
       var length;

@@ -20,11 +20,6 @@ export default {
     return apiClient.post('/tasks/', task)
   },
   patchTask(id, update){
-    console.log(update)
     return apiClient.patch('/tasks/' + id, update)
-  },
-  processAll(array){
-    console.log(Promise.all(array))
-    return Promise.all(array)
   }
 }

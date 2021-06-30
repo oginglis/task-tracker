@@ -17,9 +17,9 @@
           :reminder="task.reminder"
           :key="index"
           :id="task.id"
+          :class="backgroundColor(index)"
           v-on:askToDeleteTask2="deleteTask2(task.id)"
           v-on:askToUpdateTask2="askToUpdateTask3"
-          :taskColor="getGradientColors(index)"
         />
       </transition-group>
     </draggable>
@@ -29,7 +29,7 @@
 <script>
 import Task from "./Task.vue";
 import draggable from "vuedraggable";
-import Gradient from "javascript-color-gradient";
+
 import TaskService from "@/services/TaskService.js";
 
 export default {
@@ -38,11 +38,15 @@ export default {
     Task,
     draggable,
   },
+  filters: {
+    reverse: function (value) {
+      return value.slice().reverse();
+    },
+  },
   data() {
     return {
       info: null,
-      colours: [],
-      colourPairs: [],
+
       drag: false,
     };
   },
@@ -70,14 +74,7 @@ export default {
       },
     },
   },
-  created() {
-    let colorGradient = new Gradient();
-    const color1 = "#FFC300";
-    const color2 = "#C7003A";
-    colorGradient.setMidpoint(this.tasks.length * 2);
-    colorGradient.setGradient(color1, color2);
-    this.colours = colorGradient.getArray();
-  },
+  created() {},
 
   watch: {
     updateWithThisTask: function () {
@@ -88,6 +85,13 @@ export default {
     },
   },
   methods: {
+    backgroundColor: function (index) {
+      if (index % 2 == 0) {
+        return "task--light-grey-background";
+      } else {
+        return "task--darker-grey-background";
+      }
+    },
     askToUpdateTask3: function (id) {
       let taskToUpdate = this.tasks.filter((task) => task.id == id);
       this.$emit("askToUpdateTask4", taskToUpdate);
@@ -99,12 +103,7 @@ export default {
         task.reminder = false;
       }
     },
-    getGradientColors: function (index) {
-      while (this.colours.length > 0) {
-        this.colourPairs.push(this.colours.splice(0, 2));
-      }
-      return this.colourPairs[index];
-    },
+
     sortList: function () {
       this.info.reverse();
     },
@@ -119,18 +118,12 @@ export default {
       const serviceArray = [];
       this.tasksModel.forEach((task) => {
         if (task.position <= largestIndex) {
-          serviceArray.push(function () {
-            return TaskService.patchTask(task.id, task);
-          });
+          serviceArray.push(TaskService.patchTask(task.id, task));
         }
       });
-      TaskService.processAll(serviceArray)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((errors) => {
-          console.log(errors);
-        });
+      Promise.all(serviceArray).catch((errors) => {
+        console.log(errors);
+      });
     },
     deleteTask2: function (id) {
       this.$emit("askToDeleteTask", id);
@@ -157,5 +150,11 @@ export default {
 }
 .no-move {
   transition: transform 0s;
+}
+.task--light-grey-background {
+  background-color: rgb(233, 233, 233);
+}
+.task--darker-grey-background {
+  background-color: rgb(214, 214, 214);
 }
 </style>

@@ -1,7 +1,6 @@
 <template>
   <div
     class="task"
-    :style="style"
     :class="[
       reminder ? 'task--green-reminder' : '',
       editTask ? 'editTask' : '',
@@ -61,7 +60,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    taskColor: Array,
   },
   computed: {
     isTrueSet: function () {
@@ -71,9 +69,7 @@ export default {
         return false;
       }
     },
-    style: function () {
-      return `background-image: linear-gradient(${this.taskColor[0]}, ${this.taskColor[1]}); background-size: cover; `;
-    },
+
     momentDate: function () {
       return moment(this.date).format("MMM Do YYYY");
     },

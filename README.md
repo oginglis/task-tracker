@@ -1,6 +1,6 @@
 TO DO APP
 [X] Implement editing functionality in Module
-[] Remove Axios in Services Folder
+[X] Remove Axios into Services Folder
 [X] Fix reminder indent issue
 [X] Fix console log Type error
 [] Fix large messages
@@ -17,9 +17,13 @@ TO DO APP
 [] Button Hovering Effects
 [X] Fix sidebar jiggling
 [X] Finish the update modal functionality
-[] Modal Size restraining
+[X] Modal Size restraining
 [] Catch invalid dates
 [X] Draggable list
-[] Persist Draggable List
-[] Sort what colours retain colours
+[X] Persist Draggable List
+[X] Sort what colours retain colours
 [] Fix the 'date' console error when typing a new task
+[X] Form to close and list to update instantly not working
+[] Fix Styles
+[] Modal positioning
+[] Tasks still adding to the bottom. Want to fix this.

@@ -2,7 +2,7 @@
   <div
     v-click-outside="clickOutsideHandler"
     class="modal modal--center"
-    :style="bgColor"
+    :class="{ 'modal--green-reminder': this.task.reminder }"
   >
     <font-awesome-icon
       class="modal__close-icon"
@@ -26,14 +26,11 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import vClickOutside from "v-click-outside";
 library.add([faTimesCircle]);
+
 export default {
   name: "Modal",
   data: function () {
     return {
-      bgColor: {
-        backgroundImage: `linear-gradient(${this.taskColor[0]}, ${this.taskColor[1]})`,
-        backgroundSize: "cover",
-      },
       modalTask: {
         title: "",
         date: Date,
@@ -66,12 +63,6 @@ export default {
         default: null,
       },
     },
-    taskColor: {
-      type: Array,
-      default: () => {
-        return ["#FFC300", "#C7003A"];
-      },
-    },
   },
   created() {
     this.modalTask.title = this.task.title;
@@ -82,9 +73,6 @@ export default {
   methods: {
     toggleOpenModal: function () {
       this.$emit("toggleOpenModal");
-    },
-    style: function () {
-      return `background-color: linear-gradient(${this.taskColor[0]}, ${this.taskColor[1]}); background-size: cover; `;
     },
     updateTaskCloseModal: function (id) {
       this.toggleOpenModal();
@@ -139,23 +127,28 @@ export default {
 
 <style scoped>
 .modal {
-  height: 40vh;
-  width: 40vw;
+  width: 500px;
+  box-sizing: border-box;
   min-width: 400px;
   min-height: 200px;
   z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   border-radius: 10px;
   box-shadow: 0px 0px 100px 30px black;
+  background-color: #f8f8f8;
+  padding: 20px;
 }
 .modal--center {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+.modal--green-reminder {
+  border-left: green solid 10px;
 }
 
 .modal__close-icon {
@@ -180,6 +173,7 @@ export default {
   direction: ltr;
   unicode-bidi: bidi-override;
   max-width: 80%;
+  text-align: left;
 }
 
 .modal__info:focus,
@@ -191,7 +185,8 @@ export default {
 .modal__date {
   background: rgba(105, 24, 24, 0.3);
   border: none;
-  margin: 15px;
+  margin: 15px 0px;
+  cursor: pointer;
 }
 
 .modal__date:focus,
