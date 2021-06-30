@@ -3,13 +3,13 @@
     class="task"
     :style="style"
     :class="[
-      isTrueSet ? 'task--green-reminder' : '',
+      reminder ? 'task--green-reminder' : '',
       editTask ? 'editTask' : '',
     ]"
   >
     <div
       class="task__lhs"
-      :class="{ 'task__lhs--compensate-margin': isTrueSet }"
+      :class="{ 'task__lhs--compensate-margin': reminder }"
     >
       <h1 class="task__lhs__title task__lhs__title--restrict">
         {{ title }}
@@ -58,8 +58,8 @@ export default {
     date: String,
     id: Number,
     reminder: {
-      type: String,
-      default: "false",
+      type: Boolean,
+      default: false,
     },
     taskColor: Array,
   },

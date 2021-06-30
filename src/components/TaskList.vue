@@ -1,7 +1,7 @@
 <template>
   <div class="padding-end">
     <draggable
-      v-model="tasks"
+      v-model="tasksModel"
       group="people"
       @start="drag = true"
       @end="drag = false"
@@ -14,8 +14,8 @@
           @toggleReminda="convertRemind(task)"
           :title="task.title"
           :date="task.date"
-          :reminder="task.reminder.toString()"
-          :key="task.id"
+          :reminder="task.reminder"
+          :key="index"
           :id="task.id"
           v-on:askToDeleteTask2="deleteTask2(task.id)"
           v-on:askToUpdateTask2="askToUpdateTask3"
@@ -29,6 +29,7 @@
 <script>
 import Task from "./Task.vue";
 import draggable from "vuedraggable";
+import Gradient from "javascript-color-gradient";
 
 export default {
   name: "TaskList",
@@ -59,9 +60,26 @@ export default {
         ghostClass: "ghost",
       };
     },
+    tasksModel: {
+      get() {
+        return this.tasks;
+      },
+      set(value) {
+        this.$emit("update:tasks", value);
+      },
+    },
   },
   created() {
-    console.log("created in child");
+    console.log("Child created ", this.tasks);
+    let colorGradient = new Gradient();
+    const color1 = "#FFC300";
+    const color2 = "#C7003A";
+    colorGradient.setMidpoint(this.tasks.length * 2);
+    colorGradient.setGradient(color1, color2);
+    this.colours = colorGradient.getArray();
+  },
+  mounted() {
+    console.log("Child mounted ", this.tasks);
   },
   watch: {
     updateWithThisTask: function () {
@@ -77,10 +95,10 @@ export default {
       this.$emit("askToUpdateTask4", taskToUpdate);
     },
     convertRemind: function (task) {
-      if (task.reminder == "false") {
-        task.reminder = "true";
+      if (task.reminder == false) {
+        task.reminder = true;
       } else {
-        task.reminder = "false";
+        task.reminder = false;
       }
     },
     getGradientColors: function (index) {

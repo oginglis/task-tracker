@@ -25,7 +25,8 @@
     <TaskList
       :updateWithThisTask="taskPassUpdate"
       @askToUpdateTask4="openFormWithTask"
-      :tasks="tasks"
+      v-if="tasks"
+      :tasks.sync="tasks"
       @askToDeleteTask="deleteTask"
     />
   </div>
@@ -38,7 +39,6 @@ import TaskForm from "./TaskForm.vue";
 import TaskList from "./TaskList.vue";
 import Modal from "./Modal.vue";
 import axios from "axios";
-import Gradient from "javascript-color-gradient";
 
 export default {
   name: "TaskTracker",
@@ -49,19 +49,16 @@ export default {
     TaskList,
     Modal,
   },
-  async created() {
-    await this.fetchData();
-    let colorGradient = new Gradient();
-    const color1 = "#FFC300";
-    const color2 = "#C7003A";
-    colorGradient.setMidpoint(this.info.length * 2);
-    colorGradient.setGradient(color1, color2);
-    this.colours = colorGradient.getArray();
+  created() {
+    axios.get("http://localhost:3000/tasks").then((response) => {
+      console.log("created called");
+      this.tasks = response.data;
+    });
   },
   data: function () {
     return {
       buttonText: "Add Task",
-      tasks: [],
+      tasks: null,
       task: {
         title: null,
         date: null,
@@ -81,12 +78,6 @@ export default {
       if (this.isModalOpen) {
         this.onClickOutside();
       }
-    },
-    fetchData: function () {
-      return axios.get("http://localhost:3000/tasks").then((response) => {
-        console.log("created called");
-        this.tasks = response.data;
-      });
     },
     changeButton: function () {
       this.buttonText == "Add Task"
@@ -138,7 +129,7 @@ export default {
   },
   computed: {
     totalTaskCount: function () {
-      return this.tasks.length;
+      return null;
     },
   },
 };
