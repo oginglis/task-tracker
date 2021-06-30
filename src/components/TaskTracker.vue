@@ -19,11 +19,14 @@
         :task="task"
         :isUpdate="isPatch"
         @finishUpdate="finishedPatch"
+        :taskCount="totalTaskCount"
       />
     </transition>
     <TaskList
       :updateWithThisTask="taskPassUpdate"
       @askToUpdateTask4="openFormWithTask"
+      :tasks="tasks"
+      @askToDeleteTask="deleteTask"
     />
   </div>
 </template>
@@ -34,6 +37,8 @@ import Button from "./Button.vue";
 import TaskForm from "./TaskForm.vue";
 import TaskList from "./TaskList.vue";
 import Modal from "./Modal.vue";
+import axios from "axios";
+import Gradient from "javascript-color-gradient";
 
 export default {
   name: "TaskTracker",
@@ -44,10 +49,19 @@ export default {
     TaskList,
     Modal,
   },
-
+  async created() {
+    await this.fetchData();
+    let colorGradient = new Gradient();
+    const color1 = "#FFC300";
+    const color2 = "#C7003A";
+    colorGradient.setMidpoint(this.info.length * 2);
+    colorGradient.setGradient(color1, color2);
+    this.colours = colorGradient.getArray();
+  },
   data: function () {
     return {
       buttonText: "Add Task",
+      tasks: [],
       task: {
         title: null,
         date: null,
@@ -59,6 +73,7 @@ export default {
       isModalOpen: false,
       isInputOpen: false,
       taskPassUpdate: {},
+      colours: [],
     };
   },
   methods: {
@@ -66,6 +81,12 @@ export default {
       if (this.isModalOpen) {
         this.onClickOutside();
       }
+    },
+    fetchData: function () {
+      return axios.get("http://localhost:3000/tasks").then((response) => {
+        console.log("created called");
+        this.tasks = response.data;
+      });
     },
     changeButton: function () {
       this.buttonText == "Add Task"
@@ -101,6 +122,23 @@ export default {
         console.log("Clicked outside");
         this.isModalOpen = false;
       }
+    },
+    deleteTask: function (id) {
+      axios
+        .delete(`http://localhost:3000/tasks/${id}`)
+        .then(() => {
+          this.tasks = this.tasks.filter((task) => {
+            return task.id !== id;
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+  },
+  computed: {
+    totalTaskCount: function () {
+      return this.tasks.length;
     },
   },
 };

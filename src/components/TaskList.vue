@@ -1,7 +1,7 @@
 <template>
   <div class="padding-end">
     <draggable
-      v-model="info"
+      v-model="tasks"
       group="people"
       @start="drag = true"
       @end="drag = false"
@@ -10,14 +10,14 @@
     >
       <transition-group type="transition" :name="!drag ? 'flip-list' : null">
         <Task
-          v-for="(task, index) in info"
+          v-for="(task, index) in tasks"
           @toggleReminda="convertRemind(task)"
           :title="task.title"
           :date="task.date"
           :reminder="task.reminder.toString()"
           :key="task.id"
           :id="task.id"
-          v-on:askToDeleteTask2="deleteTask"
+          v-on:askToDeleteTask2="deleteTask2(task.id)"
           v-on:askToUpdateTask2="askToUpdateTask3"
           :taskColor="getGradientColors(index)"
         />
@@ -28,8 +28,6 @@
 
 <script>
 import Task from "./Task.vue";
-import axios from "axios";
-import Gradient from "javascript-color-gradient";
 import draggable from "vuedraggable";
 
 export default {
@@ -49,18 +47,9 @@ export default {
   props: {
     taskData: Object,
     updateWithThisTask: Object,
+    tasks: Array,
   },
-  mounted() {
-    axios.get("http://localhost:3000/tasks").then((response) => {
-      this.info = response.data;
-      let colorGradient = new Gradient();
-      const color1 = "#FFC300";
-      const color2 = "#C7003A";
-      colorGradient.setMidpoint(this.info.length * 2);
-      colorGradient.setGradient(color1, color2);
-      this.colours = colorGradient.getArray();
-    });
-  },
+
   computed: {
     dragOptions() {
       return {
@@ -71,7 +60,9 @@ export default {
       };
     },
   },
-  beforeUpdate() {},
+  created() {
+    console.log("created in child");
+  },
   watch: {
     updateWithThisTask: function () {
       var foundIndex = this.info.findIndex(
@@ -81,20 +72,8 @@ export default {
     },
   },
   methods: {
-    deleteTask: function (id) {
-      axios
-        .delete(`http://localhost:3000/tasks/${id}`)
-        .then(() => {
-          this.info = this.info.filter((task) => {
-            return task.id !== id;
-          });
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
     askToUpdateTask3: function (id) {
-      let taskToUpdate = this.info.filter((task) => task.id == id);
+      let taskToUpdate = this.tasks.filter((task) => task.id == id);
       this.$emit("askToUpdateTask4", taskToUpdate);
     },
     convertRemind: function (task) {
@@ -115,6 +94,9 @@ export default {
     },
     onChange: function (e) {
       console.log(e);
+    },
+    deleteTask2: function (id) {
+      this.$emit("askToDeleteTask", id);
     },
   },
 };

@@ -4,41 +4,39 @@
       "title": "OHUGOe this looks like it is working",
       "date": "0123-03-12T11:11",
       "reminder": false,
-      "id": 10
+      "id": 10,
+      "position": 0
     },
     {
       "title": "Hugo's task tds AShdhrer is working",
       "date": "2021-05-30T11:09",
       "reminder": false,
-      "id": 11
+      "id": 11,
+      "position": 1
     },
     {
       "title": "Short This can be much much longer if we want it to be okay. Just working on editing it some more and making it to today",
       "date": "2021-06-23T19:45",
       "reminder": false,
-      "id": 13
+      "position": 2
     },
     {
       "title": "Edit the colours of the app",
       "date": "2021-06-05T14:12",
       "reminder": true,
-      "id": 14
+      "position": 3
     },
     {
       "title": "We are just going to add some This NEED MORE EDITING more tasks here",
       "date": "2021-06-10T21:16",
       "reminder": false,
-      "id": 15
+      "position": 4
     },
     {
       "title": "Yessss Lad",
       "reminder": false,
-      "id": 16
-    },
-    {
-      "title": "Yessss Lad",
-      "reminder": true,
-      "id": 17
+      "id": 16,
+      "position": 5
     }
   ],
   "comments": [

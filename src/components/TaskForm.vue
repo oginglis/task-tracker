@@ -71,6 +71,7 @@ export default {
         default: null,
       },
     },
+    taskCount: Number,
   },
   methods: {
     submitForm: function (e) {
@@ -80,6 +81,7 @@ export default {
           title: this.taskInfo,
           date: this.dateTime,
           reminder: this.checked,
+          position: this.taskCount,
         })
         .then(function (response) {
           console.log(response);
