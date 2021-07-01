@@ -30,7 +30,7 @@
 import Task from "./Task.vue";
 import draggable from "vuedraggable";
 import { defineComponent } from "vue";
-import TaskService from "@/services/TaskService.js";
+import TaskService from "@/services/TaskService";
 
 export default defineComponent({
   name: "TaskList",

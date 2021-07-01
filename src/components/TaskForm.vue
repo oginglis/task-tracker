@@ -100,7 +100,7 @@ export default defineComponent({
   },
 
   computed: {
-    updateOrSave: function () {
+    updateOrSave: function (): string {
       return this.isUpdate == true ? "Update Task" : "Save Task";
     },
   },
