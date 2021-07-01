@@ -19,15 +19,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import moment from "moment";
+import { defineComponent } from "vue";
 import TaskService from "@/services/TaskService.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import vClickOutside from "v-click-outside";
 library.add([faTimesCircle]);
 
-export default {
+export default defineComponent({
   name: "Modal",
   data: function () {
     return {
@@ -122,7 +123,7 @@ export default {
       this.taskId = this.task.id;
     },
   },
-};
+});
 </script>
 
 <style scoped>

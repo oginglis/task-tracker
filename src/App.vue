@@ -4,10 +4,12 @@
   </div>
 </template>
 
-<script>
+
+<script lang="ts">
+import { defineComponent } from "vue";
 import TaskTracker from "./components/TaskTracker.vue";
 
-export default {
+export default defineComponent({
   name: "App",
   components: {
     TaskTracker,
@@ -18,7 +20,7 @@ export default {
     // all titles will be injected into this template
     titleTemplate: "%s | Task Tracker",
   },
-};
+});
 </script>
 
 <style>

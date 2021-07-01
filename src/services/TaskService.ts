@@ -13,13 +13,13 @@ export default {
   getTasks() {
     return apiClient.get('/tasks')
   },
-  deleteTask(id){
+  deleteTask(id: Number) {
     return apiClient.delete('/tasks/' + id)
   },
-  postTask(task){
+  postTask(task: Object) {
     return apiClient.post('/tasks/', task)
   },
-  patchTask(id, update){
+  patchTask(id: Number, update: Object) {
     return apiClient.patch('/tasks/' + id, update)
   }
 }

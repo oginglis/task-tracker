@@ -24,9 +24,10 @@
     </form>
   </div>
 </template>
-<script>
+<script lang="ts">
 import TaskService from "@/services/TaskService.js";
-export default {
+import { defineComponent } from "vue";
+export default defineComponent({
   name: "TaskForm",
   data: function () {
     return {
@@ -103,7 +104,7 @@ export default {
       return this.isUpdate == true ? "Update Task" : "Save Task";
     },
   },
-};
+});
 </script>
 
 <style scoped>

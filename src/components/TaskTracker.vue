@@ -33,15 +33,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import Header from "./Header.vue";
 import Button from "./Button.vue";
 import TaskForm from "./TaskForm.vue";
 import TaskList from "./TaskList.vue";
 import Modal from "./Modal.vue";
-import TaskService from "@/services/TaskService.js";
+import TaskService from "@/services/TaskService.ts";
 
-export default {
+export default defineComponent({
   name: "TaskTracker",
   components: {
     Header,
@@ -145,7 +146,7 @@ export default {
       return length;
     },
   },
-};
+});
 </script>
 
 <style scoped>

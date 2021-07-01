@@ -2,8 +2,9 @@
   <button class="btn btn--red" @click="clickButton">{{ buttonText }}</button>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+export default defineComponent({
   name: "Button",
   props: {
     buttonText: {
@@ -16,7 +17,7 @@ export default {
       this.$emit("clickButton", this.buttonText);
     },
   },
-};
+});
 </script>
 
 <style scoped>

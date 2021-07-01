@@ -35,8 +35,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { library } from "@fortawesome/fontawesome-svg-core";
+import { defineComponent } from "vue";
 import {
   faTimesCircle,
   faEdit,
@@ -44,7 +45,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 library.add([faTimesCircle, faEdit, faBell]);
-export default {
+export default defineComponent({
   name: "Task",
   components: {},
   data() {
@@ -90,7 +91,7 @@ export default {
       this.$emit("toggleReminda");
     },
   },
-};
+});
 </script>
 
 <style scoped>

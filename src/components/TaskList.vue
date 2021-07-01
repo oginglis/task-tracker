@@ -26,13 +26,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Task from "./Task.vue";
 import draggable from "vuedraggable";
-
+import { defineComponent } from "vue";
 import TaskService from "@/services/TaskService.js";
 
-export default {
+export default defineComponent({
   name: "TaskList",
   components: {
     Task,
@@ -138,7 +138,7 @@ export default {
       return array;
     },
   },
-};
+});
 </script>
 
 <style scoped>
