@@ -44,7 +44,11 @@ import {
   faBell,
 } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
-library.add([faTimesCircle, faEdit, faBell]);
+library.add([
+  faTimesCircle as IconDefinition,
+  faEdit as IconDefinition,
+  faBell as IconDefinition,
+]);
 export default defineComponent({
   name: "Task",
   components: {},

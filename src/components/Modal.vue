@@ -21,12 +21,14 @@
 
 <script lang="ts">
 import moment from "moment";
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import TaskService from "@/services/TaskService.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import vClickOutside from "v-click-outside";
+
 library.add([faTimesCircle]);
+import Task from "@/types/Task";
 
 export default defineComponent({
   name: "Modal",
@@ -47,6 +49,8 @@ export default defineComponent({
   },
   props: {
     task: {
+      required: true,
+      type: Object as PropType<Task>,
       title: {
         default: " This is a task to tesk",
         type: String,
@@ -79,7 +83,7 @@ export default defineComponent({
     toggleOpenModal: function () {
       this.$emit("toggleOpenModal");
     },
-    updateTaskCloseModal: function (id) {
+    updateTaskCloseModal: function (id): void {
       this.toggleOpenModal();
       let update = {
         title: this.modalTask.title,
@@ -96,18 +100,18 @@ export default defineComponent({
 
       this.$emit("rerender", update);
     },
-    update: function (e) {
+    update: function (e): void {
       this.modalTask.title = e.target.innerText;
     },
-    clickOutsideHandler() {
+    clickOutsideHandler(): void {
       this.$emit("clickOutside");
     },
-    mounted() {
+    mounted(): void {
       console.log("mounted");
     },
   },
   computed: {
-    momentDate2: function () {
+    momentDate2: function (): String {
       return moment(this.task.date).format("yyyy-MM-dd");
     },
   },

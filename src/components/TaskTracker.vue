@@ -40,15 +40,7 @@ import Button from "./Button.vue";
 import TaskForm from "./TaskForm.vue";
 import TaskList from "./TaskList.vue";
 import Modal from "./Modal.vue";
-import TaskService from "@/services/TaskService.ts";
-
-interface Task {
-  title: string;
-  date: Date;
-  reminder: Boolean;
-  position: number;
-  id: number;
-}
+import TaskService from "@/services/TaskService";
 
 export default defineComponent({
   name: "TaskTracker",
