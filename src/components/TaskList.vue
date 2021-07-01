@@ -153,8 +153,10 @@ export default {
 }
 .task--light-grey-background {
   background-color: rgb(233, 233, 233);
+  transition: background-color 0.5s ease;
 }
 .task--darker-grey-background {
   background-color: rgb(214, 214, 214);
+  transition: background-color 0.5s ease;
 }
 </style>

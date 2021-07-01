@@ -1,106 +1,38 @@
 {
   "tasks": [
     {
-      "title": "OHUGOe this looks like it is working",
-      "date": "0123-03-12T11:11",
-      "reminder": false,
-      "id": 10,
-      "position": 4
-    },
-    {
-      "title": "Hugo's task tds AShdhrer is working",
-      "date": "2021-05-30T11:09",
-      "reminder": false,
-      "id": 11,
-      "position": 5
-    },
-    {
       "title": "Short This can be much much longer if we want it to be okay. Just working on editing it some more and making it to today",
       "date": "2021-06-23T19:45",
       "reminder": true,
-      "position": 7,
+      "position": 2,
       "id": 14023
-    },
-    {
-      "title": "Edit the colours of the app",
-      "date": "2021-06-05T14:12",
-      "reminder": true,
-      "position": 3,
-      "id": 1433
     },
     {
       "title": "We are just going to add some This NEED MORE EDITING more tasks here",
       "date": "2021-06-10T21:16",
       "reminder": false,
-      "position": 6,
+      "position": 4,
       "id": 140
-    },
-    {
-      "title": "Yessss Lad",
-      "reminder": false,
-      "id": 16,
-      "position": 6
-    },
-    {
-      "title": "I am adding a new task, please can this work okay",
-      "date": "2021-06-30T16:02",
-      "reminder": true,
-      "position": 2,
-      "id": 17
-    },
-    {
-      "title": "New AXIOS Api call added WOOP WOOP",
-      "date": "2021-06-30T17:27",
-      "reminder": true,
-      "position": 6,
-      "id": 18
     },
     {
       "title": "New Test of task adding without reminder",
       "date": "2021-06-18T17:30",
       "reminder": false,
-      "position": 0,
-      "id": 20
-    },
-    {
-      "title": "New test of task adding without Date",
-      "reminder": true,
-      "position": 6,
-      "id": 21
-    },
-    {
-      "title": "Do new tasks create a TASK ID??",
-      "date": "2021-06-30T18:09",
-      "reminder": true,
       "position": 1,
-      "id": 14024
-    },
-    {
-      "title": "This is adasd noq qoekinf  B",
-      "date": "2021-06-30T20:51",
-      "reminder": true,
-      "position": 6,
-      "id": 14025
-    },
-    {
-      "title": "Yo!!!",
-      "date": "2021-06-30T21:04",
-      "reminder": false,
-      "position": 6,
-      "id": 14026
+      "id": 20
     },
     {
       "title": "New tasks ",
       "date": "0002-03-12T12:03",
       "reminder": true,
-      "position": 13,
+      "position": 3,
       "id": 14027
     },
     {
       "title": "This is a test of the list to see if one opens correctly",
       "date": "2021-06-30T21:55",
-      "reminder": true,
-      "position": 14,
+      "reminder": false,
+      "position": 0,
       "id": 14028
     }
   ],
