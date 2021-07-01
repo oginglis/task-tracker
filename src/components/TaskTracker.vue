@@ -27,7 +27,7 @@
       :updateWithThisTask="taskPassUpdate"
       @askToUpdateTask4="openFormWithTask"
       v-if="tasks"
-      v-model:tasks="tasks"
+      v-model="tasks"
       @askToDeleteTask="deleteTask"
     />
   </div>
@@ -41,6 +41,14 @@ import TaskForm from "./TaskForm.vue";
 import TaskList from "./TaskList.vue";
 import Modal from "./Modal.vue";
 import TaskService from "@/services/TaskService.ts";
+
+interface Task {
+  title: string;
+  date: Date;
+  reminder: Boolean;
+  position: number;
+  id: number;
+}
 
 export default defineComponent({
   name: "TaskTracker",
@@ -64,9 +72,10 @@ export default defineComponent({
       task: {
         title: null,
         date: null,
-        id: null,
         reminder: null,
-      },
+        position: null,
+        id: null,
+      } as Task,
       isPatch: false,
       isModalOpen: false,
       isInputOpen: false,

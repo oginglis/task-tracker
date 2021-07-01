@@ -53,11 +53,15 @@ export default defineComponent({
       },
       date: {
         default: "20-July 101",
-        type: String,
+        type: Date,
       },
       reminder: {
         default: false,
         type: Boolean,
+      },
+      positon: {
+        type: Number,
+        default: null,
       },
       id: {
         type: Number,

@@ -66,10 +66,10 @@ export default defineComponent({
       };
     },
     tasksModel: {
-      get() {
+      get(): Array<Object> {
         return this.tasks;
       },
-      set(value) {
+      set(value: Array<Object>): void {
         this.$emit("update:tasks", value);
       },
     },
@@ -92,7 +92,7 @@ export default defineComponent({
         return "task--darker-grey-background";
       }
     },
-    askToUpdateTask3: function (id) {
+    askToUpdateTask3: function (id: Number) {
       let taskToUpdate = this.tasks.filter((task) => task.id == id);
       this.$emit("askToUpdateTask4", taskToUpdate);
     },
