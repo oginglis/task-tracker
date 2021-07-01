@@ -27,7 +27,7 @@
       :updateWithThisTask="taskPassUpdate"
       @askToUpdateTask4="openFormWithTask"
       v-if="tasks"
-      :tasks.sync="tasks"
+      v-model:tasks="tasks"
       @askToDeleteTask="deleteTask"
     />
   </div>
