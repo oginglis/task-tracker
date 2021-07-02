@@ -2,7 +2,7 @@
   <div
     v-click-outside="clickOutsideHandler"
     class="modal modal--center"
-    :class="{ 'modal--green-reminder': this.task.reminder }"
+    :class="{ 'modal--green-reminder': task.reminder }"
   >
     <font-awesome-icon
       class="modal__close-icon"
@@ -15,7 +15,7 @@
     </p>
     <h3 class="modal__title">Date:</h3>
     <input class="modal__date" v-model="modalTask.date" type="datetime-local" />
-    <button @click="updateTaskCloseModal(taskId)">Update Task</button>
+    <button @click="updateTaskCloseModal(modalTask.id)">Update Task</button>
   </div>
 </template>
 
@@ -28,18 +28,19 @@ import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import vClickOutside from "v-click-outside";
 
 library.add([faTimesCircle]);
-import Task from "@/types/Task";
+import { TaskType } from "@/types/Task";
 
 export default defineComponent({
   name: "Modal",
   data: function () {
     return {
       modalTask: {
-        title: "",
-        date: Date,
-        id: null,
+        title: "this is a test title",
+        date: new Date(),
         reminder: false,
-      },
+        position: 10101,
+        id: 101010,
+      } as TaskType,
       focusIn: false,
       dataChanged: false,
     };
@@ -49,14 +50,12 @@ export default defineComponent({
   },
   props: {
     task: {
-      required: true,
-      type: Object as PropType<Task>,
       title: {
         default: " This is a task to tesk",
         type: String,
       },
       date: {
-        default: "20-July 101",
+        default: new Date(),
         type: Date,
       },
       reminder: {
@@ -65,13 +64,13 @@ export default defineComponent({
       },
       positon: {
         type: Number,
-        default: null,
+        default: 999,
       },
       id: {
         type: Number,
-        default: null,
+        default: 999,
       },
-    },
+    } as PropType<TaskType>,
   },
   created() {
     this.modalTask.title = this.task.title;
@@ -117,18 +116,18 @@ export default defineComponent({
   },
   watch: {
     "task.date": function () {
-      this.modalDate = this.task.date;
+      this.modalTask.date = this.task.date;
     },
     "task.title": function () {
-      this.modalTitle = this.task.title;
+      this.modalTask.title = this.task.title;
     },
     modalTitle: function (newVal) {
       if (!this.focusIn) {
-        this.modalTitle = newVal;
+        this.modalTask.title = newVal;
       }
     },
     "task.id": function () {
-      this.taskId = this.task.id;
+      this.modalTask.id = this.task.id;
     },
   },
 });

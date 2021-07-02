@@ -28,8 +28,9 @@
 
 <script lang="ts">
 import Task from "./Task.vue";
+import { TaskType } from "@/types/Task";
 import draggable from "vuedraggable";
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import TaskService from "@/services/TaskService";
 
 export default defineComponent({
@@ -39,21 +40,22 @@ export default defineComponent({
     draggable,
   },
   filters: {
-    reverse: function (value) {
+    reverse: function (value: Array<TaskType>) {
       return value.slice().reverse();
     },
   },
   data() {
     return {
-      info: null,
-
+      info: [],
       drag: false,
     };
   },
   props: {
     taskData: Object,
     updateWithThisTask: Object,
-    tasks: Array,
+    tasks: {
+      type: Array as PropType<Array<TaskType>>,
+    },
   },
 
   computed: {
@@ -66,10 +68,10 @@ export default defineComponent({
       };
     },
     tasksModel: {
-      get(): Array<Object> {
+      get(): Array<TaskType> {
         return this.tasks;
       },
-      set(value: Array<Object>): void {
+      set(value: Array<TaskType>): void {
         this.$emit("update:tasks", value);
       },
     },

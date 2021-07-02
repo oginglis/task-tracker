@@ -41,6 +41,7 @@ import TaskForm from "./TaskForm.vue";
 import TaskList from "./TaskList.vue";
 import Modal from "./Modal.vue";
 import TaskService from "@/services/TaskService";
+import { TaskType } from "@/types/Task";
 
 export default defineComponent({
   name: "TaskTracker",
@@ -67,7 +68,7 @@ export default defineComponent({
         reminder: null,
         position: null,
         id: null,
-      } as Task,
+      } as TaskType,
       isPatch: false,
       isModalOpen: false,
       isInputOpen: false,
