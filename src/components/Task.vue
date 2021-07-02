@@ -68,22 +68,22 @@ export default defineComponent({
   },
   computed: {
     isTrueSet: function () {
-      if (this.reminder == "true") {
+      if (this.reminder == true) {
         return true;
       } else {
         return false;
       }
     },
 
-    momentDate: function () {
+    momentDate: function (): string {
       return moment(this.date).format("MMM Do YYYY");
     },
   },
   methods: {
-    askToDeleteTask: function (id) {
+    askToDeleteTask: function (id: number): void {
       this.$emit("askToDeleteTask2", id);
     },
-    askToUpdateTask: function (id) {
+    askToUpdateTask: function (id: number): void {
       this.$emit("askToUpdateTask2", id);
       if (this.editTask == false) {
         this.editTask = true;

@@ -53,34 +53,28 @@ export default defineComponent({
     Modal,
   },
   created() {
-    TaskService.getTasks().then((response) => {
-      this.tasks = response.data;
+    TaskService.getTasks().then((response): void => {
+      this.tasks = response.data as Array<TaskType>;
       this.sortIndexes(this.tasks);
     });
   },
   data: function () {
     return {
       buttonText: "Add Task",
-      tasks: null,
-      task: {
-        title: null,
-        date: null,
-        reminder: null,
-        position: null,
-        id: null,
-      } as TaskType,
+      tasks: [] as Array<TaskType>,
+      task: {} as TaskType,
       isPatch: false,
       isModalOpen: false,
       isInputOpen: false,
-      taskPassUpdate: {},
+      taskPassUpdate: {} as TaskType,
     };
   },
   methods: {
-    addNewTaskToTasks: function (task) {
+    addNewTaskToTasks: function (task: TaskType): void {
       this.tasks.push(task);
       this.buttonText = "Add Task";
     },
-    sortIndexes: function (elems) {
+    sortIndexes: function (elems: TaskType[]) {
       elems.sort(function (a, b) {
         return a.position - b.position;
       });
@@ -99,7 +93,7 @@ export default defineComponent({
         (this.task.date = ""),
         (this.task.reminder = false);
     },
-    openFormWithTask: function (task) {
+    openFormWithTask: function (task: any) {
       if (this.isModalOpen == false) {
         this.isModalOpen = true;
         this.task.date = task[0].date;
@@ -116,7 +110,7 @@ export default defineComponent({
     toggleModal: function () {
       this.isModalOpen = !this.isModalOpen;
     },
-    updateList: function (task) {
+    updateList: function (task: TaskType) {
       this.taskPassUpdate = task;
     },
     onClickOutside() {
@@ -126,7 +120,7 @@ export default defineComponent({
       }
     },
 
-    deleteTask: function (id) {
+    deleteTask: function (id: number) {
       TaskService.deleteTask(id)
         .then(() => {
           this.tasks = this.tasks.filter((task) => {

@@ -1,6 +1,6 @@
 export interface TaskType {
   title: string;
-  date: Date;
+  date: string;
   reminder: Boolean;
   position: number;
   id: number;

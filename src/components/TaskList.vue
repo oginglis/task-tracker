@@ -46,13 +46,13 @@ export default defineComponent({
   },
   data() {
     return {
-      info: [],
+      info: [] as TaskType[],
       drag: false,
     };
   },
   props: {
-    taskData: Object,
-    updateWithThisTask: Object,
+    taskData: Object as PropType<TaskType>,
+    updateWithThisTask: Object as PropType<TaskType>,
     tasks: {
       type: Array as PropType<Array<TaskType>>,
     },
@@ -71,12 +71,11 @@ export default defineComponent({
       get(): Array<TaskType> {
         return this.tasks;
       },
-      set(value: Array<TaskType>): void {
+      set(value: TaskType) {
         this.$emit("update:tasks", value);
       },
     },
   },
-  created() {},
 
   watch: {
     updateWithThisTask: function () {
@@ -86,8 +85,9 @@ export default defineComponent({
       this.info.splice(foundIndex, 1, this.updateWithThisTask);
     },
   },
+
   methods: {
-    backgroundColor: function (index) {
+    backgroundColor: function (index: number): string {
       if (index % 2 == 0) {
         return "task--light-grey-background";
       } else {
@@ -98,7 +98,7 @@ export default defineComponent({
       let taskToUpdate = this.tasks.filter((task) => task.id == id);
       this.$emit("askToUpdateTask4", taskToUpdate);
     },
-    convertRemind: function (task) {
+    convertRemind: function (task: TaskType): void {
       if (task.reminder == false) {
         task.reminder = true;
       } else {
@@ -106,7 +106,7 @@ export default defineComponent({
       }
     },
 
-    sortList: function () {
+    sortList: function (): void {
       this.info.reverse();
     },
     onChange: function (e) {
@@ -117,7 +117,7 @@ export default defineComponent({
         task.position = index;
       });
       const largestIndex = Math.max(oldIndex, newIndex);
-      const serviceArray = [];
+      const serviceArray: Promise<any>[] = [];
       this.tasksModel.forEach((task) => {
         if (task.position <= largestIndex) {
           serviceArray.push(TaskService.patchTask(task.id, task));
@@ -127,15 +127,15 @@ export default defineComponent({
         console.log(errors);
       });
     },
-    deleteTask2: function (id) {
+    deleteTask2: function (id: number) {
       this.$emit("askToDeleteTask", id);
     },
     updatePositons: function () {
       this.tasks.forEach((task) => {
-        task.positon = 0;
+        task.position = 0;
       });
     },
-    saveOrder: function (array) {
+    saveOrder: function (array: Array<TaskType>) {
       // TO DO: Make patch requests on all tasks that have had their position updated using their id
       return array;
     },

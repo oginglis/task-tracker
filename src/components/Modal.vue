@@ -34,13 +34,7 @@ export default defineComponent({
   name: "Modal",
   data: function () {
     return {
-      modalTask: {
-        title: "this is a test title",
-        date: new Date(),
-        reminder: false,
-        position: 10101,
-        id: 101010,
-      } as TaskType,
+      modalTask: {} as TaskType,
       focusIn: false,
       dataChanged: false,
     };
@@ -50,26 +44,6 @@ export default defineComponent({
   },
   props: {
     task: {
-      title: {
-        default: " This is a task to tesk",
-        type: String,
-      },
-      date: {
-        default: new Date(),
-        type: Date,
-      },
-      reminder: {
-        default: false,
-        type: Boolean,
-      },
-      positon: {
-        type: Number,
-        default: 999,
-      },
-      id: {
-        type: Number,
-        default: 999,
-      },
     } as PropType<TaskType>,
   },
   created() {

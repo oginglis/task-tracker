@@ -8,7 +8,7 @@
         name="title"
         id="title"
         placeholder="Add task"
-        v-model="taskInfo"
+        v-model="task.title"
       />
       <label class="v-spacer" for="date">Date & Time:</label>
       <input
@@ -16,92 +16,41 @@
         type="datetime-local"
         id="date"
         name="date"
-        v-model="dateTime"
+        v-model="task.date"
       />
       <label for="reminder">Set Reminder?</label>
-      <input v-model="checked" type="checkbox" id="checkbox" />
-      <button @click="submitForm" class="v-spacer">{{ updateOrSave }}</button>
+      <input v-model="task.date" type="checkbox" id="checkbox" />
+      <button @click="submitForm" class="v-spacer">Save Task</button>
     </form>
   </div>
 </template>
 <script lang="ts">
 import TaskService from "@/services/TaskService.js";
 import { defineComponent } from "vue";
+import { TaskType } from "@/types/Task";
 export default defineComponent({
   name: "TaskForm",
   data: function () {
     return {
-      checked: false,
-      dateTime: Date,
-      taskInfo: "",
+      task: {} as TaskType,
     };
   },
-  watch: {
-    taskInfoUpdate: function () {
-      // watch it
-
-      this.taskInfo = this.taskInfoUpdate;
-    },
-    taskDateUpdate: function () {
-      // watch it
-
-      this.dateTime = this.taskDateUpdate;
-    },
-    taskReminderUpdate: function () {
-      // watch it
-
-      this.checked = this.taskReminderUpdate;
-    },
-  },
+  watch: {},
   props: {
-    task: {
-      title: {
-        default: " This is a task to tesk",
-        type: String,
-      },
-      date: {
-        default: "20-July 101",
-        type: String,
-      },
-      reminder: {
-        default: false,
-        type: Boolean,
-      },
-      id: {
-        type: Number,
-        default: null,
-      },
-    },
     taskCount: Number,
   },
   methods: {
-    submitForm: function (e) {
+    submitForm: function (e: Event) {
       e.preventDefault();
-      let newTask = {
-        title: this.taskInfo,
-        date: this.dateTime,
-        reminder: this.checked,
-        position: this.taskCount,
-      };
-      TaskService.postTask(newTask)
+
+      TaskService.postTask(this.task)
         .then(function (response) {
           console.log(response);
         })
         .catch(function (error) {
           console.log(error);
         });
-      this.$emit("newTaskCreated", newTask);
-      this.taskInfoUpdate = "";
-      this.taskDateUpdate = "";
-      this.taskReminderUpdate = false;
-      this.taskIdUpdate = "";
-      this.finishUpdate;
-    },
-  },
-
-  computed: {
-    updateOrSave: function (): string {
-      return this.isUpdate == true ? "Update Task" : "Save Task";
+      this.$emit("newTaskCreated", this.task);
     },
   },
 });
