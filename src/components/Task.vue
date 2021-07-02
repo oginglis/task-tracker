@@ -44,11 +44,7 @@ import {
   faBell,
 } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
-library.add([
-  faTimesCircle as IconDefinition,
-  faEdit as IconDefinition,
-  faBell as IconDefinition,
-]);
+library.add([faTimesCircle, faEdit, faBell] as any);
 export default defineComponent({
   name: "Task",
   components: {},
@@ -60,7 +56,10 @@ export default defineComponent({
   props: {
     title: String,
     date: String,
-    id: Number,
+    id: {
+      type: Number,
+      default: () => 1000,
+    },
     reminder: {
       type: Boolean,
       default: false,

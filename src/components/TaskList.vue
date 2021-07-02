@@ -2,11 +2,11 @@
   <div class="padding-end">
     <draggable
       v-model="tasksModel"
-      group="people"
       @start="drag = true"
       @end="drag = false"
       v-bind="dragOptions"
       @change="onChange"
+      group="people"
     >
       <transition-group type="transition" :name="!drag ? 'flip-list' : null">
         <Task
@@ -52,9 +52,19 @@ export default defineComponent({
   },
   props: {
     taskData: Object as PropType<TaskType>,
-    updateWithThisTask: Object as PropType<TaskType>,
+    updateWithThisTask: {
+      type: Object as PropType<TaskType>,
+      default: () => ({
+        title: "Arrow Function Expression",
+      }),
+    },
     tasks: {
       type: Array as PropType<Array<TaskType>>,
+      default: () => [
+        {
+          title: "Arrow Function Expression",
+        },
+      ],
     },
   },
 
@@ -109,7 +119,7 @@ export default defineComponent({
     sortList: function (): void {
       this.info.reverse();
     },
-    onChange: function (e) {
+    onChange: function (e: any) {
       const {
         moved: { oldIndex, newIndex },
       } = e;

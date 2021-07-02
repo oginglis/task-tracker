@@ -28,6 +28,7 @@
       @askToUpdateTask4="openFormWithTask"
       v-if="tasks"
       v-model="tasks"
+      :tasks="tasks"
       @askToDeleteTask="deleteTask"
     />
   </div>
@@ -134,8 +135,8 @@ export default defineComponent({
   },
 
   computed: {
-    totalTaskCount: function () {
-      var length;
+    totalTaskCount: function (): number {
+      var length: number = 0;
       if (this.tasks) {
         length = this.tasks.length;
       }

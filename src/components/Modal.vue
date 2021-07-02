@@ -22,12 +22,12 @@
 <script lang="ts">
 import moment from "moment";
 import { defineComponent, PropType } from "vue";
-import TaskService from "@/services/TaskService.js";
+import TaskService from "@/services/TaskService";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import vClickOutside from "v-click-outside";
 
-library.add([faTimesCircle]);
+library.add([faTimesCircle] as any);
 import { TaskType } from "@/types/Task";
 
 export default defineComponent({
@@ -44,7 +44,11 @@ export default defineComponent({
   },
   props: {
     task: {
-    } as PropType<TaskType>,
+      type: Object as PropType<TaskType>,
+      default: () => ({
+        title: "this is a detault",
+      }),
+    },
   },
   created() {
     this.modalTask.title = this.task.title;
@@ -56,7 +60,7 @@ export default defineComponent({
     toggleOpenModal: function () {
       this.$emit("toggleOpenModal");
     },
-    updateTaskCloseModal: function (id): void {
+    updateTaskCloseModal: function (id: number): void {
       this.toggleOpenModal();
       let update = {
         title: this.modalTask.title,
@@ -73,7 +77,7 @@ export default defineComponent({
 
       this.$emit("rerender", update);
     },
-    update: function (e): void {
+    update: function (e: any): void {
       this.modalTask.title = e.target.innerText;
     },
     clickOutsideHandler(): void {

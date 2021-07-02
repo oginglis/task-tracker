@@ -25,7 +25,7 @@
   </div>
 </template>
 <script lang="ts">
-import TaskService from "@/services/TaskService.js";
+import TaskService from "@/services/TaskService";
 import { defineComponent } from "vue";
 import { TaskType } from "@/types/Task";
 export default defineComponent({
