@@ -1,36 +1,21 @@
 <template>
   <div class="padding-end">
-    <draggable
-      v-model="tasksModel"
-      @start="drag = true"
-      @end="drag = false"
-      v-bind="dragOptions"
-      @change="onChange"
-      tag="transition-group"
-      item-key="id"
-    >
-      <transition-group type="transition" :name="!drag ? 'flip-list' : null">
-        <Task
-          v-for="(task, index) in tasks"
-          @toggleReminda="convertRemind(task)"
-          :title="task.title"
-          :date="task.date"
-          :reminder="task.reminder"
-          :key="index"
-          :id="task.id"
-          :class="backgroundColor(index)"
-          v-on:askToDeleteTask2="deleteTask2(task.id)"
-          v-on:askToUpdateTask2="askToUpdateTask3"
-        />
-      </transition-group>
-    </draggable>
+    <Task
+      v-for="(task, index) in tasks"
+      @toggleReminda="convertRemind(task)"
+      :task="task"
+      :key="task.id"
+      :class="backgroundColor(index)"
+      v-on:askToDeleteTask2="deleteTask2(task.id)"
+      v-on:askToUpdateTask2="askToUpdateTask3"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import Task from "./Task.vue";
 import { TaskType } from "@/types/Task";
-import draggable from "vuedraggable";
+
 import { defineComponent, PropType } from "vue";
 import TaskService from "@/services/TaskService";
 
@@ -38,7 +23,6 @@ export default defineComponent({
   name: "TaskList",
   components: {
     Task,
-    draggable,
   },
   filters: {
     reverse: function (value: Array<TaskType>) {

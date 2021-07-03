@@ -43,13 +43,9 @@ export default defineComponent({
     submitForm: function (e: Event) {
       e.preventDefault();
 
-      TaskService.postTask(this.task)
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      TaskService.postTask(this.task).catch(function (error) {
+        console.log(error);
+      });
       this.$emit("newTaskCreated", this.task);
     },
   },

@@ -27,3 +27,6 @@ TO DO APP
 [] Fix Styles
 [] Modal positioning
 [] Tasks still adding to the bottom. Want to fix this.
+[] Typing a long task in the form does not line break.
+[] Add draggable again
+[] Date are invalid

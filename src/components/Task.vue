@@ -2,16 +2,16 @@
   <div
     class="task"
     :class="[
-      reminder ? 'task--green-reminder' : '',
+      task.reminder ? 'task--green-reminder' : '',
       editTask ? 'editTask' : '',
     ]"
   >
     <div
       class="task__lhs"
-      :class="{ 'task__lhs--compensate-margin': reminder }"
+      :class="{ 'task__lhs--compensate-margin': task.reminder }"
     >
       <h1 class="task__lhs__title task__lhs__title--restrict">
-        {{ title }}
+        {{ task.title }}
       </h1>
       <h2 class="task__lhs__date">{{ momentDate }}</h2>
     </div>
@@ -22,12 +22,12 @@
         icon="bell"
       ></font-awesome-icon>
       <font-awesome-icon
-        @click="askToUpdateTask(id)"
+        @click="askToUpdateTask(task.id)"
         class="fa-spacer"
         icon="edit"
       ></font-awesome-icon>
       <font-awesome-icon
-        @click="askToDeleteTask(id)"
+        @click="askToDeleteTask(task.id)"
         class="fa-spacer"
         icon="times-circle"
       ></font-awesome-icon>
@@ -43,6 +43,8 @@ import {
   faEdit,
   faBell,
 } from "@fortawesome/free-solid-svg-icons";
+import { PropType } from "vue";
+import { TaskType } from "@/types/Task";
 import moment from "moment";
 library.add([faTimesCircle, faEdit, faBell] as any);
 export default defineComponent({
@@ -54,20 +56,16 @@ export default defineComponent({
     };
   },
   props: {
-    title: String,
-    date: String,
-    id: {
-      type: Number,
-      default: () => 1000,
-    },
-    reminder: {
-      type: Boolean,
-      default: false,
+    task: {
+      type: Object as PropType<TaskType>,
+      default: () => ({
+        title: "Arrow Function Expression",
+      }),
     },
   },
   computed: {
     isTrueSet: function () {
-      if (this.reminder == true) {
+      if (this.task.reminder == true) {
         return true;
       } else {
         return false;
@@ -75,7 +73,8 @@ export default defineComponent({
     },
 
     momentDate: function (): string {
-      return moment(this.date).format("MMM Do YYYY");
+      var newDt: any = moment(this.task.date, "MM/DD/YY");
+      return moment(newDt).format("MMM Do YYYY");
     },
   },
   methods: {
