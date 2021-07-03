@@ -6,7 +6,8 @@
       @end="drag = false"
       v-bind="dragOptions"
       @change="onChange"
-      group="people"
+      tag="transition-group"
+      item-key="id"
     >
       <transition-group type="transition" :name="!drag ? 'flip-list' : null">
         <Task
