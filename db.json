@@ -1,7 +1,7 @@
 {
   "tasks": [
     {
-      "title": "Short This can be much much longer if we want it to be okay. Just working on editing it some more and making it to today",
+      "title": "HAHAHAHAH n editing it some more and making it to today",
       "date": "2021-06-23T19:45",
       "reminder": true,
       "position": 2,
@@ -18,7 +18,7 @@
       "title": "New Test of task adding without reminder",
       "date": "2021-06-18T17:30",
       "reminder": false,
-      "position": 1,
+      "position": 0,
       "id": 20
     },
     {
@@ -29,10 +29,10 @@
       "id": 14027
     },
     {
-      "title": "This is a test of the list to see if one opens correctly",
+      "title": "This task should stay at n and update straight away \number 4\n\n",
       "date": "2021-06-30T21:55",
       "reminder": false,
-      "position": 0,
+      "position": 1,
       "id": 14028
     },
     {

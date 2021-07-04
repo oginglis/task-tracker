@@ -12,6 +12,7 @@
         type: 'transition-group',
         name: !drag ? 'flip-list' : null,
       }"
+      @change="onChange"
     >
       <template #item="{ element, index }">
         <Task
