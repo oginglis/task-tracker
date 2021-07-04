@@ -73,8 +73,7 @@ export default defineComponent({
     },
 
     momentDate: function (): string {
-      var newDt: any = moment(this.task.date, "MM/DD/YY");
-      return moment(newDt).format("MMM Do YYYY");
+      return moment(this.task.date).format("MMM Do YYYY");
     },
   },
   methods: {

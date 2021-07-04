@@ -27,8 +27,7 @@
       :updateWithThisTask="taskPassUpdate"
       @askToUpdateTask4="openFormWithTask"
       v-if="tasks"
-      v-model="tasks"
-      :tasks="tasks"
+      v-model:tasks="tasks"
       @askToDeleteTask="deleteTask"
     />
   </div>
@@ -43,6 +42,7 @@ import TaskList from "./TaskList.vue";
 import Modal from "./Modal.vue";
 import TaskService from "@/services/TaskService";
 import { TaskType } from "@/types/Task";
+import _ from "lodash";
 
 export default defineComponent({
   name: "TaskTracker",
@@ -105,14 +105,18 @@ export default defineComponent({
         this.isModalOpen = false;
       }
     },
-    finishedPatch: function () {
+    finishedPatch: function (): void {
       this.isPatch = false;
     },
     toggleModal: function () {
       this.isModalOpen = !this.isModalOpen;
     },
-    updateList: function (task: TaskType) {
+    updateList: function (task: TaskType): void {
       this.taskPassUpdate = task;
+      this.tasks;
+      let indexOld: number = _.keys(_.pickBy(this.tasks, { id: task.id }));
+      // Find matching task index, then splice replace
+      this.tasks.splice(indexOld, 1, task);
     },
     onClickOutside() {
       if (this.isModalOpen) {

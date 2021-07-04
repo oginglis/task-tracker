@@ -1,20 +1,36 @@
 <template>
   <div class="padding-end">
-    <Task
-      v-for="(task, index) in tasks"
-      @toggleReminda="convertRemind(task)"
-      :task="task"
-      :key="task.id"
-      :class="backgroundColor(index)"
-      v-on:askToDeleteTask2="deleteTask2(task.id)"
-      v-on:askToUpdateTask2="askToUpdateTask3"
-    />
+    <draggable
+      v-model="tasksModel"
+      group="description"
+      @start="drag = true"
+      @end="drag = false"
+      tag="transition-group"
+      item-key="id"
+      :component-data="{
+        tag: 'ul',
+        type: 'transition-group',
+        name: !drag ? 'flip-list' : null,
+      }"
+    >
+      <template #item="{ element, index }">
+        <Task
+          @toggleReminda="convertRemind(element)"
+          :task="element"
+          :key="element.id"
+          :class="backgroundColor(index)"
+          v-on:askToDeleteTask2="deleteTask2(element.id)"
+          v-on:askToUpdateTask2="askToUpdateTask3"
+        />
+      </template>
+    </draggable>
   </div>
 </template>
 
 <script lang="ts">
 import Task from "./Task.vue";
 import { TaskType } from "@/types/Task";
+import draggable from "vuedraggable";
 
 import { defineComponent, PropType } from "vue";
 import TaskService from "@/services/TaskService";
@@ -23,6 +39,7 @@ export default defineComponent({
   name: "TaskList",
   components: {
     Task,
+    draggable,
   },
   filters: {
     reverse: function (value: Array<TaskType>) {
@@ -47,7 +64,18 @@ export default defineComponent({
       type: Array as PropType<Array<TaskType>>,
       default: () => [
         {
-          title: "Arrow Function Expression",
+          title: "New tasks ",
+          date: "0002-03-12T12:03",
+          reminder: true,
+          position: 3,
+          id: 14027,
+        },
+        {
+          title: "This is a test of the list to see if one opens correctly",
+          date: "2021-06-30T21:55",
+          reminder: false,
+          position: 0,
+          id: 14028,
         },
       ],
     },
@@ -147,6 +175,10 @@ export default defineComponent({
 }
 .no-move {
   transition: transform 0s;
+}
+.ghost {
+  opacity: 0.5;
+  background: #c8ebfb;
 }
 .task--light-grey-background {
   background-color: rgb(233, 233, 233);

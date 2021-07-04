@@ -66,6 +66,7 @@ export default defineComponent({
         title: this.modalTask.title,
         date: this.modalTask.date,
         reminder: this.modalTask.reminder,
+        positon: this.modalTask.position,
         id: id,
       };
       // Make Axios request with the data from the task
