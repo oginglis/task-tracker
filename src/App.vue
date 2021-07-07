@@ -2,7 +2,7 @@
   <div id="app">
     <metainfo>
       <template v-slot:title="{ content }">{{
-        content ? `${content} | SITE_NAME` : `SITE_NAME`
+        content ? `${content} | Task Track App` : `SITE_NAME`
       }}</template>
     </metainfo>
     <TaskTracker />
@@ -21,7 +21,7 @@ export default defineComponent({
   },
   setup() {
     useMeta({
-      title: "Task Tracking App",
+      title: "Tasks",
       htmlAttrs: { lang: "en", amp: true },
     });
   },

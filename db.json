@@ -4,32 +4,32 @@
       "title": "I have added TypeScrip and font-awesome. The key was the update all the packages to ",
       "date": "2021-07-04T19:59",
       "id": 14029,
-      "position": 0
+      "position": 3
     },
     {
       "title": "New task Test Reminder",
       "date": "2021-07-07T13:43",
       "id": 14034,
-      "position": 4
+      "position": 2
     },
     {
       "title": "New Task ADDEEEE",
       "date": "2021-07-07T13:51",
       "id": 14037,
-      "position": 3
+      "position": 4
     },
     {
       "reminder": false,
       "title": "Please can this work",
       "date": "2021-07-07T14:31",
       "id": 14040,
-      "position": 1
+      "position": 0
     },
     {
       "title": "New to add ",
       "reminder": true,
       "id": 14041,
-      "position": 2
+      "position": 1
     },
     {
       "title": "Ollie is adding a task",
