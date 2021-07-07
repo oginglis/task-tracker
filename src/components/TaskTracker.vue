@@ -15,7 +15,7 @@
     </div>
     <transition name="fade">
       <TaskForm
-        v-if="buttonText !== 'Add Task'"
+        v-if="buttonText !== 'Add a Task'"
         :task="task"
         :isUpdate="isPatch"
         @finishUpdate="finishedPatch"
@@ -61,7 +61,7 @@ export default defineComponent({
   },
   data: function () {
     return {
-      buttonText: "Add Task",
+      buttonText: "Add a Task",
       tasks: [] as Array<TaskType>,
       task: {} as TaskType,
       isPatch: false,
@@ -74,6 +74,7 @@ export default defineComponent({
     addNewTaskToTasks: function (task: TaskType): void {
       this.tasks.push(task);
       this.buttonText = "Add Task";
+      this.updatePositionsWithIndexes();
     },
     sortIndexes: function (elems: TaskType[]) {
       elems.sort(function (a, b) {
@@ -86,9 +87,9 @@ export default defineComponent({
       }
     },
     changeButton: function () {
-      this.buttonText == "Add Task"
+      this.buttonText == "Add a Task"
         ? (this.buttonText = "Hide Task Adder")
-        : (this.buttonText = "Add Task");
+        : (this.buttonText = "Add a Task");
       this.isPatch = false;
       (this.task.title = ""),
         (this.task.date = ""),
@@ -124,7 +125,11 @@ export default defineComponent({
         this.isModalOpen = false;
       }
     },
-
+    updatePositionsWithIndexes() {
+      this.tasks.forEach((task, index) => {
+        task.position = index;
+      });
+    },
     deleteTask: function (id: number) {
       TaskService.deleteTask(id)
         .then(() => {

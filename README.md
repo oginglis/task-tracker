@@ -32,3 +32,4 @@
 - [] Add draggable transitions
 - [] Date are invalid
 - [] 'Enter' to close module window
+- [] Delseclting Date Changes the reminder setting

@@ -11,6 +11,7 @@
         tag: 'ul',
         type: 'transition-group',
         name: !drag ? 'flip-list' : null,
+        class: 'task-list--remove-padding',
       }"
       @change="onChange"
     >
@@ -188,5 +189,9 @@ export default defineComponent({
 .task--darker-grey-background {
   background-color: rgb(214, 214, 214);
   transition: background-color 0.5s ease;
+}
+
+.task-list--remove-padding {
+  padding-left: 0;
 }
 </style>

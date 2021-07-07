@@ -1,9 +1,16 @@
 <template>
-  <button class="btn btn--red" @click="clickButton">{{ buttonText }}</button>
+  <button class="btn btn--red" @click="clickButton">
+    <font-awesome-icon class="btn__plus" icon="plus"></font-awesome-icon>
+    {{ buttonText }}
+  </button>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+library.add([faPlus] as any);
+
 export default defineComponent({
   name: "Button",
   props: {
@@ -22,13 +29,17 @@ export default defineComponent({
 
 <style scoped>
 .btn {
-  width: 100px;
+  padding: 10px;
   border: none;
   border-radius: 10px;
   text-decoration: none;
   display: inline-block;
-  height: 50px;
+
   cursor: pointer;
+}
+
+.btn__plus {
+  margin-right: 5px;
 }
 
 .btn--red {

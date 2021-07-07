@@ -36,8 +36,9 @@
 </template>
 
 <script lang="ts">
-import { library } from "@fortawesome/fontawesome-svg-core";
 import { defineComponent } from "vue";
+import { library } from "@fortawesome/fontawesome-svg-core";
+
 import {
   faTimesCircle,
   faEdit,

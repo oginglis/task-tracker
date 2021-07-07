@@ -11,15 +11,15 @@
         v-model="task.title"
       />
       <label class="v-spacer" for="date">Date & Time:</label>
-      <input
+
+      <Datepicker
         class="v-spacer"
-        type="datetime-local"
         id="date"
-        name="date"
         v-model="task.date"
+        :clearable="true"
       />
       <label for="reminder">Set Reminder?</label>
-      <input v-model="task.date" type="checkbox" id="checkbox" />
+      <input v-model="task.reminder" type="checkbox" id="checkbox" />
       <button @click="submitForm" class="v-spacer">Save Task</button>
     </form>
   </div>
@@ -28,12 +28,16 @@
 import TaskService from "@/services/TaskService";
 import { defineComponent } from "vue";
 import { TaskType } from "@/types/Task";
+import Datepicker from "vue3-datepicker";
 export default defineComponent({
   name: "TaskForm",
   data: function () {
     return {
       task: {} as TaskType,
     };
+  },
+  components: {
+    Datepicker,
   },
   watch: {},
   props: {
@@ -42,7 +46,9 @@ export default defineComponent({
   methods: {
     submitForm: function (e: Event) {
       e.preventDefault();
-
+      if (this.task.reminder == undefined) {
+        this.task.reminder = false;
+      }
       TaskService.postTask(this.task).catch(function (error) {
         console.log(error);
       });
