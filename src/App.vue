@@ -1,5 +1,10 @@
 <template>
   <div id="app">
+    <metainfo>
+      <template v-slot:title="{ content }">{{
+        content ? `${content} | SITE_NAME` : `SITE_NAME`
+      }}</template>
+    </metainfo>
     <TaskTracker />
   </div>
 </template>
@@ -8,11 +13,17 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import TaskTracker from "./components/TaskTracker.vue";
-
+import { useMeta } from "vue-meta";
 export default defineComponent({
   name: "App",
   components: {
     TaskTracker,
+  },
+  setup() {
+    useMeta({
+      title: "Task Tracking App",
+      htmlAttrs: { lang: "en", amp: true },
+    });
   },
 });
 </script>
