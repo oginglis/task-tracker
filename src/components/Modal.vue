@@ -14,13 +14,20 @@
       {{ modalTask.title }}
     </p>
     <h3 class="modal__title">Date:</h3>
-    <input class="modal__date" v-model="modalTask.date" type="datetime-local" />
+    <Datepicker
+      class="modal__date"
+      id="date"
+      v-model="modalTask.date"
+      :clearable="true"
+    />
+
     <button @click="updateTaskCloseModal(modalTask.id)">Update Task</button>
   </div>
 </template>
 
 <script lang="ts">
 import moment from "moment";
+import Datepicker from "vue3-datepicker";
 import { defineComponent, PropType } from "vue";
 import TaskService from "@/services/TaskService";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -32,6 +39,9 @@ import { TaskType } from "@/types/Task";
 
 export default defineComponent({
   name: "Modal",
+  components: {
+    Datepicker,
+  },
   data: function () {
     return {
       modalTask: {} as TaskType,
