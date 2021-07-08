@@ -13,7 +13,9 @@
       <h1 class="task__lhs__title task__lhs__title--restrict">
         {{ task.title }}
       </h1>
-      <h2 class="task__lhs__date">{{ momentDate }}</h2>
+      <h2 class="task__lhs__date">
+        {{ momentDate }}
+      </h2>
     </div>
     <div class="task__rhs">
       <font-awesome-icon

@@ -10,16 +10,35 @@
         placeholder="Add task"
         v-model="task.title"
       />
-      <label class="v-spacer" for="date">Date & Time:</label>
+      <span
+        ><font-awesome-icon
+          class="form__icon"
+          icon="calendar-alt"
+          @click="handleCalendarClick"
+        ></font-awesome-icon>
+        <font-awesome-icon
+          @click="handleBellClick"
+          class="form__icon"
+          icon="bell"
+          :class="{
+            'form__icon__bellactive animate__animated animate__headShake':
+              task.reminder,
+          }"
+        ></font-awesome-icon
+      ></span>
+
+      <label v-if="isCalendarVisible" class="form__date" for="date"
+        >Date & Time:</label
+      >
 
       <Datepicker
-        class="v-spacer"
+        class="v-spacer form__date--input"
         id="date"
         v-model="task.date"
         :clearable="true"
+        v-if="isCalendarVisible"
       />
-      <label for="reminder">Set Reminder?</label>
-      <input v-model="task.reminder" type="checkbox" id="checkbox" />
+
       <button @click="submitForm" class="v-spacer">Save Task</button>
     </form>
   </div>
@@ -29,11 +48,19 @@ import TaskService from "@/services/TaskService";
 import { defineComponent } from "vue";
 import { TaskType } from "@/types/Task";
 import Datepicker from "vue3-datepicker";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import "animate.css";
+
+import { faCalendarAlt, faBell } from "@fortawesome/free-solid-svg-icons";
+
+library.add([faCalendarAlt, faBell] as any);
+
 export default defineComponent({
   name: "TaskForm",
   data: function () {
     return {
       task: {} as TaskType,
+      isCalendarVisible: false,
     };
   },
   components: {
@@ -44,6 +71,22 @@ export default defineComponent({
     taskCount: Number,
   },
   methods: {
+    handleCalendarClick: function (): void {
+      this.isCalendarVisible = !this.isCalendarVisible;
+    },
+    handleBellClick: function (): void {
+      switch (this.task.reminder) {
+        case undefined:
+          this.task.reminder = true;
+          break;
+        case true:
+          this.task.reminder = false;
+          break;
+        case false:
+          this.task.reminder = true;
+          break;
+      }
+    },
     submitForm: function (e: Event) {
       e.preventDefault();
       if (this.task.reminder == undefined) {
@@ -79,7 +122,7 @@ form {
 
 .task-box-input {
   width: 80%;
-  height: 50px;
+
   margin: 100px;
   align-self: end;
 }
@@ -87,7 +130,23 @@ form {
   margin: 5px 0px;
 }
 
-#checkbox {
-  display: inline-block;
+.form__date,
+.form__date--input {
+  margin: 0.5rem 0rem;
+}
+
+.form__icon {
+  display: inline;
+  margin-right: 10px;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+.form__icon:hover {
+  cursor: pointer;
+}
+
+.form__icon__bellactive {
+  color: green;
 }
 </style>

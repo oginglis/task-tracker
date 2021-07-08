@@ -2,7 +2,7 @@
   <div id="app">
     <metainfo>
       <template v-slot:title="{ content }">{{
-        content ? `${content} | Task Track App` : `SITE_NAME`
+        content ? `${content} | Task Track App` : `Task Tracker`
       }}</template>
     </metainfo>
     <TaskTracker />
