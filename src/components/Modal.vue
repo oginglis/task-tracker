@@ -17,7 +17,7 @@
     <Datepicker
       class="modal__date"
       id="date"
-      v-model="modalTask.date"
+      v-model="parsedDate"
       :clearable="true"
     />
 
@@ -102,6 +102,14 @@ export default defineComponent({
   computed: {
     momentDate2: function (): String {
       return moment(this.task.date).format("yyyy-MM-dd");
+    },
+    parsedDate: {
+      get: function (): Date {
+        return new Date(this.modalTask.date);
+      },
+      set: function (newValue: string) {
+        this.modalTask.date = newValue;
+      },
     },
   },
   watch: {
