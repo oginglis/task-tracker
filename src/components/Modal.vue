@@ -3,6 +3,7 @@
     v-click-outside="clickOutsideHandler"
     class="modal modal--center"
     :class="{ 'modal--green-reminder': task.reminder }"
+    :style="modalPositionStyle"
   >
     <font-awesome-icon
       class="modal__close-icon"
@@ -21,7 +22,9 @@
       :clearable="true"
     />
 
-    <button @click="updateTaskCloseModal(modalTask.id)">Update Task</button>
+    <button class="modal__submit" @click="updateTaskCloseModal(modalTask.id)">
+      Update Task
+    </button>
   </div>
 </template>
 
@@ -79,7 +82,7 @@ export default defineComponent({
         positon: this.modalTask.position,
         id: id,
       };
-      console.log(update);
+
       // Make Axios request with the data from the task
       TaskService.patchTask(id, update)
         .then(() => {})
@@ -110,6 +113,15 @@ export default defineComponent({
       set: function (newValue: string) {
         this.modalTask.date = newValue;
       },
+    },
+    modalPositionStyle: function () {
+      let styleObject = {
+        position: "absolute",
+        left: "50%",
+        top: "50%",
+        transform: "translate(-50%, -50%)",
+      };
+      return styleObject;
     },
   },
   watch: {
@@ -170,16 +182,19 @@ export default defineComponent({
 
 .modal__title {
   font-size: 20px;
-  margin: 0px;
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
 }
 .modal__info {
-  font-size: 15px;
+  font-size: 1.2em;
+  font-weight: bold;
   background: rgba(105, 24, 24, 0);
   border: none;
   direction: ltr;
   unicode-bidi: bidi-override;
   max-width: 80%;
   text-align: left;
+  margin: 0rem;
 }
 
 .modal__info:focus,
@@ -191,7 +206,7 @@ export default defineComponent({
 .modal__date {
   background: rgba(105, 24, 24, 0.3);
   border: none;
-  margin: 15px 0px;
+  margin: 1rem 0px;
   cursor: pointer;
 }
 
@@ -199,5 +214,9 @@ export default defineComponent({
 .modal__date:hover {
   outline: none;
   background: rgba(105, 24, 24, 0.1);
+}
+
+.modal__submit {
+  margin-top: 1rem;
 }
 </style>

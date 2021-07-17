@@ -33,3 +33,5 @@
 - [] Date are invalid
 - [] 'Enter' to close module window
 - [] Delseclting Date Changes the reminder setting
+- [] Opening module at task positon. Sending task data through props.
+CHANGE SHOULD BE HAPPENING AT TASKS LIST LEVEL.

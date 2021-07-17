@@ -5,6 +5,7 @@
       task.reminder ? 'task--green-reminder' : '',
       editTask ? 'editTask' : '',
     ]"
+    :ref="createTaskName"
   >
     <div
       class="task__lhs"
@@ -48,6 +49,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { PropType } from "vue";
 import { TaskType } from "@/types/Task";
+import { TaskPosition } from "@/types/TaskPosition";
 import moment from "moment";
 library.add([faTimesCircle, faEdit, faBell] as any);
 export default defineComponent({
@@ -56,6 +58,7 @@ export default defineComponent({
   data() {
     return {
       editTask: false,
+      taskPosition: {} as TaskPosition,
     };
   },
   props: {
@@ -78,6 +81,9 @@ export default defineComponent({
     momentDate: function (): string {
       return moment(this.task.date).format("MMM Do YYYY");
     },
+    createTaskName: function (): string {
+      return `Task=${this.task.position}`;
+    },
   },
   methods: {
     askToDeleteTask: function (id: number): void {
@@ -91,9 +97,20 @@ export default defineComponent({
         this.editTask = false;
       }
     },
-    toggleRemider: function () {
+    toggleRemider: function (): void {
       this.$emit("toggleReminda");
     },
+  },
+  watch: {
+    position: function () {
+      this.$emit("sendTaskPosition", this.taskPosition);
+    },
+  },
+  mounted() {
+    let { top, left }: TaskPosition = this.$el.getBoundingClientRect();
+    this.taskPosition.left = left;
+    this.taskPosition.top = top;
+    console.log(this.task.id + " " + this.taskPosition.top);
   },
 });
 </script>

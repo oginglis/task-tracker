@@ -18,6 +18,7 @@
       <template #item="{ element, index }">
         <Task
           @toggleReminda="convertRemind(element)"
+          @sendTaskPosition="sendUpTaskPosition(element.id, $event)"
           :task="element"
           :key="element.id"
           :class="backgroundColor(index)"
@@ -33,7 +34,8 @@
 import Task from "./Task.vue";
 import { TaskType } from "@/types/Task";
 import draggable from "vuedraggable";
-
+import { TaskPosition } from "@/types/TaskPosition";
+import { TasksPositionObject } from "@/types/TasksPositionObject";
 import { defineComponent, PropType } from "vue";
 import TaskService from "@/services/TaskService";
 
@@ -52,6 +54,7 @@ export default defineComponent({
     return {
       info: [] as TaskType[],
       drag: false,
+      positionsObject: {} as TasksPositionObject,
     };
   },
   props: {
@@ -163,6 +166,14 @@ export default defineComponent({
     saveOrder: function (array: Array<TaskType>) {
       // TO DO: Make patch requests on all tasks that have had their position updated using their id
       return array;
+    },
+    sendUpTaskPosition: function (
+      taskId: number,
+      taskPosition: TaskPosition
+    ): void {
+      this.positionsObject[taskId] = taskPosition;
+      console.log(this.positionsObject);
+      this.$emit("sendUpTaskPositonAgain", taskPosition);
     },
   },
 });

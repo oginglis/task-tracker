@@ -29,6 +29,7 @@
       v-if="tasks"
       v-model:tasks="tasks"
       @askToDeleteTask="deleteTask"
+      @sendUpTaskPositonAgain="0"
     />
   </div>
 </template>
