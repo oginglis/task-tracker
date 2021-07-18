@@ -10,7 +10,7 @@
       "title": "New task Test Reminder",
       "date": "2021-07-07T13:43",
       "id": 14034,
-      "position": 0
+      "position": 6
     },
     {
       "title": "New Task ADDEEEE",
@@ -23,27 +23,27 @@
       "title": "Please cThis lets me update the task an this work",
       "date": "2021-03-02T00:00:00.000Z",
       "id": 14040,
-      "position": 6
+      "position": 3
     },
     {
       "title": "New to add ",
       "reminder": true,
       "id": 14041,
-      "position": 5
+      "position": 0
     },
     {
       "title": "Ollie is adding a task",
       "date": "2021-07-19T23:00:00.000Z",
       "reminder": true,
       "id": 14042,
-      "position": 3
+      "position": 2
     },
     {
       "title": "This is a test",
       "reminder": false,
       "id": 14043,
       "date": "2021-07-04T23:00:00.000Z",
-      "position": 4
+      "position": 1
     }
   ],
   "comments": [

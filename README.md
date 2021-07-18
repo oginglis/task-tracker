@@ -35,3 +35,11 @@
 - [] Delseclting Date Changes the reminder setting
 - [] Opening module at task positon. Sending task data through props.
 CHANGE SHOULD BE HAPPENING AT TASKS LIST LEVEL.
+
+Method in vue list that calculates list item positon
+@Change list draggable call this method for each item
+Add these positions to an object
+Send this object to task tracker.
+Pass this object to Modal as prop.
+--Open task to height of moda
+Center Modal To this positon

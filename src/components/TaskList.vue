@@ -24,6 +24,7 @@
           :class="backgroundColor(index)"
           v-on:askToDeleteTask2="deleteTask2(element.id)"
           v-on:askToUpdateTask2="askToUpdateTask3"
+          :ref="`Task ${element.id}`"
         />
       </template>
     </draggable>
@@ -154,6 +155,13 @@ export default defineComponent({
       Promise.all(serviceArray).catch((errors) => {
         console.log(errors);
       });
+      this.tasksModel.forEach((task) => {
+        let refName: string = `Task = ${task.id}`;
+        (this.$refs[refName] as any).getBoundingClientRect();
+        // this.taskPosition.top = top;
+        // this.$emit("sendTaskPosition", this.taskPosition);
+        // console.log(this.task.id + " " + this.taskPosition.top);
+      });
     },
     deleteTask2: function (id: number) {
       this.$emit("askToDeleteTask", id);
@@ -172,7 +180,7 @@ export default defineComponent({
       taskPosition: TaskPosition
     ): void {
       this.positionsObject[taskId] = taskPosition;
-      console.log(this.positionsObject);
+      // console.log(this.positionsObject);
       this.$emit("sendUpTaskPositonAgain", taskPosition);
     },
   },

@@ -110,7 +110,7 @@ export default defineComponent({
     let { top, left }: TaskPosition = this.$el.getBoundingClientRect();
     this.taskPosition.left = left;
     this.taskPosition.top = top;
-    console.log(this.task.id + " " + this.taskPosition.top);
+    this.$emit("sendTaskPosition", this.taskPosition);
   },
 });
 </script>
