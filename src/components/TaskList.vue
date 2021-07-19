@@ -156,8 +156,8 @@ export default defineComponent({
         console.log(errors);
       });
       this.tasksModel.forEach((task) => {
-        let refName: string = `Task = ${task.id}`;
-        (this.$refs[refName] as any).getBoundingClientRect();
+        let refName: string = `Task ${task.id}`;
+        console.log((this.$refs[refName] as any).$el.getBoundingClientRect());
         // this.taskPosition.top = top;
         // this.$emit("sendTaskPosition", this.taskPosition);
         // console.log(this.task.id + " " + this.taskPosition.top);
