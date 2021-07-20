@@ -7,6 +7,7 @@
       :task="task"
       @clickOutside="onClickOutside"
       v-if="isModalOpen"
+      :taskPosition="calculateTaskPosition(task.id)"
     >
     </Modal>
     <div class="text-inline">
@@ -30,6 +31,7 @@
       v-model:tasks="tasks"
       @askToDeleteTask="deleteTask"
       @sendUpTaskPositonAgain="0"
+      @sendTaskPositions="passTaskPositonsToModal"
     />
   </div>
 </template>
@@ -43,6 +45,8 @@ import TaskList from "./TaskList.vue";
 import Modal from "./Modal.vue";
 import TaskService from "@/services/TaskService";
 import { TaskType } from "@/types/Task";
+import { TaskPosition } from "@/types/TaskPosition";
+import { TasksPositionObject } from "@/types/TasksPositionObject";
 import _ from "lodash";
 
 export default defineComponent({
@@ -69,9 +73,16 @@ export default defineComponent({
       isModalOpen: false,
       isInputOpen: false,
       taskPassUpdate: {} as TaskType,
+      taskPositionsObjectParent: {} as TasksPositionObject,
     };
   },
   methods: {
+    calculateTaskPosition: function (id: number): TaskPosition {
+      return this.taskPositionsObjectParent[id];
+    },
+    passTaskPositonsToModal: function (taskPositons: TasksPositionObject) {
+      this.taskPositionsObjectParent = taskPositons;
+    },
     addNewTaskToTasks: function (task: TaskType): void {
       this.tasks.push(task);
       this.buttonText = "Add Task";

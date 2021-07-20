@@ -39,6 +39,7 @@ import vClickOutside from "v-click-outside";
 
 library.add([faTimesCircle] as any);
 import { TaskType } from "@/types/Task";
+import { TaskPosition } from "@/types/TaskPosition";
 
 export default defineComponent({
   name: "Modal",
@@ -61,6 +62,9 @@ export default defineComponent({
       default: () => ({
         title: "this is a detault",
       }),
+    },
+    taskPosition: {
+      type: Object as PropType<TaskPosition>,
     },
   },
   created() {
@@ -114,12 +118,12 @@ export default defineComponent({
         this.modalTask.date = newValue;
       },
     },
-    modalPositionStyle: function () {
+    modalPositionStyle: function (): object {
       let styleObject = {
         position: "absolute",
-        left: "50%",
-        top: "50%",
-        transform: "translate(-50%, -50%)",
+        left: `${this.taskPosition?.left}px`,
+        top: `${this.taskPosition?.top}px`,
+        // transform: "translate(-50%, -50%)",
       };
       return styleObject;
     },
@@ -161,9 +165,6 @@ export default defineComponent({
 }
 .modal--center {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
 }
 .modal--green-reminder {
   border-left: green solid 10px;

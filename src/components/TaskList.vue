@@ -114,7 +114,9 @@ export default defineComponent({
       this.info.splice(foundIndex, 1, this.updateWithThisTask);
     },
   },
-
+  mounted: function () {
+    this.updateAndSendPositions();
+  },
   methods: {
     backgroundColor: function (index: number): string {
       if (index % 2 == 0) {
@@ -155,16 +157,21 @@ export default defineComponent({
       Promise.all(serviceArray).catch((errors) => {
         console.log(errors);
       });
-      this.tasksModel.forEach((task) => {
-        let refName: string = `Task ${task.id}`;
-        console.log((this.$refs[refName] as any).$el.getBoundingClientRect());
-        // this.taskPosition.top = top;
-        // this.$emit("sendTaskPosition", this.taskPosition);
-        // console.log(this.task.id + " " + this.taskPosition.top);
-      });
+      this.updateAndSendPositions();
     },
     deleteTask2: function (id: number) {
       this.$emit("askToDeleteTask", id);
+    },
+    updateAndSendPositions: function (): void {
+      this.tasksModel.forEach((task) => {
+        let refName: string = `Task ${task.id}`;
+        let top: number, left: number;
+        top = (this.$refs[refName] as any).$el.getBoundingClientRect().top;
+        left = (this.$refs[refName] as any).$el.getBoundingClientRect().left;
+        let posObject: TaskPosition = { top: top, left: left };
+        this.positionsObject[task.id] = posObject;
+      });
+      this.$emit("sendTaskPositions", this.positionsObject);
     },
     updatePositons: function () {
       this.tasks.forEach((task) => {
