@@ -2,18 +2,18 @@
   <div class="padding-end">
     <draggable
       v-model="tasksModel"
-      group="description"
       @start="drag = true"
       @end="drag = false"
       tag="transition-group"
       item-key="id"
+      v-bind="dragOptions"
       :component-data="{
         tag: 'ul',
         type: 'transition-group',
         name: !drag ? 'flip-list' : null,
-        class: 'task-list--remove-padding',
       }"
       @change="onChange"
+      class="task-list--remove-padding"
     >
       <template #item="{ element, index }">
         <Task
