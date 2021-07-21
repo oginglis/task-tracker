@@ -138,7 +138,7 @@ export default defineComponent({
 
 .task__lhs {
   text-align: left;
-  color: black;
+  color: rgb(243, 243, 243);
   margin-left: 0px;
 }
 

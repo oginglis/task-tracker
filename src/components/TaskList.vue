@@ -21,7 +21,7 @@
           @sendTaskPosition="sendUpTaskPosition(element.id, $event)"
           :task="element"
           :key="element.id"
-          :class="backgroundColor(index)"
+          :style="backgroundColor(index)"
           v-on:askToDeleteTask2="deleteTask2(element.id)"
           v-on:askToUpdateTask2="askToUpdateTask3"
           :ref="`Task ${element.id}`"
@@ -66,6 +66,7 @@ export default defineComponent({
         title: "Arrow Function Expression",
       }),
     },
+    listColour: String,
     tasks: {
       type: Array as PropType<Array<TaskType>>,
       default: () => [
@@ -118,11 +119,19 @@ export default defineComponent({
     this.updateAndSendPositions();
   },
   methods: {
-    backgroundColor: function (index: number): string {
+    backgroundColor: function (index: number): object {
+      let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
+
+      let hsl: string[] = hslReg.exec(this.listColour!)!.slice(1, 4);
+
       if (index % 2 == 0) {
-        return "task--light-grey-background";
+        return {
+          backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 10}%`,
+        };
       } else {
-        return "task--darker-grey-background";
+        return {
+          backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 10}%`,
+        };
       }
     },
     askToUpdateTask3: function (id: Number) {

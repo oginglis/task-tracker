@@ -16,3 +16,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+h1 {
+  color: rgb(243, 243, 243);
+}
+</style>

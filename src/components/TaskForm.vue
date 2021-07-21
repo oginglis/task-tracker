@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form ref="inputForm">
+    <form ref="inputForm" :style="formColourStyles">
       <label for="title">Task</label>
       <input
         class="v-spacer task-box-input"
@@ -69,6 +69,10 @@ export default defineComponent({
   watch: {},
   props: {
     taskCount: Number,
+    formColour: {
+      type: String,
+      default: "hsl(39, 81%, 73%)",
+    },
   },
   methods: {
     handleCalendarClick: function (): void {
@@ -96,6 +100,17 @@ export default defineComponent({
         console.log(error);
       });
       this.$emit("newTaskCreated", this.task);
+    },
+  },
+  computed: {
+    formColourStyles: function () {
+      let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
+
+      let hsl: string[] = hslReg.exec(this.formColour!)!.slice(1, 4);
+      console.log(hsl);
+      return {
+        backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 10}%`,
+      };
     },
   },
 });

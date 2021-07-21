@@ -3,7 +3,7 @@
     v-click-outside="clickOutsideHandler"
     class="modal modal--center"
     :class="{ 'modal--green-reminder': task.reminder }"
-    :style="modalPositionStyle"
+    :style="[modalPositionStyle, modalColourStyles]"
   >
     <font-awesome-icon
       class="modal__close-icon"
@@ -66,6 +66,10 @@ export default defineComponent({
     taskPosition: {
       type: Object as PropType<TaskPosition>,
     },
+    modalColour: {
+      type: String,
+      default: "hsl(39, 81%, 73%)",
+    },
   },
   created() {
     this.modalTask.title = this.task.title;
@@ -126,6 +130,14 @@ export default defineComponent({
         // transform: "translate(-50%, -50%)",
       };
       return styleObject;
+    },
+    modalColourStyles: function () {
+      let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
+      let hsl: string[] = hslReg.exec(this.modalColour!)!.slice(1, 4);
+      console.log(hsl);
+      return {
+        backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 10}%`,
+      };
     },
   },
   watch: {

@@ -1,5 +1,8 @@
 <template>
-  <div class="task-tracker-wrap">
+  <div
+    class="task-tracker-wrap"
+    :style="{ backgroundColor: taskTrackerColour }"
+  >
     <Modal
       @toggleOpenModal="toggleModal"
       @rerender="updateList"
@@ -8,12 +11,14 @@
       @clickOutside="onClickOutside"
       v-if="isModalOpen"
       :taskPosition="calculateTaskPosition(task.id)"
+      :modalColour="taskTrackerColour"
     >
     </Modal>
     <div class="text-inline">
       <Header title="Task Tracker" />
       <Button @clickButton="changeButton" :buttonText="buttonText" />
     </div>
+
     <transition name="fade">
       <TaskForm
         v-if="buttonText !== 'Add a Task'"
@@ -22,11 +27,14 @@
         @finishUpdate="finishedPatch"
         :taskCount="totalTaskCount"
         @newTaskCreated="addNewTaskToTasks"
+        :formColour="taskTrackerColour"
       />
     </transition>
+    <ColourSelector @changeColour="changeTaskTrackerColour" />
     <TaskList
       :updateWithThisTask="taskPassUpdate"
       @askToUpdateTask4="openFormWithTask"
+      :listColour="taskTrackerColour"
       v-if="tasks"
       v-model:tasks="tasks"
       @askToDeleteTask="deleteTask"
@@ -43,6 +51,7 @@ import Button from "./Button.vue";
 import TaskForm from "./TaskForm.vue";
 import TaskList from "./TaskList.vue";
 import Modal from "./Modal.vue";
+import ColourSelector from "./ColourSelector.vue";
 import TaskService from "@/services/TaskService";
 import { TaskType } from "@/types/Task";
 import { TaskPosition } from "@/types/TaskPosition";
@@ -57,6 +66,7 @@ export default defineComponent({
     TaskForm,
     TaskList,
     Modal,
+    ColourSelector,
   },
   created() {
     TaskService.getTasks().then((response): void => {
@@ -74,9 +84,13 @@ export default defineComponent({
       isInputOpen: false,
       taskPassUpdate: {} as TaskType,
       taskPositionsObjectParent: {} as TasksPositionObject,
+      taskTrackerColour: "hsl(39, 81%, 73%)",
     };
   },
   methods: {
+    changeTaskTrackerColour: function (colour: string): void {
+      this.taskTrackerColour = colour;
+    },
     calculateTaskPosition: function (id: number): TaskPosition {
       return this.taskPositionsObjectParent[id];
     },
