@@ -12,6 +12,7 @@
       v-if="isModalOpen"
       :taskPosition="calculateTaskPosition(task.id)"
       :modalColour="taskTrackerColour"
+      @toggleReminder="updateTaskReminder"
     >
     </Modal>
     <div class="text-inline">
@@ -88,6 +89,12 @@ export default defineComponent({
     };
   },
   methods: {
+    updateTaskReminder: function (task: TaskType) {
+      this.task.reminder = !this.task.reminder;
+      TaskService.patchTask(task.id, this.task).catch(function (error) {
+        console.log(error);
+      });
+    },
     changeTaskTrackerColour: function (colour: string): void {
       this.taskTrackerColour = colour;
     },

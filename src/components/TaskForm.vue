@@ -105,9 +105,7 @@ export default defineComponent({
   computed: {
     formColourStyles: function () {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
-
       let hsl: string[] = hslReg.exec(this.formColour!)!.slice(1, 4);
-      console.log(hsl);
       return {
         backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 10}%`,
       };

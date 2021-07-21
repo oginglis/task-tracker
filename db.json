@@ -4,40 +4,50 @@
       "title": "I have added TypeScrip and font-awesome. The key was the update all the packages to ",
       "date": "2021-07-04T19:59",
       "id": 14029,
-      "position": 3
+      "position": 4,
+      "reminder": true
     },
     {
-      "title": "New Task ADDEEEE",
+      "title": "This task tracker is slower starting to work!!!",
       "date": "2021-07-07T13:51",
       "id": 14037,
-      "position": 1
+      "position": 3,
+      "reminder": true
     },
     {
-      "reminder": false,
+      "reminder": true,
       "title": "Please cThis lets me update the task an this work I need oto make this task really long so ",
       "date": "2021-03-02T00:00:00.000Z",
       "id": 14040,
-      "position": 0
+      "position": 1
     },
     {
       "title": "Ollie is adding a task",
       "date": "2021-07-19T23:00:00.000Z",
-      "reminder": true,
-      "id": 14042,
-      "position": 7
-    },
-    {
-      "title": "This is a test",
       "reminder": false,
-      "id": 14043,
-      "date": "2021-07-04T23:00:00.000Z",
+      "id": 14042,
       "position": 2
     },
     {
-      "title": "This is a new task to add with a positions",
+      "title": "This is a test",
       "reminder": true,
-      "id": 14044,
+      "id": 14043,
+      "date": "2021-07-04T23:00:00.000Z",
       "position": 6
+    },
+    {
+      "title": "This is a new task for today ",
+      "date": "2021-07-13T23:00:00.000Z",
+      "reminder": false,
+      "id": 14044,
+      "position": 5
+    },
+    {
+      "date": "2021-07-20T23:00:00.000Z",
+      "title": "Work Work Work Work Work Work Work Work Work Work Work Work Work Work Work ",
+      "reminder": false,
+      "id": 14045,
+      "position": 0
     }
   ],
   "comments": [

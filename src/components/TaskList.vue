@@ -17,7 +17,7 @@
     >
       <template #item="{ element, index }">
         <Task
-          @toggleReminda="convertRemind(element)"
+          @toggleTaskReminder="convertRemind(element)"
           @sendTaskPosition="sendUpTaskPosition(element.id, $event)"
           :task="element"
           :key="element.id"
@@ -106,7 +106,9 @@ export default defineComponent({
       },
     },
   },
-
+  created() {
+    window.addEventListener("resize", this.updateAndSendPositions);
+  },
   watch: {
     updateWithThisTask: function () {
       var foundIndex = this.info.findIndex(
@@ -144,6 +146,9 @@ export default defineComponent({
       } else {
         task.reminder = false;
       }
+      TaskService.patchTask(task.id, task).catch(function (error) {
+        console.log(error);
+      });
     },
 
     sortList: function (): void {

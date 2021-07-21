@@ -14,6 +14,15 @@
     <p class="modal__info" contenteditable="true" @blur="update">
       {{ modalTask.title }}
     </p>
+    <font-awesome-icon
+      @click="handleBellClick"
+      class="modal__icon"
+      icon="bell"
+      :class="{
+        'modal__icon__bellactive animate__animated animate__headShake':
+          task.reminder,
+      }"
+    ></font-awesome-icon>
     <h3 class="modal__title">Date:</h3>
     <Datepicker
       class="modal__date"
@@ -60,7 +69,11 @@ export default defineComponent({
     task: {
       type: Object as PropType<TaskType>,
       default: () => ({
-        title: "this is a detault",
+        title: "This is a demo tasks",
+        date: "2021-07-07T13:51",
+        reminder: true,
+        position: 1,
+        id: 1202,
       }),
     },
     taskPosition: {
@@ -77,7 +90,16 @@ export default defineComponent({
     this.modalTask.id = this.task.id;
     this.modalTask.reminder = this.task.reminder;
   },
+  updated() {
+    this.modalTask.title = this.task.title;
+    this.modalTask.date = this.task.date;
+    this.modalTask.id = this.task.id;
+    this.modalTask.reminder = this.task.reminder;
+  },
   methods: {
+    handleBellClick: function () {
+      this.$emit("toggleReminder", this.task);
+    },
     toggleOpenModal: function () {
       this.$emit("toggleOpenModal");
     },
@@ -87,7 +109,7 @@ export default defineComponent({
         title: this.modalTask.title,
         date: this.modalTask.date,
         reminder: this.modalTask.reminder,
-        positon: this.modalTask.position,
+        position: this.modalTask.position,
         id: id,
       };
 
@@ -134,7 +156,7 @@ export default defineComponent({
     modalColourStyles: function () {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
       let hsl: string[] = hslReg.exec(this.modalColour!)!.slice(1, 4);
-      console.log(hsl);
+
       return {
         backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 10}%`,
       };
@@ -174,6 +196,7 @@ export default defineComponent({
   box-shadow: 0px 0px 100px 30px black;
   background-color: #f8f8f8;
   padding: 20px;
+  border: 1px black solid;
 }
 .modal--center {
   position: absolute;
@@ -194,12 +217,10 @@ export default defineComponent({
 }
 
 .modal__title {
-  font-size: 20px;
   margin-top: 0.8rem;
   margin-bottom: 0.8rem;
 }
 .modal__info {
-  font-size: 1.2em;
   font-weight: bold;
   background: rgba(105, 24, 24, 0);
   border: none;
@@ -231,5 +252,20 @@ export default defineComponent({
 
 .modal__submit {
   margin-top: 1rem;
+}
+
+.modal__icon {
+  display: inline;
+  margin-right: 10px;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+.modal__icon:hover {
+  cursor: pointer;
+}
+
+.modal__icon__bellactive {
+  color: green;
 }
 </style>

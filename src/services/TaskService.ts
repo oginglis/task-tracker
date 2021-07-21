@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { TaskType } from '../types/Task'
 
 const apiClient = axios.create({
   baseURL: 'http://localhost:3000',
@@ -19,7 +20,7 @@ export default {
   postTask(task: Object) {
     return apiClient.post('/tasks/', task)
   },
-  patchTask(id: Number, update: Object) {
+  patchTask(id: Number, update: TaskType) {
     return apiClient.patch('/tasks/' + id, update)
   }
 }

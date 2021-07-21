@@ -23,6 +23,10 @@
         @click="toggleRemider"
         class="fa-spacer"
         icon="bell"
+        :class="{
+          'form__icon__bellactive animate__animated animate__headShake':
+            task.reminder,
+        }"
       ></font-awesome-icon>
       <font-awesome-icon
         @click="askToUpdateTask(task.id)"
@@ -41,7 +45,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
-
+import "animate.css";
 import {
   faTimesCircle,
   faEdit,
@@ -59,6 +63,7 @@ export default defineComponent({
     return {
       editTask: false,
       taskPosition: {} as TaskPosition,
+      bellShakeAllowed: false,
     };
   },
   props: {
@@ -85,6 +90,7 @@ export default defineComponent({
       return `Task=${this.task.position}`;
     },
   },
+  beforeMount() {},
   methods: {
     askToDeleteTask: function (id: number): void {
       this.$emit("askToDeleteTask2", id);
@@ -98,7 +104,7 @@ export default defineComponent({
       }
     },
     toggleRemider: function (): void {
-      this.$emit("toggleReminda");
+      this.$emit("toggleTaskReminder");
     },
   },
   watch: {
