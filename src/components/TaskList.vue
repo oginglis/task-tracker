@@ -20,7 +20,7 @@
           @toggleTaskReminder="convertRemind(element)"
           @sendTaskPosition="sendUpTaskPosition(element.id, $event)"
           :task="element"
-          :key="element.id"
+          :key="index"
           :style="backgroundColor(index)"
           v-on:askToDeleteTask2="deleteTask2(element.id)"
           v-on:askToUpdateTask2="askToUpdateTask3"
