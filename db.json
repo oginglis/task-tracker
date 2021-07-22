@@ -11,22 +11,22 @@
       "title": "This task tracker is slower starting to work!!!",
       "date": "2021-07-07T13:51",
       "id": 14037,
-      "position": 3,
-      "reminder": true
+      "position": 2,
+      "reminder": false
     },
     {
       "reminder": true,
       "title": "Please cThis lets me update the task an this work I need oto make this task really long so ",
       "date": "2021-03-02T00:00:00.000Z",
       "id": 14040,
-      "position": 1
+      "position": 5
     },
     {
       "title": "Ollie is adding a task",
       "date": "2021-07-19T23:00:00.000Z",
       "reminder": false,
       "id": 14042,
-      "position": 2
+      "position": 0
     },
     {
       "title": "This is a test",
@@ -40,14 +40,14 @@
       "date": "2021-07-13T23:00:00.000Z",
       "reminder": false,
       "id": 14044,
-      "position": 5
+      "position": 1
     },
     {
       "date": "2021-07-20T23:00:00.000Z",
       "title": "Work Work Work Work Work Work Work Work Work Work Work Work Work Work Work ",
       "reminder": false,
       "id": 14045,
-      "position": 0
+      "position": 3
     }
   ],
   "comments": [
