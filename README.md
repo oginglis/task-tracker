@@ -34,6 +34,7 @@
 - [] 'Enter' to close module window
 - [] Delseclting Date Changes the reminder setting
 - [] Opening module at task positon. Sending task data through props.
+- [] Use UUID to create unique ID on form submit
 CHANGE SHOULD BE HAPPENING AT TASKS LIST LEVEL.
 
 Method in vue list that calculates list item positon
