@@ -1,16 +1,25 @@
 {
   "tasks": [
     {
-      "title": "This is the modal without the old updated method and it lets you update the text",
+      "title": "This is a task",
       "reminder": false,
+      "completed": false,
       "id": 1,
-      "position": 0
+      "position": 1
     },
     {
-      "title": "I am confused why it is not longer",
+      "title": "This is another task",
       "reminder": false,
+      "completed": false,
       "id": 2,
-      "position": 1
+      "position": 2
+    },
+    {
+      "title": "I want to add a really really long task to see what happenes okat this is me going to see",
+      "reminder": false,
+      "completed": false,
+      "id": 3,
+      "position": 0
     }
   ],
   "comments": [

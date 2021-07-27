@@ -19,6 +19,7 @@ export default defineComponent({
 
 <style scoped>
 h1 {
-  color: rgb(243, 243, 243);
+  font-weight: initial;
+  margin: 0.5rem 0;
 }
 </style>

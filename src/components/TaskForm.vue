@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="form">
     <form ref="inputForm" :style="formColourStyles">
       <label for="title">Task</label>
       <input
@@ -95,6 +95,9 @@ export default defineComponent({
       if (this.task.reminder == undefined) {
         this.task.reminder = false;
       }
+      if (this.task.completed == undefined) {
+        this.task.completed = false;
+      }
       TaskService.postTask(this.task).catch(function (error) {
         console.log(error);
       });
@@ -119,16 +122,21 @@ export default defineComponent({
   width: 100%;
   align-self: end;
 }
+
+.form {
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
 form {
   display: flex;
   flex-direction: column;
   padding: 10px;
   align-items: flex-start;
-  border: 1px black solid;
+
   margin: 0 auto;
   border-radius: 10px;
-  width: 470px;
-  background-color: linear-gradient("#FFC300", "#C7003A");
+
   background-size: cover;
 }
 

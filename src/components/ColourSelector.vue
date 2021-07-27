@@ -19,7 +19,7 @@ export default defineComponent({
   data: function () {
     return {
       colours: [
-        { colour: "hsl(32, 26%, 54%)", active: true },
+        { colour: "hsl(39, 81%, 73%)", active: true },
         { colour: "hsl(41, 51%, 53%)", active: false },
         { colour: "hsl(31, 65%, 55%)", active: false },
         { colour: "hsl(13, 64%, 47%)", active: false },
@@ -47,7 +47,7 @@ export default defineComponent({
 .dot {
   height: 25px;
   width: 25px;
-  margin: 0rem 1rem;
+
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
@@ -65,6 +65,7 @@ export default defineComponent({
 .dots__wrapper {
   display: flex;
   width: 100%;
-  margin: 1rem 0rem 0rem 0rem;
+  margin: 0.5rem 0rem 0rem 0rem;
+  justify-content: space-between;
 }
 </style>

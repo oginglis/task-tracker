@@ -6,39 +6,40 @@
       editTask ? 'editTask' : '',
     ]"
     :ref="createTaskName"
+    @click="askToUpdateTask(task.id)"
   >
+    <font-awesome-icon
+      @click="askToDeleteTask(task.id)"
+      class="fa-spacer"
+      icon="check"
+    ></font-awesome-icon>
     <div
-      class="task__lhs"
-      :class="{ 'task__lhs--compensate-margin': task.reminder }"
+      class="task_middle"
+      :class="{ 'task_middle--compensate-margin': task.reminder }"
     >
-      <h1 class="task__lhs__title task__lhs__title--restrict">
+      <h1 class="task_middle__title task_middle__title--restrict">
         {{ task.title }}
       </h1>
-      <h2 class="task__lhs__date">
+      <h2 class="task_middle__date">
         {{ momentDate }}
       </h2>
     </div>
-    <div class="task__rhs">
-      <font-awesome-icon
-        @click="toggleRemider"
-        class="fa-spacer"
-        icon="bell"
-        :class="{
-          'form__icon__bellactive animate__animated animate__headShake':
-            task.reminder,
-        }"
-      ></font-awesome-icon>
-      <font-awesome-icon
-        @click="askToUpdateTask(task.id)"
-        class="fa-spacer"
-        icon="edit"
-      ></font-awesome-icon>
-      <font-awesome-icon
-        @click="askToDeleteTask(task.id)"
-        class="fa-spacer"
-        icon="times-circle"
-      ></font-awesome-icon>
-    </div>
+
+    <!-- <font-awesome-icon
+      @click="toggleRemider"
+      class="fa-spacer"
+      icon="bell"
+      :class="{
+        'form__icon__bellactive animate__animated animate__headShake':
+          task.reminder,
+      }"
+    ></font-awesome-icon> -->
+
+    <font-awesome-icon
+      @click="askToDeleteTask(task.id)"
+      class="fa-spacer"
+      icon="times"
+    ></font-awesome-icon>
   </div>
 </template>
 
@@ -46,16 +47,12 @@
 import { defineComponent } from "vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import "animate.css";
-import {
-  faTimesCircle,
-  faEdit,
-  faBell,
-} from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faCheck, faBell } from "@fortawesome/free-solid-svg-icons";
 import { PropType } from "vue";
 import { TaskType } from "@/types/Task";
 import { TaskPosition } from "@/types/TaskPosition";
 import moment from "moment";
-library.add([faTimesCircle, faEdit, faBell] as any);
+library.add([faTimes, faCheck, faBell] as any);
 export default defineComponent({
   name: "Task",
   components: {},
@@ -124,10 +121,11 @@ export default defineComponent({
 <style scoped>
 .task {
   margin: 5px auto;
+
   border-radius: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding-left: 40px;
   padding-right: 40px;
   box-sizing: border-box;
@@ -138,27 +136,31 @@ export default defineComponent({
   filter: brightness(95%);
 }
 
+.task:hover .fa-spacer {
+  display: initial;
+}
+
 .task--green-reminder {
   border-left: 10px solid green;
 }
 
-.task__lhs {
-  text-align: left;
-
+.task_middle {
+  text-align: center;
+  width: 70%;
   margin-left: 0px;
 }
 
-.task__lhs__title {
+.task_middle__title {
   font-size: 1em;
   font-weight: initial;
 }
 
-.task__lhs__date {
+.task_middle__date {
   font-size: 0.6rem;
   font-weight: initial;
 }
 
-.task__lhs__title--restrict {
+.task_middle__title--restrict {
   max-height: 3.6em;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -166,7 +168,7 @@ export default defineComponent({
   line-height: 1.2em;
 }
 
-.task__lhs--compensate-margin {
+.task_middle--compensate-margin {
   margin-left: -10px;
 }
 
@@ -177,6 +179,7 @@ export default defineComponent({
 }
 
 .fa-spacer {
+  display: none;
   margin: 5px;
   color: black;
 }

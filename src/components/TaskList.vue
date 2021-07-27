@@ -1,5 +1,5 @@
 <template>
-  <div class="padding-end">
+  <div class="task_list padding-end">
     <draggable
       v-model="tasksModel"
       @start="drag = true"
@@ -24,8 +24,9 @@
           :task="element"
           :key="index"
           :style="backgroundColor(index)"
-          v-on:askToDeleteTask2="deleteTask2(element.id)"
-          v-on:askToUpdateTask2="askToUpdateTask3"
+          @askToDeleteTask2="deleteTask2(element.id)"
+          @click="askToUpdateTask3"
+          @askToUpdateTask2="askToUpdateTask3"
           :ref="`Task ${element.id}`"
         />
       </template>
@@ -211,6 +212,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.task_list {
+  width: 100%;
+}
 .padding-end:last-child {
   padding-bottom: 10px;
 }

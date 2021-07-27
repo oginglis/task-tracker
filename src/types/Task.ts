@@ -3,5 +3,6 @@ export interface TaskType {
   date: string;
   reminder: Boolean;
   position: number;
+  completed: Boolean;
   id: number;
 }

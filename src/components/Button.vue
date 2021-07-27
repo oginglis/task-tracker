@@ -51,6 +51,7 @@ export default defineComponent({
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
+  margin-bottom: 0.5rem;
 }
 
 .btn__plus {
@@ -59,7 +60,7 @@ export default defineComponent({
 
 .btn--red {
   background-color: rgb(192, 29, 29);
-  color: white;
+
   font-size: 16px;
 }
 

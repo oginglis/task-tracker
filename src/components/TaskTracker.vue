@@ -21,6 +21,7 @@
         @clickButton="changeButton"
         :buttonText="buttonText"
         :buttonBGColor="taskTrackerColour"
+        :style="calculatedTextColor"
       />
     </div>
 
@@ -36,6 +37,7 @@
       />
     </transition>
     <ColourSelector @changeColour="changeTaskTrackerColour" />
+    <p v-if="emptyMessage">You have no Tasks on this list yet.</p>
     <TaskList
       :updateWithThisTask="taskPassUpdate"
       @askToUpdateTask4="openFormWithTask"
@@ -138,6 +140,7 @@ export default defineComponent({
         this.task.date = task[0].date;
         this.task.reminder = task[0].reminder;
         this.task.title = task[0].title;
+        this.task.completed = task[0].completed;
         this.task.id = parseInt(task[0].id);
       } else if (this.isModalOpen == true) {
         this.isModalOpen = false;
@@ -181,6 +184,13 @@ export default defineComponent({
   },
 
   computed: {
+    emptyMessage: function (): Boolean {
+      if (this.tasks.length == 0) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     totalTaskCount: function (): number {
       var length: number = 0;
       if (this.tasks) {
@@ -220,14 +230,14 @@ export default defineComponent({
 .task-tracker-wrap {
   padding: 0px 20px;
   border-radius: 10px;
-  width: 500px;
+  width: 400px;
   margin: 0px auto;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: content-box;
-  border: 1px black solid;
+
   min-height: 50rem;
 }
 

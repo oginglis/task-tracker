@@ -72,6 +72,7 @@ export default defineComponent({
         title: "This is a demo tasks",
         date: "2021-07-07T13:51",
         reminder: true,
+        completed: false,
         position: 1,
         id: 1202,
       }),
@@ -88,6 +89,7 @@ export default defineComponent({
     this.modalTask.title = this.task.title;
     this.modalTask.date = this.task.date;
     this.modalTask.id = this.task.id;
+    this.modalTask.completed = this.task.completed;
     this.modalTask.reminder = this.task.reminder;
   },
   methods: {
@@ -104,6 +106,7 @@ export default defineComponent({
         date: this.modalTask.date,
         reminder: this.modalTask.reminder,
         position: this.modalTask.position,
+        completed: this.modalTask.completed,
         id: id,
       };
 
@@ -177,7 +180,7 @@ export default defineComponent({
 
 <style scoped>
 .modal {
-  width: 500px;
+  font-weight: initial;
   box-sizing: border-box;
   min-width: 400px;
   min-height: 200px;
