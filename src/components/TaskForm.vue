@@ -50,7 +50,6 @@ import { TaskType } from "@/types/Task";
 import Datepicker from "vue3-datepicker";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import "animate.css";
-
 import { faCalendarAlt, faBell } from "@fortawesome/free-solid-svg-icons";
 
 library.add([faCalendarAlt, faBell] as any);

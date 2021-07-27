@@ -90,12 +90,6 @@ export default defineComponent({
     this.modalTask.id = this.task.id;
     this.modalTask.reminder = this.task.reminder;
   },
-  updated() {
-    this.modalTask.title = this.task.title;
-    this.modalTask.date = this.task.date;
-    this.modalTask.id = this.task.id;
-    this.modalTask.reminder = this.task.reminder;
-  },
   methods: {
     handleBellClick: function () {
       this.$emit("toggleReminder", this.task);

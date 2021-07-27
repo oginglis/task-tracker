@@ -106,7 +106,7 @@ export default defineComponent({
     },
     addNewTaskToTasks: function (task: TaskType): void {
       this.tasks.push(task);
-      this.buttonText = "Add Task";
+      this.buttonText = "Add a Task";
       this.updatePositionsWithIndexes();
     },
     sortIndexes: function (elems: TaskType[]) {
@@ -208,10 +208,12 @@ export default defineComponent({
   align-items: center;
   box-sizing: content-box;
   border: 1px black solid;
+  min-height: 50rem;
 }
 
 .text-inline {
   display: flex;
+  flex-direction: column;
   align-items: center;
   align-content: space-between;
   justify-content: space-between;

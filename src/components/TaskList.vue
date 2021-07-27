@@ -6,6 +6,8 @@
       @end="drag = false"
       tag="transition-group"
       item-key="id"
+      direction="horizontal"
+      delay="10"
       v-bind="dragOptions"
       :component-data="{
         tag: 'ul',
