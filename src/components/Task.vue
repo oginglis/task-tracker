@@ -144,16 +144,18 @@ export default defineComponent({
 
 .task__lhs {
   text-align: left;
-  color: rgb(243, 243, 243);
+
   margin-left: 0px;
 }
 
 .task__lhs__title {
-  font-size: 1.2em;
+  font-size: 1em;
+  font-weight: initial;
 }
 
 .task__lhs__date {
-  font-size: 10px;
+  font-size: 0.6rem;
+  font-weight: initial;
 }
 
 .task__lhs__title--restrict {

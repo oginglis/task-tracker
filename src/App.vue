@@ -29,19 +29,13 @@ export default defineComponent({
 </script>
 
 <style>
-@font-face {
-  font-family: "MonumentGrotesk";
-  src: url("assets/fonts/MonumentGrotesk-Medium.woff") format("woff");
-  font-weight: medium;
-}
+@import url("https://use.typekit.net/saf3ibf.css");
 
-@font-face {
-  font-family: "MonumentGrotesk";
-  src: url("assets/fonts/MonumentGrotesk-Regular.woff") format("woff");
-  font-weight: normal;
-}
 #app {
-  font-family: MonumentGrotesk;
+  font-family: aktiv-grotesk, sans-serif;
+  font-weight: 200;
+  font-style: normal;
+  font-size: 15px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

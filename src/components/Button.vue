@@ -1,5 +1,5 @@
 <template>
-  <button class="btn btn--red" @click="clickButton">
+  <button class="btn" @click="clickButton" :style="buttonBGColour">
     <font-awesome-icon class="btn__plus" icon="plus"></font-awesome-icon>
     {{ buttonText }}
   </button>
@@ -13,10 +13,26 @@ library.add([faPlus] as any);
 
 export default defineComponent({
   name: "Button",
+  data: function () {
+    return {};
+  },
   props: {
     buttonText: {
       type: String,
       default: "Add Task",
+    },
+    buttonBGColor: {
+      type: String,
+      default: "hsl(39, 81%, 83%)",
+    },
+  },
+  computed: {
+    buttonBGColour: function () {
+      let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
+      let hsl: string[] = hslReg.exec(this.buttonBGColor!)!.slice(1, 4);
+      return {
+        backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 10}%`,
+      };
     },
   },
   methods: {
@@ -34,7 +50,6 @@ export default defineComponent({
   border-radius: 10px;
   text-decoration: none;
   display: inline-block;
-
   cursor: pointer;
 }
 

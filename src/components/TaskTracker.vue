@@ -1,7 +1,7 @@
 <template>
   <div
     class="task-tracker-wrap"
-    :style="{ backgroundColor: taskTrackerColour }"
+    :style="[calculatedBackgroundColor, calculatedTextColor]"
   >
     <Modal
       @toggleOpenModal="toggleModal"
@@ -17,7 +17,11 @@
     </Modal>
     <div class="text-inline">
       <Header title="Task Tracker" />
-      <Button @clickButton="changeButton" :buttonText="buttonText" />
+      <Button
+        @clickButton="changeButton"
+        :buttonText="buttonText"
+        :buttonBGColor="taskTrackerColour"
+      />
     </div>
 
     <transition name="fade">
@@ -58,7 +62,7 @@ import { TaskType } from "@/types/Task";
 import { TaskPosition } from "@/types/TaskPosition";
 import { TasksPositionObject } from "@/types/TasksPositionObject";
 import _ from "lodash";
-
+import tinyColor from "tinycolor2";
 export default defineComponent({
   name: "TaskTracker",
   components: {
@@ -183,6 +187,22 @@ export default defineComponent({
         length = this.tasks.length;
       }
       return length;
+    },
+    calculatedBackgroundColor: function (): object {
+      return {
+        backgroundColor: this.taskTrackerColour,
+      };
+    },
+    calculatedTextColor: function (): object {
+      if (tinyColor(this.taskTrackerColour).isLight()) {
+        return {
+          color: "black",
+        };
+      } else {
+        return {
+          color: "white",
+        };
+      }
     },
   },
 });
