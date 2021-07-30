@@ -125,9 +125,8 @@ export default defineComponent({
   border-radius: 10px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding-left: 40px;
-  padding-right: 40px;
+  justify-content: space-evenly;
+
   box-sizing: border-box;
 }
 
@@ -180,7 +179,8 @@ export default defineComponent({
 
 .fa-spacer {
   display: none;
-  margin: 5px;
+  width: 0.9rem;
+  margin: 0px;
   color: black;
 }
 .fa-spacer:hover {
