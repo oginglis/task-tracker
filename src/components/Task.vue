@@ -9,6 +9,7 @@
     @click="askToUpdateTask(task.id)"
   >
     <font-awesome-icon
+      :style="styleIcon"
       @click="askToDeleteTask(task.id)"
       class="fa-spacer"
       icon="check"
@@ -36,6 +37,7 @@
     ></font-awesome-icon> -->
 
     <font-awesome-icon
+      :style="styleIcon"
       @click="askToDeleteTask(task.id)"
       class="fa-spacer"
       icon="times"
@@ -70,6 +72,10 @@ export default defineComponent({
         title: "Arrow Function Expression",
       }),
     },
+    bgColor: {
+      type: String,
+      default: "hsl(39, 81%, 73%)",
+    },
   },
   computed: {
     isTrueSet: function () {
@@ -79,7 +85,18 @@ export default defineComponent({
         return false;
       }
     },
+    styleIcon: function (): object {
+      let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
 
+      let hsl: string[] = hslReg.exec(this.bgColor!)!.slice(1, 4);
+      return {
+        backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 20}%`,
+        border: `0.4rem solid hsl(${hsl[0]},${hsl[1]}%,${
+          parseInt(hsl[2]) + 10
+        }% `,
+        "--color-hover": `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 45}%`,
+      };
+    },
     momentDate: function (): string {
       return moment(this.task.date).format("MMM Do YYYY");
     },
@@ -121,22 +138,31 @@ export default defineComponent({
 <style scoped>
 .task {
   margin: 5px auto;
-
   border-radius: 10px;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-
   box-sizing: border-box;
+  transition: filter 0.2s ease;
 }
 
 .task:hover {
-  cursor: pointer;
-  filter: brightness(95%);
+  cursor: grab;
+  filter: brightness(0.95);
+}
+
+.task:hover .fa-spacer:hover {
+  transform: scale(1.3);
+  background-color: var(--color-hover);
 }
 
 .task:hover .fa-spacer {
-  display: initial;
+  height: 0.9rem;
+  padding: 0.3rem;
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1.2);
 }
 
 .task--green-reminder {
@@ -178,13 +204,19 @@ export default defineComponent({
 }
 
 .fa-spacer {
-  display: none;
+  /* display: none; */
+
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
   width: 0.9rem;
   margin: 0px;
-  color: black;
+
+  border-radius: 50%;
+  border: 0.2rem black solid;
+  transition: transform 0.1s cubic-bezier(0.36, 0.75, 0.67, 1.46);
 }
 .fa-spacer:hover {
-  color: green;
   cursor: pointer;
 }
 </style>

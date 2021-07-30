@@ -228,9 +228,9 @@ export default defineComponent({
 }
 
 .task-tracker-wrap {
-  padding: 0px 20px;
+  padding: 1.5rem 3rem;
   border-radius: 10px;
-  width: 400px;
+  width: 300px;
   margin: 0px auto;
   box-sizing: border-box;
   display: flex;
@@ -238,7 +238,7 @@ export default defineComponent({
   align-items: center;
   box-sizing: content-box;
 
-  min-height: 50rem;
+  min-height: 40rem;
 }
 
 .text-inline {

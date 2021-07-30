@@ -5,21 +5,35 @@
       "reminder": false,
       "completed": false,
       "id": 1,
-      "position": 2
+      "position": 0
     },
     {
       "title": "This is another task",
       "reminder": false,
       "completed": false,
       "id": 2,
-      "position": 0
+      "position": 2
     },
     {
-      "title": "I want to add a really really long task to see what happenes okat this is me going to see",
-      "reminder": false,
+      "title": "This is a new task added at the bottom",
+      "reminder": true,
       "completed": false,
       "id": 3,
+      "position": 4
+    },
+    {
+      "title": "This is another task",
+      "reminder": false,
+      "completed": false,
+      "id": 4,
       "position": 1
+    },
+    {
+      "title": "And another",
+      "reminder": false,
+      "completed": false,
+      "id": 5,
+      "position": 3
     }
   ],
   "comments": [

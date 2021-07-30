@@ -28,6 +28,7 @@
           @click="askToUpdateTask3"
           @askToUpdateTask2="askToUpdateTask3"
           :ref="`Task ${element.id}`"
+          :bgColor="listColour"
         />
       </template>
     </draggable>
