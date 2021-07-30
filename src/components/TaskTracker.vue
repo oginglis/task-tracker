@@ -238,7 +238,7 @@ export default defineComponent({
   align-items: center;
   box-sizing: content-box;
 
-  min-height: 40rem;
+  min-height: 30rem;
 }
 
 .text-inline {
