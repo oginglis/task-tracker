@@ -1,31 +1,37 @@
 {
   "tasks": [
     {
-      "title": "This is a new task added at the bottom",
-      "reminder": true,
-      "completed": false,
-      "id": 3,
-      "position": 0
-    },
-    {
       "title": "This is another task",
       "reminder": false,
       "completed": false,
       "id": 4,
-      "position": 1
+      "position": 0
     },
     {
       "title": "Adding a new more tasks",
       "reminder": false,
       "completed": false,
       "id": 5,
-      "position": 2
+      "position": 1
     },
     {
-      "title": "And a few more tasks to use",
+      "title": "New task aaaa",
       "reminder": false,
       "completed": false,
-      "id": 6
+      "id": 7,
+      "position": 3
+    },
+    {
+      "title": "Impletement the P5 feature that lets you toggle task tracker colours",
+      "reminder": false,
+      "completed": false,
+      "id": 8
+    },
+    {
+      "title": "See what happens when you submit a task again",
+      "reminder": false,
+      "completed": false,
+      "id": 9
     }
   ],
   "comments": [

@@ -31,6 +31,9 @@ export default defineComponent({
       type: String,
       default: null,
     },
+    width: String,
+    height: String,
+    borderStyles: Boolean,
   },
   methods: {
     clicked: function (): void {
@@ -41,13 +44,23 @@ export default defineComponent({
     styleIcon: function (): object {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
       let hsl: string[] = hslReg.exec(this.bgColor!)!.slice(1, 4);
-      return {
-        backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 20}%)`,
-        border: `0.4rem solid hsl(${hsl[0]},${hsl[1]}%,${
-          parseInt(hsl[2]) + 10
-        }% )`,
-        "--color-hover": `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 45}%)`,
-      };
+      if (this.borderStyles) {
+        return {
+          backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${
+            parseInt(hsl[2]) + 20
+          }%)`,
+          border: `0.4rem solid hsl(${hsl[0]},${hsl[1]}%,${
+            parseInt(hsl[2]) + 10
+          }% )`,
+          "--color-hover": `hsl(${hsl[0]},${hsl[1]}%,${
+            parseInt(hsl[2]) + 45
+          }%)`,
+          width: this.width,
+          height: this.height,
+        };
+      } else {
+        return {};
+      }
     },
   },
 });
@@ -60,6 +73,7 @@ export default defineComponent({
   height: 0.9rem;
   margin: 0px;
   border-radius: 50%;
+  padding: 0.3rem;
   transition: transform 0.1s cubic-bezier(0.36, 0.75, 0.67, 1.46);
 }
 .icon--hidden {

@@ -49,9 +49,21 @@
       @sendTaskPositions="passTaskPositonsToModal"
     />
     <div class="task-tracker__bottom-bar">
-      <ClickableIcon type="palette" :bgColor="taskTrackerColour" />
+      <ClickableIcon
+        type="palette"
+        class="hiding__icon"
+        :bgColor="taskTrackerColour"
+        :borderStyles="false"
+        :style="iconBGHover"
+      />
       <ClickableIcon type="plus" :bgColor="taskTrackerColour" />
-      <ClickableIcon type="trash" :bgColor="taskTrackerColour" />
+      <ClickableIcon
+        type="trash"
+        :bgColor="taskTrackerColour"
+        class="hiding__icon"
+        :borderStyles="false"
+        :style="iconBGHover"
+      />
     </div>
   </div>
 </template>
@@ -199,6 +211,13 @@ export default defineComponent({
         return false;
       }
     },
+    iconBGHover: function (): object {
+      let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
+      let hsl: string[] = hslReg.exec(this.taskTrackerColour!)!.slice(1, 4);
+      return {
+        "--bg-hov-color": `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 10}%`,
+      };
+    },
     totalTaskCount: function (): number {
       var length: number = 0;
       if (this.tasks) {
@@ -245,8 +264,12 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   box-sizing: content-box;
-
   min-height: 30rem;
+}
+
+.task-tracker-wrap:hover .hiding__icon {
+  visibility: visible;
+  opacity: 1;
 }
 
 .text-inline {
@@ -265,5 +288,19 @@ export default defineComponent({
   width: 100%;
   font-size: 1.5rem;
   font-weight: 0.5rem;
+}
+
+.icon__bottoms {
+  font-size: 2rem;
+}
+
+.hiding__icon {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hiding__icon:hover {
+  background-color: var(--bg-hov-color);
 }
 </style>

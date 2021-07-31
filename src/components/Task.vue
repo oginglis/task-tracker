@@ -9,10 +9,11 @@
     @click="askToUpdateTask(task.id)"
   >
     <ClickableIcon
-      type="check"
+      type="trash"
       class="icon icon--hide"
       @iconClicked="askToDeleteTask(task.id)"
       :bgColor="bgColor"
+      :borderStyles="true"
     />
     <div
       class="task_middle"
@@ -26,10 +27,12 @@
       </h2>
     </div>
     <ClickableIcon
-      type="times"
+      type="check"
       class="icon icon--hide"
-      @iconClicked="askToDeleteTask(task.id)"
       :bgColor="bgColor"
+      :width="`0.9rem`"
+      :height="`0.9rem`"
+      :borderStyles="true"
     />
   </div>
 </template>
@@ -142,14 +145,9 @@ export default defineComponent({
   filter: brightness(0.95);
 }
 
-.task:hover .icon:hover {
-  transform: scale(1.3);
-  background-color: var(--color-hover);
-}
-
 .task:hover .icon--hide {
   height: 0.9rem;
-  padding: 0.3rem;
+
   visibility: visible;
   opacity: 1;
   transform: scale(1.2);
@@ -199,8 +197,5 @@ export default defineComponent({
   opacity: 0;
   visibility: hidden;
   overflow: hidden;
-}
-.icon:hover {
-  cursor: pointer;
 }
 </style>
