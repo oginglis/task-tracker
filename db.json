@@ -1,13 +1,6 @@
 {
   "tasks": [
     {
-      "title": "This is a task",
-      "reminder": false,
-      "completed": false,
-      "id": 1,
-      "position": 2
-    },
-    {
       "title": "This is a new task added at the bottom",
       "reminder": true,
       "completed": false,
@@ -22,11 +15,17 @@
       "position": 1
     },
     {
-      "title": "And another",
+      "title": "Adding a new more tasks",
       "reminder": false,
       "completed": false,
       "id": 5,
-      "position": 3
+      "position": 2
+    },
+    {
+      "title": "And a few more tasks to use",
+      "reminder": false,
+      "completed": false,
+      "id": 6
     }
   ],
   "comments": [

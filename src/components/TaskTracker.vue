@@ -48,6 +48,11 @@
       @sendUpTaskPositonAgain="0"
       @sendTaskPositions="passTaskPositonsToModal"
     />
+    <div class="task-tracker__bottom-bar">
+      <ClickableIcon type="palette" :bgColor="taskTrackerColour" />
+      <ClickableIcon type="plus" :bgColor="taskTrackerColour" />
+      <ClickableIcon type="trash" :bgColor="taskTrackerColour" />
+    </div>
   </div>
 </template>
 
@@ -57,6 +62,7 @@ import Header from "./Header.vue";
 import Button from "./Button.vue";
 import TaskForm from "./TaskForm.vue";
 import TaskList from "./TaskList.vue";
+import ClickableIcon from "./ClickableIcon.vue";
 import Modal from "./Modal.vue";
 import ColourSelector from "./ColourSelector.vue";
 import TaskService from "@/services/TaskService";
@@ -65,6 +71,7 @@ import { TaskPosition } from "@/types/TaskPosition";
 import { TasksPositionObject } from "@/types/TasksPositionObject";
 import _ from "lodash";
 import tinyColor from "tinycolor2";
+
 export default defineComponent({
   name: "TaskTracker",
   components: {
@@ -74,6 +81,7 @@ export default defineComponent({
     TaskList,
     Modal,
     ColourSelector,
+    ClickableIcon,
   },
   created() {
     TaskService.getTasks().then((response): void => {
@@ -249,5 +257,13 @@ export default defineComponent({
   justify-content: space-between;
   flex-wrap: nowrap;
   width: 100%;
+}
+
+.task-tracker__bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 1.5rem;
+  font-weight: 0.5rem;
 }
 </style>

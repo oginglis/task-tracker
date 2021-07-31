@@ -8,12 +8,12 @@
     :ref="createTaskName"
     @click="askToUpdateTask(task.id)"
   >
-    <font-awesome-icon
-      :style="styleIcon"
-      @click="askToDeleteTask(task.id)"
-      class="fa-spacer"
-      icon="check"
-    ></font-awesome-icon>
+    <ClickableIcon
+      type="check"
+      class="icon icon--hide"
+      @iconClicked="askToDeleteTask(task.id)"
+      :bgColor="bgColor"
+    />
     <div
       class="task_middle"
       :class="{ 'task_middle--compensate-margin': task.reminder }"
@@ -25,23 +25,12 @@
         {{ momentDate }}
       </h2>
     </div>
-
-    <!-- <font-awesome-icon
-      @click="toggleRemider"
-      class="fa-spacer"
-      icon="bell"
-      :class="{
-        'form__icon__bellactive animate__animated animate__headShake':
-          task.reminder,
-      }"
-    ></font-awesome-icon> -->
-
-    <font-awesome-icon
-      :style="styleIcon"
-      @click="askToDeleteTask(task.id)"
-      class="fa-spacer"
-      icon="times"
-    ></font-awesome-icon>
+    <ClickableIcon
+      type="times"
+      class="icon icon--hide"
+      @iconClicked="askToDeleteTask(task.id)"
+      :bgColor="bgColor"
+    />
   </div>
 </template>
 
@@ -53,11 +42,12 @@ import { faTimes, faCheck, faBell } from "@fortawesome/free-solid-svg-icons";
 import { PropType } from "vue";
 import { TaskType } from "@/types/Task";
 import { TaskPosition } from "@/types/TaskPosition";
+import ClickableIcon from "./ClickableIcon.vue";
 import moment from "moment";
 library.add([faTimes, faCheck, faBell] as any);
 export default defineComponent({
   name: "Task",
-  components: {},
+  components: { ClickableIcon },
   data() {
     return {
       editTask: false,
@@ -152,17 +142,18 @@ export default defineComponent({
   filter: brightness(0.95);
 }
 
-.task:hover .fa-spacer:hover {
+.task:hover .icon:hover {
   transform: scale(1.3);
   background-color: var(--color-hover);
 }
 
-.task:hover .fa-spacer {
+.task:hover .icon--hide {
   height: 0.9rem;
   padding: 0.3rem;
   visibility: visible;
   opacity: 1;
   transform: scale(1.2);
+  background-color: var(--color-hover);
 }
 
 .task--green-reminder {
@@ -203,20 +194,13 @@ export default defineComponent({
   height: 100%;
 }
 
-.fa-spacer {
+.icon--hide {
   /* display: none; */
-
   opacity: 0;
   visibility: hidden;
   overflow: hidden;
-  width: 0.9rem;
-  margin: 0px;
-
-  border-radius: 50%;
-  border: 0.2rem black solid;
-  transition: transform 0.1s cubic-bezier(0.36, 0.75, 0.67, 1.46);
 }
-.fa-spacer:hover {
+.icon:hover {
   cursor: pointer;
 }
 </style>
