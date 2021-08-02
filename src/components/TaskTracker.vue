@@ -3,7 +3,11 @@
     class="task-tracker-wrap"
     :style="[calculatedBackgroundColor, calculatedTextColor]"
   >
-    <div class="task_tracker_display">
+    <div
+      v-if="!showColourSelctor"
+      class="task_tracker_display"
+      ref="taskDisplay"
+    >
       <Modal
         @toggleOpenModal="toggleModal"
         @rerender="updateList"
@@ -49,26 +53,34 @@
         @sendUpTaskPositonAgain="0"
         @sendTaskPositions="passTaskPositonsToModal"
       />
-      <div class="task-tracker__bottom-bar">
-        <ClickableIcon
-          type="palette"
-          class="hiding__icon"
-          :bgColor="taskTrackerColour"
-          :borderStyles="false"
-          :style="iconBGHover"
-        />
-        <ClickableIcon type="plus" :bgColor="taskTrackerColour" />
-        <ClickableIcon
-          type="trash"
-          :bgColor="taskTrackerColour"
-          class="hiding__icon"
-          :borderStyles="false"
-          :style="iconBGHover"
-        />
-      </div>
     </div>
-    <div class="task_tracker_canvas">
-      <P5Canvas />
+    <P5Canvas
+      v-else
+      :canvasSize="taskTrackDimensions()"
+      :bgColor="taskTrackerColour"
+      :ballColours="colours"
+    />
+    <div class="task-tracker__bottom-bar">
+      <ClickableIcon
+        type="palette"
+        class="hiding__icon"
+        :bgColor="taskTrackerColour"
+        :borderStyles="false"
+        :style="iconBGHover"
+        @iconClicked="toggleP5Canvas"
+      />
+      <ClickableIcon
+        type="plus"
+        :bgColor="taskTrackerColour"
+        @iconClicked="changeButton"
+      />
+      <ClickableIcon
+        type="trash"
+        :bgColor="taskTrackerColour"
+        class="hiding__icon"
+        :borderStyles="false"
+        :style="iconBGHover"
+      />
     </div>
   </div>
 </template>
@@ -84,9 +96,10 @@ import Modal from "./Modal.vue";
 import ColourSelector from "./ColourSelector.vue";
 import TaskService from "@/services/TaskService";
 import { TaskType } from "@/types/Task";
-import P5Canvas from "./P5Canvas.vue";
+import P5Canvas from "./P5CanvasColours.vue";
 import { TaskPosition } from "@/types/TaskPosition";
 import { TasksPositionObject } from "@/types/TasksPositionObject";
+import { TrackerDimensions } from "@/types/Dimensions";
 import _ from "lodash";
 import tinyColor from "tinycolor2";
 
@@ -119,9 +132,42 @@ export default defineComponent({
       taskPassUpdate: {} as TaskType,
       taskPositionsObjectParent: {} as TasksPositionObject,
       taskTrackerColour: "hsl(39, 81%, 73%)",
+      showColourSelctor: false,
+      colours: [
+        { colour: "hsl(39, 81%, 73%)", active: true },
+        { colour: "hsl(41, 51%, 53%)", active: false },
+        { colour: "hsl(31, 65%, 55%)", active: false },
+        { colour: "hsl(13, 64%, 47%)", active: false },
+        { colour: "hsl(4, 63%, 41%)", active: false },
+        { colour: "hsl(350, 66%, 33%)", active: false },
+        { colour: "hsl(11, 24%, 59%)", active: false },
+        { colour: "hsl(344, 59%, 43%)", active: false },
+        { colour: "hsl(313, 29%, 56%)", active: false },
+      ],
     };
   },
   methods: {
+    toggleP5Canvas: function (): void {
+      this.showColourSelctor = !this.showColourSelctor;
+      this.taskTrackDimensions();
+    },
+    taskTrackDimensions: function (): TrackerDimensions {
+      let taskDisplay = this.$refs["taskDisplay"] as any;
+      if (taskDisplay) {
+        let cs = getComputedStyle(taskDisplay);
+
+        let paddingY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+
+        let borderY =
+          parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+
+        // Element width and height minus padding and border
+
+        let elementHeight = taskDisplay.offsetHeight - paddingY - borderY;
+        return { height: elementHeight, width: this.$el.offsetWidth };
+      }
+      return { height: 100, width: 2000 };
+    },
     updateTaskReminder: function (task: TaskType) {
       this.task.reminder = !this.task.reminder;
       TaskService.patchTask(task.id, this.task).catch(function (error) {
@@ -188,7 +234,6 @@ export default defineComponent({
     },
     onClickOutside() {
       if (this.isModalOpen) {
-        console.log("Clicked outside");
         this.isModalOpen = false;
       }
     },
