@@ -3,67 +3,72 @@
     class="task-tracker-wrap"
     :style="[calculatedBackgroundColor, calculatedTextColor]"
   >
-    <Modal
-      @toggleOpenModal="toggleModal"
-      @rerender="updateList"
-      :isOpen="isModalOpen"
-      :task="task"
-      @clickOutside="onClickOutside"
-      v-if="isModalOpen"
-      :taskPosition="calculateTaskPosition(task.id)"
-      :modalColour="taskTrackerColour"
-      @toggleReminder="updateTaskReminder"
-    >
-    </Modal>
-    <div class="text-inline">
-      <Header title="Task Tracker" />
-      <Button
-        @clickButton="changeButton"
-        :buttonText="buttonText"
-        :buttonBGColor="taskTrackerColour"
-        :style="calculatedTextColor"
-      />
-    </div>
-
-    <transition name="fade">
-      <TaskForm
-        v-if="buttonText !== 'Add a Task'"
+    <div class="task_tracker_display">
+      <Modal
+        @toggleOpenModal="toggleModal"
+        @rerender="updateList"
+        :isOpen="isModalOpen"
         :task="task"
-        :isUpdate="isPatch"
-        @finishUpdate="finishedPatch"
-        :taskCount="totalTaskCount"
-        @newTaskCreated="addNewTaskToTasks"
-        :formColour="taskTrackerColour"
+        @clickOutside="onClickOutside"
+        v-if="isModalOpen"
+        :taskPosition="calculateTaskPosition(task.id)"
+        :modalColour="taskTrackerColour"
+        @toggleReminder="updateTaskReminder"
+      >
+      </Modal>
+      <div class="text-inline">
+        <Header title="Task Tracker" />
+        <Button
+          @clickButton="changeButton"
+          :buttonText="buttonText"
+          :buttonBGColor="taskTrackerColour"
+          :style="calculatedTextColor"
+        />
+      </div>
+
+      <transition name="fade">
+        <TaskForm
+          v-if="buttonText !== 'Add a Task'"
+          :task="task"
+          :isUpdate="isPatch"
+          @finishUpdate="finishedPatch"
+          :taskCount="totalTaskCount"
+          @newTaskCreated="addNewTaskToTasks"
+          :formColour="taskTrackerColour"
+        />
+      </transition>
+      <ColourSelector @changeColour="changeTaskTrackerColour" />
+      <p v-if="emptyMessage">You have no Tasks on this list yet.</p>
+      <TaskList
+        :updateWithThisTask="taskPassUpdate"
+        @askToUpdateTask4="openFormWithTask"
+        :listColour="taskTrackerColour"
+        v-if="tasks"
+        v-model:tasks="tasks"
+        @askToDeleteTask="deleteTask"
+        @sendUpTaskPositonAgain="0"
+        @sendTaskPositions="passTaskPositonsToModal"
       />
-    </transition>
-    <ColourSelector @changeColour="changeTaskTrackerColour" />
-    <p v-if="emptyMessage">You have no Tasks on this list yet.</p>
-    <TaskList
-      :updateWithThisTask="taskPassUpdate"
-      @askToUpdateTask4="openFormWithTask"
-      :listColour="taskTrackerColour"
-      v-if="tasks"
-      v-model:tasks="tasks"
-      @askToDeleteTask="deleteTask"
-      @sendUpTaskPositonAgain="0"
-      @sendTaskPositions="passTaskPositonsToModal"
-    />
-    <div class="task-tracker__bottom-bar">
-      <ClickableIcon
-        type="palette"
-        class="hiding__icon"
-        :bgColor="taskTrackerColour"
-        :borderStyles="false"
-        :style="iconBGHover"
-      />
-      <ClickableIcon type="plus" :bgColor="taskTrackerColour" />
-      <ClickableIcon
-        type="trash"
-        :bgColor="taskTrackerColour"
-        class="hiding__icon"
-        :borderStyles="false"
-        :style="iconBGHover"
-      />
+      <div class="task-tracker__bottom-bar">
+        <ClickableIcon
+          type="palette"
+          class="hiding__icon"
+          :bgColor="taskTrackerColour"
+          :borderStyles="false"
+          :style="iconBGHover"
+        />
+        <ClickableIcon type="plus" :bgColor="taskTrackerColour" />
+        <ClickableIcon
+          type="trash"
+          :bgColor="taskTrackerColour"
+          class="hiding__icon"
+          :borderStyles="false"
+          :style="iconBGHover"
+        />
+      </div>
+    </div>
+    <div class="task_tracker_canvas">
+      <P5Canvas />
     </div>
   </div>
 </template>
@@ -79,6 +84,7 @@ import Modal from "./Modal.vue";
 import ColourSelector from "./ColourSelector.vue";
 import TaskService from "@/services/TaskService";
 import { TaskType } from "@/types/Task";
+import P5Canvas from "./P5Canvas.vue";
 import { TaskPosition } from "@/types/TaskPosition";
 import { TasksPositionObject } from "@/types/TasksPositionObject";
 import _ from "lodash";
@@ -94,6 +100,7 @@ export default defineComponent({
     Modal,
     ColourSelector,
     ClickableIcon,
+    P5Canvas,
   },
   created() {
     TaskService.getTasks().then((response): void => {

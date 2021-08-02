@@ -5,7 +5,7 @@
       "reminder": false,
       "completed": false,
       "id": 4,
-      "position": 3
+      "position": 4
     },
     {
       "title": "Adding a new more tasks",
@@ -26,13 +26,14 @@
       "reminder": false,
       "completed": false,
       "id": 8,
-      "position": 2
+      "position": 3
     },
     {
       "title": "See what happens when you submit a task again",
       "reminder": false,
       "completed": false,
-      "id": 9
+      "id": 9,
+      "position": 2
     }
   ],
   "comments": [
