@@ -1,5 +1,5 @@
 <template>
-  <div id="canvas"></div>
+  <div id="canvas" class="flexcanvas"></div>
 </template>
 
 <script lang="ts">
@@ -12,7 +12,9 @@ import { Color } from "../types/Color";
 export default defineComponent({
   name: "P5Canvas",
   data: function () {
-    return {};
+    return {
+      clickedColor: "",
+    };
   },
   props: {
     canvasSize: {
@@ -24,6 +26,10 @@ export default defineComponent({
     },
     ballColours: {
       type: Array as PropType<Array<Color>>,
+    },
+    title: {
+      type: String,
+      default: "Task Tracker",
     },
   },
   methods: {
@@ -59,13 +65,38 @@ export default defineComponent({
         p.noStroke();
         p.fill(255, 204);
       };
-
+      const isHovered = function (currentValue: any) {
+        if (p.dist(p.mouseX, p.mouseY, currentValue.x, currentValue.y) < 30) {
+          return false;
+        } else {
+          return true;
+        }
+      };
       p.draw = () => {
+        p.cursor("arrow");
         p.background(this.hslTorbg(this.bgColor));
+        p.textAlign("center");
+        p.fill(0, 0, 0);
+        p.text("Choose a colour for " + this.title, width / 2, height / 2);
         balls.forEach((ball: any) => {
           ball.collide();
           ball.move();
           ball.display();
+        });
+
+        if (balls.every(isHovered)) {
+          p.cursor(p.HAND);
+        } else {
+          p.cursor(p.MOVE);
+        }
+      };
+
+      p.mousePressed = () => {
+        balls.forEach((ball: any) => {
+          if (ball.clicked()) {
+            this.clickedColor = ball.color;
+            this.$emit("clickColor", this.clickedColor);
+          }
         });
       };
 
@@ -142,6 +173,13 @@ export default defineComponent({
         display() {
           p.fill(this.color as any);
           p.ellipse(this.x, this.y, this.diameter, this.diameter);
+        }
+        clicked() {
+          if (p.dist(p.mouseX, p.mouseY, this.x, this.y) < this.diameter) {
+            console.log(this.color, "CLICK");
+
+            return true;
+          }
         }
       }
     };

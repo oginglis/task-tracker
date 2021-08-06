@@ -21,7 +21,7 @@
       >
       </Modal>
       <div class="text-inline">
-        <Header title="Task Tracker" />
+        <Header :title="title" />
         <Button
           @clickButton="changeButton"
           :buttonText="buttonText"
@@ -53,35 +53,37 @@
         @sendUpTaskPositonAgain="0"
         @sendTaskPositions="passTaskPositonsToModal"
       />
+      <div class="task-tracker__bottom-bar">
+        <ClickableIcon
+          type="palette"
+          class="hiding__icon"
+          :bgColor="taskTrackerColour"
+          :borderStyles="false"
+          :style="iconBGHover"
+          @iconClicked="toggleP5Canvas"
+        />
+        <ClickableIcon
+          type="plus"
+          :bgColor="taskTrackerColour"
+          @iconClicked="changeButton"
+        />
+        <ClickableIcon
+          type="trash"
+          :bgColor="taskTrackerColour"
+          class="hiding__icon"
+          :borderStyles="false"
+          :style="iconBGHover"
+        />
+      </div>
     </div>
     <P5Canvas
       v-else
       :canvasSize="taskTrackDimensions()"
       :bgColor="taskTrackerColour"
       :ballColours="colours"
+      @clickColor="updateColor"
+      :title="title"
     />
-    <div class="task-tracker__bottom-bar">
-      <ClickableIcon
-        type="palette"
-        class="hiding__icon"
-        :bgColor="taskTrackerColour"
-        :borderStyles="false"
-        :style="iconBGHover"
-        @iconClicked="toggleP5Canvas"
-      />
-      <ClickableIcon
-        type="plus"
-        :bgColor="taskTrackerColour"
-        @iconClicked="changeButton"
-      />
-      <ClickableIcon
-        type="trash"
-        :bgColor="taskTrackerColour"
-        class="hiding__icon"
-        :borderStyles="false"
-        :style="iconBGHover"
-      />
-    </div>
   </div>
 </template>
 
@@ -123,6 +125,7 @@ export default defineComponent({
   },
   data: function () {
     return {
+      title: "Task Tracker",
       buttonText: "Add a Task",
       tasks: [] as Array<TaskType>,
       task: {} as TaskType,
@@ -147,6 +150,12 @@ export default defineComponent({
     };
   },
   methods: {
+    updateColor: function (newColor: string): void {
+      let hslNewColor = tinyColor(newColor).toHslString();
+      console.log(hslNewColor);
+      this.taskTrackerColour = hslNewColor;
+      this.toggleP5Canvas();
+    },
     toggleP5Canvas: function (): void {
       this.showColourSelctor = !this.showColourSelctor;
       this.taskTrackDimensions();
