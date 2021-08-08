@@ -65,14 +65,13 @@
             @iconClicked="toggleP5Canvas"
           />
         </Tooltip>
-        <Tooltip
-          position="bottom"
-          :tooltipText="'Create action (hold shift to create at the top)'"
-        >
+        <Tooltip position="bottom" :tooltipText="'Create action'">
           <ClickableIcon
             type="plus"
             :bgColor="taskTrackerColour"
             @iconClicked="changeButton"
+            class="add__action"
+            :style="addIconBg()"
           />
         </Tooltip>
         <Tooltip position="bottom" :tooltipText="'Delete list'">
@@ -172,6 +171,13 @@ export default defineComponent({
     };
   },
   methods: {
+    addIconBg: function (): object {
+      let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
+      let hsl: string[] = hslReg.exec(this.taskTrackerColour!)!.slice(1, 4);
+      return {
+        backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 10}%`,
+      };
+    },
     updateTaskTrackerTitle: function (newTitle: string): void {
       console.log("Update the title");
       this.title = newTitle;
@@ -392,5 +398,13 @@ export default defineComponent({
 
 .hiding__icon:hover {
   background-color: var(--bg-hov-color);
+}
+.add__action {
+  padding: 1rem 2.5rem;
+  border-radius: 0.8rem;
+}
+
+.add__action.icon:hover {
+  transform: scale(1.1);
 }
 </style>

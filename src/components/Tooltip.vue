@@ -23,7 +23,9 @@ export default defineComponent({
 <style scoped>
 [tooltip] {
   position: relative;
-  animation-delay: 2s;
+  font-family: aktiv-grotesk, sans-serif;
+  font-weight: 200;
+  font-style: normal;
   /* position: TOP */
   /* position: BOTTOM */
   /* position: LEFT */
@@ -36,7 +38,7 @@ export default defineComponent({
 [tooltip]:before,
 [tooltip]:after {
   text-transform: none;
-  animation-delay: 2s;
+
   /* opinion 2 */
   font-size: 1rem;
   /* opinion 3 */
@@ -72,6 +74,9 @@ export default defineComponent({
   background: #495057;
   color: #fff;
   z-index: 1000;
+  font-family: aktiv-grotesk, sans-serif;
+  font-weight: 200;
+  font-style: normal;
   /* absurdity 2 */
 }
 [tooltip]:hover:before,
@@ -138,15 +143,13 @@ export default defineComponent({
 [tooltip][position^="top"]:hover::after,
 [tooltip][position^="bottom"]:hover::before,
 [tooltip][position^="bottom"]:hover::after {
-  animation-delay: 2s;
-  animation: tooltips-vert 300ms ease-out forwards;
+  animation: tooltips-vert 300ms ease-out 0.5s forwards;
 }
 [tooltip][position^="left"]:hover::before,
 [tooltip][position^="left"]:hover::after,
 [tooltip][position^="right"]:hover::before,
 [tooltip][position^="right"]:hover::after {
-  animation-delay: 2s;
-  animation: tooltips-horz 300ms ease-out forwards;
+  animation: tooltips-horz 300ms ease-out 0.5s forwards;
 }
 /* don't show empty tooltips */
 [tooltip=""]::before,

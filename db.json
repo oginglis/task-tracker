@@ -5,14 +5,14 @@
       "reminder": false,
       "completed": false,
       "id": 9,
-      "position": 0
+      "position": 3
     },
     {
       "title": "Add some more tasks to this list",
       "reminder": false,
       "completed": false,
       "id": 10,
-      "position": 3
+      "position": 2
     },
     {
       "title": "Yees Toooosls",
@@ -26,7 +26,7 @@
       "reminder": true,
       "completed": false,
       "id": 15,
-      "position": 2
+      "position": 0
     }
   ],
   "comments": [

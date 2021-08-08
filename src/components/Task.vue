@@ -16,13 +16,13 @@
       :borderStyles="true"
     />
     <div
-      class="task_middle"
-      :class="{ 'task_middle--compensate-margin': task.reminder }"
+      class="task__body"
+      :class="{ 'task__body--compensate-margin': task.reminder }"
     >
-      <h1 class="task_middle__title task_middle__title--restrict">
+      <h1 class="task__body__content task__body__content--restrict noselect">
         {{ task.title }}
       </h1>
-      <h2 class="task_middle__date">
+      <h2 class="task__body__date noselect">
         {{ momentDate }}
       </h2>
     </div>
@@ -159,37 +159,31 @@ export default defineComponent({
   border-left: 10px solid green;
 }
 
-.task_middle {
+.task__body {
   text-align: center;
   width: 70%;
   margin-left: 0px;
 }
 
-.task_middle__title {
+.task__body__content {
   font-size: 1em;
   font-weight: initial;
 }
 
-.task_middle__date {
+.task__body__date {
   font-size: 0.6rem;
   font-weight: initial;
 }
 
-.task_middle__title--restrict {
+.task__body__content--restrict {
   overflow: hidden;
   white-space: normal;
   line-height: 1.2em;
   text-overflow: ellipsis;
 }
 
-.task_middle--compensate-margin {
+.task__body--compensate-margin {
   margin-left: -10px;
-}
-
-.task__rhs {
-  display: flex;
-  align-content: space-between;
-  height: 100%;
 }
 
 .icon--hide {
@@ -197,5 +191,19 @@ export default defineComponent({
   opacity: 0;
   visibility: hidden;
   overflow: hidden;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.task:hover .icon--hide:hover {
+  transform: scale(1.5);
 }
 </style>
