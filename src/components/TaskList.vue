@@ -205,7 +205,7 @@ export default defineComponent({
       taskPosition: TaskPosition
     ): void {
       this.positionsObject[taskId] = taskPosition;
-      // console.log(this.positionsObject);
+
       this.$emit("sendUpTaskPositonAgain", taskPosition);
     },
   },

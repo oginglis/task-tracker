@@ -4,7 +4,8 @@
     :icon="type"
     :style="styleIcon"
     class="icon"
-  ></font-awesome-icon>
+    ><span class="tooltiptext">Tooltip text</span></font-awesome-icon
+  >
 </template>
 
 <script lang="ts">
@@ -88,5 +89,22 @@ export default defineComponent({
 .icon:hover {
   transform: scale(1.3);
   background-color: var(--color-hover);
+}
+
+.icon:hover .tooltiptext {
+  visibility: visible;
+}
+.icon .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
 }
 </style>

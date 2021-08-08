@@ -138,6 +138,7 @@ export default defineComponent({
   justify-content: space-evenly;
   box-sizing: border-box;
   transition: filter 0.2s ease;
+  text-overflow: ellipsis;
 }
 
 .task:hover {
@@ -175,11 +176,10 @@ export default defineComponent({
 }
 
 .task_middle__title--restrict {
-  max-height: 3.6em;
-  text-overflow: ellipsis;
   overflow: hidden;
   white-space: normal;
   line-height: 1.2em;
+  text-overflow: ellipsis;
 }
 
 .task_middle--compensate-margin {

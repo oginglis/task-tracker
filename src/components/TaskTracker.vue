@@ -3,11 +3,7 @@
     class="task-tracker-wrap"
     :style="[calculatedBackgroundColor, calculatedTextColor]"
   >
-    <div
-      v-if="!showColourSelctor"
-      class="task_tracker_display"
-      ref="taskDisplay"
-    >
+    <div v-if="showTasks" class="task_tracker_display" ref="taskDisplay">
       <Modal
         @toggleOpenModal="toggleModal"
         @rerender="updateList"
@@ -21,7 +17,11 @@
       >
       </Modal>
       <div class="text-inline">
-        <Header :title="title" />
+        <Header
+          :title="title"
+          @updateTitle="updateTaskTrackerTitle"
+          :headerColour="taskTrackerColour"
+        />
         <Button
           @clickButton="changeButton"
           :buttonText="buttonText"
@@ -41,7 +41,7 @@
           :formColour="taskTrackerColour"
         />
       </transition>
-      <ColourSelector @changeColour="changeTaskTrackerColour" />
+
       <p v-if="emptyMessage">You have no Tasks on this list yet.</p>
       <TaskList
         :updateWithThisTask="taskPassUpdate"
@@ -51,29 +51,39 @@
         v-model:tasks="tasks"
         @askToDeleteTask="deleteTask"
         @sendUpTaskPositonAgain="0"
+        @click="toggleModal"
         @sendTaskPositions="passTaskPositonsToModal"
       />
       <div class="task-tracker__bottom-bar">
-        <ClickableIcon
-          type="palette"
-          class="hiding__icon"
-          :bgColor="taskTrackerColour"
-          :borderStyles="false"
-          :style="iconBGHover"
-          @iconClicked="toggleP5Canvas"
-        />
-        <ClickableIcon
-          type="plus"
-          :bgColor="taskTrackerColour"
-          @iconClicked="changeButton"
-        />
-        <ClickableIcon
-          type="trash"
-          :bgColor="taskTrackerColour"
-          class="hiding__icon"
-          :borderStyles="false"
-          :style="iconBGHover"
-        />
+        <Tooltip position="bottom" :tooltipText="'Choose list colour'">
+          <ClickableIcon
+            type="palette"
+            class="hiding__icon"
+            :bgColor="taskTrackerColour"
+            :borderStyles="false"
+            :style="iconBGHover"
+            @iconClicked="toggleP5Canvas"
+          />
+        </Tooltip>
+        <Tooltip
+          position="bottom"
+          :tooltipText="'Create action (hold shift to create at the top)'"
+        >
+          <ClickableIcon
+            type="plus"
+            :bgColor="taskTrackerColour"
+            @iconClicked="changeButton"
+          />
+        </Tooltip>
+        <Tooltip position="bottom" :tooltipText="'Delete list'">
+          <ClickableIcon
+            type="trash"
+            :bgColor="taskTrackerColour"
+            class="hiding__icon"
+            :borderStyles="false"
+            :style="iconBGHover"
+          />
+        </Tooltip>
       </div>
     </div>
     <P5Canvas
@@ -83,6 +93,7 @@
       :ballColours="colours"
       @clickColor="updateColor"
       :title="title"
+      :textColor="calculatedTextColor"
     />
   </div>
 </template>
@@ -95,7 +106,7 @@ import TaskForm from "./TaskForm.vue";
 import TaskList from "./TaskList.vue";
 import ClickableIcon from "./ClickableIcon.vue";
 import Modal from "./Modal.vue";
-import ColourSelector from "./ColourSelector.vue";
+import Tooltip from "./Tooltip.vue";
 import TaskService from "@/services/TaskService";
 import { TaskType } from "@/types/Task";
 import P5Canvas from "./P5CanvasColours.vue";
@@ -113,7 +124,7 @@ export default defineComponent({
     TaskForm,
     TaskList,
     Modal,
-    ColourSelector,
+    Tooltip,
     ClickableIcon,
     P5Canvas,
   },
@@ -135,29 +146,44 @@ export default defineComponent({
       taskPassUpdate: {} as TaskType,
       taskPositionsObjectParent: {} as TasksPositionObject,
       taskTrackerColour: "hsl(39, 81%, 73%)",
-      showColourSelctor: false,
+      showTasks: true,
       colours: [
         { colour: "hsl(39, 81%, 73%)", active: true },
-        { colour: "hsl(41, 51%, 53%)", active: false },
-        { colour: "hsl(31, 65%, 55%)", active: false },
-        { colour: "hsl(13, 64%, 47%)", active: false },
-        { colour: "hsl(4, 63%, 41%)", active: false },
-        { colour: "hsl(350, 66%, 33%)", active: false },
-        { colour: "hsl(11, 24%, 59%)", active: false },
-        { colour: "hsl(344, 59%, 43%)", active: false },
-        { colour: "hsl(313, 29%, 56%)", active: false },
+        { colour: "hsl(13, 80%, 48%)", active: false },
+        { colour: "hsl(341, 67%, 47%)", active: false },
+        { colour: "hsl(75, 56%, 38%)", active: false },
+        { colour: "hsl(10, 30%, 62%)", active: false },
+        { colour: "hsl(0, 0%, 100%)", active: false },
+        { colour: "hsl(319, 57%, 39%)", active: false },
+        { colour: "hsl(2, 73%, 43%)", active: false },
+        { colour: "hsl(207, 15%, 12%)", active: false },
+        { colour: "hsl(196, 44%, 51%)", active: false },
+        { colour: "hsl(12, 73%, 51%)", active: false },
+        { colour: "hsl(164, 35%, 52%)", active: false },
+        { colour: "hsl(31, 80%, 54%)", active: false },
+        { colour: "hsl(205, 80%, 40%)", active: false },
+        { colour: "hsl(41, 62%, 51%)", active: false },
+        { colour: "hsl(186, 56%, 42%)", active: false },
+        { colour: "hsl(195, 23%, 27%)", active: false },
+        { colour: "hsl(316, 38%, 58%)", active: false },
+        { colour: "hsl(207, 15%, 12%)", active: false },
+        { colour: "hsl(212, 73%, 36%)", active: false },
       ],
     };
   },
   methods: {
+    updateTaskTrackerTitle: function (newTitle: string): void {
+      console.log("Update the title");
+      this.title = newTitle;
+    },
     updateColor: function (newColor: string): void {
       let hslNewColor = tinyColor(newColor).toHslString();
-      console.log(hslNewColor);
       this.taskTrackerColour = hslNewColor;
       this.toggleP5Canvas();
     },
     toggleP5Canvas: function (): void {
-      this.showColourSelctor = !this.showColourSelctor;
+      console.log("Toggle Canvas CAleed");
+      this.showTasks ? (this.showTasks = false) : (this.showTasks = true);
       this.taskTrackDimensions();
     },
     taskTrackDimensions: function (): TrackerDimensions {
@@ -173,6 +199,9 @@ export default defineComponent({
         // Element width and height minus padding and border
 
         let elementHeight = taskDisplay.offsetHeight - paddingY - borderY;
+        if (elementHeight < 450) {
+          elementHeight = 450;
+        }
         return { height: elementHeight, width: this.$el.offsetWidth };
       }
       return { height: 100, width: 2000 };

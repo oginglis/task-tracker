@@ -21,7 +21,7 @@ export default defineComponent({
   },
   setup() {
     useMeta({
-      title: "Tasks",
+      title: "Actions",
       htmlAttrs: { lang: "en", amp: true },
     });
   },

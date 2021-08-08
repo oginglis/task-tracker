@@ -31,6 +31,9 @@ export default defineComponent({
       type: String,
       default: "Task Tracker",
     },
+    textColor: {
+      type: Object,
+    },
   },
   methods: {
     hslTorbg: function (hsl: any): string {
@@ -41,8 +44,8 @@ export default defineComponent({
   mounted() {
     let sketch = (p: P5) => {
       let spring = 0.05;
-      let gravity = -0.02;
-      let friction = -0.9;
+      let gravity = -0.01;
+      let friction = -0.99;
       let balls: any = [];
       let width = this.canvasSize!.width;
       let height = this.canvasSize!.height;
@@ -56,7 +59,9 @@ export default defineComponent({
           balls[index] = new Ball(
             p.random(width),
             p.random(height),
-            30,
+            p.random(-3, 3),
+            p.random(-3, 3),
+            40,
             index,
             balls,
             bc
@@ -67,16 +72,17 @@ export default defineComponent({
       };
       const isHovered = function (currentValue: any) {
         if (p.dist(p.mouseX, p.mouseY, currentValue.x, currentValue.y) < 30) {
-          return false;
-        } else {
           return true;
+        } else {
+          return false;
         }
       };
       p.draw = () => {
-        p.cursor("arrow");
         p.background(this.hslTorbg(this.bgColor));
         p.textAlign("center");
-        p.fill(0, 0, 0);
+        p.textFont("aktiv-grotesk");
+        p.textSize(15);
+        p.fill(this.textColor!.color);
         p.text("Choose a colour for " + this.title, width / 2, height / 2);
         balls.forEach((ball: any) => {
           ball.collide();
@@ -84,10 +90,10 @@ export default defineComponent({
           ball.display();
         });
 
-        if (balls.every(isHovered)) {
+        if (balls.some(isHovered)) {
           p.cursor(p.HAND);
         } else {
-          p.cursor(p.MOVE);
+          p.cursor(p.ARROW);
         }
       };
 
@@ -95,9 +101,19 @@ export default defineComponent({
         balls.forEach((ball: any) => {
           if (ball.clicked()) {
             this.clickedColor = ball.color;
-            this.$emit("clickColor", this.clickedColor);
           }
         });
+
+        if (balls.some((ball: any) => ball.clicked())) {
+          console.log("Emiteeed");
+          this.$emit("clickColor", this.clickedColor);
+        }
+        // if(balls.some((ball: any) => ball.clicked()){
+        //     this.clickedColor = ball.color;
+        //     this.$emit("clickColor", this.clickedColor);
+        //   }
+
+        // });
       };
 
       class Ball {
@@ -112,6 +128,8 @@ export default defineComponent({
         constructor(
           xin: number,
           yin: number,
+          vxin: number,
+          vyin: number,
           din: number,
           idin: number,
           oin: Array<Ball>,
@@ -119,8 +137,8 @@ export default defineComponent({
         ) {
           this.x = xin;
           this.y = yin;
-          this.vx = 0;
-          this.vy = 0;
+          this.vx = vxin;
+          this.vy = vyin;
           this.diameter = din;
           this.id = idin;
           this.others = oin;
@@ -176,9 +194,9 @@ export default defineComponent({
         }
         clicked() {
           if (p.dist(p.mouseX, p.mouseY, this.x, this.y) < this.diameter) {
-            console.log(this.color, "CLICK");
-
             return true;
+          } else {
+            return false;
           }
         }
       }
