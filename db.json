@@ -1,32 +1,10 @@
 {
   "tasks": [
     {
-      "title": "See what happens when you submit a task again",
+      "title": "New Task for the list",
       "reminder": false,
       "completed": false,
-      "id": 9,
-      "position": 3
-    },
-    {
-      "title": "Add some more tasks to this list",
-      "reminder": false,
-      "completed": false,
-      "id": 10,
-      "position": 2
-    },
-    {
-      "title": "Yees Toooosls",
-      "reminder": false,
-      "completed": false,
-      "id": 13,
-      "position": 1
-    },
-    {
-      "title": "Hugo like this",
-      "reminder": true,
-      "completed": false,
-      "id": 15,
-      "position": 0
+      "id": 1
     }
   ],
   "comments": [

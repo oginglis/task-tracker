@@ -32,6 +32,7 @@
         />
       </template>
     </draggable>
+    <NewAction :bgColor="listColour" />
   </div>
 </template>
 
@@ -43,12 +44,14 @@ import { TaskPosition } from "@/types/TaskPosition";
 import { TasksPositionObject } from "@/types/TasksPositionObject";
 import { defineComponent, PropType } from "vue";
 import TaskService from "@/services/TaskService";
+import NewAction from "./NewAction.vue";
 
 export default defineComponent({
   name: "TaskList",
   components: {
     Task,
     draggable,
+    NewAction,
   },
   filters: {
     reverse: function (value: Array<TaskType>) {

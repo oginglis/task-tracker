@@ -16,44 +16,46 @@
         @toggleReminder="updateTaskReminder"
       >
       </Modal>
-      <div class="text-inline">
-        <Header
-          :title="title"
-          @updateTitle="updateTaskTrackerTitle"
-          :headerColour="taskTrackerColour"
-        />
-        <Button
-          @clickButton="changeButton"
-          :buttonText="buttonText"
-          :buttonBGColor="taskTrackerColour"
-          :style="calculatedTextColor"
+      <div>
+        <div class="text-inline">
+          <Header
+            :title="title"
+            @updateTitle="updateTaskTrackerTitle"
+            :headerColour="taskTrackerColour"
+          />
+          <Button
+            @clickButton="changeButton"
+            :buttonText="buttonText"
+            :buttonBGColor="taskTrackerColour"
+            :style="calculatedTextColor"
+          />
+        </div>
+
+        <transition name="fade">
+          <TaskForm
+            v-if="buttonText !== 'Add a Task'"
+            :task="task"
+            :isUpdate="isPatch"
+            @finishUpdate="finishedPatch"
+            :taskCount="totalTaskCount"
+            @newTaskCreated="addNewTaskToTasks"
+            :formColour="taskTrackerColour"
+          />
+        </transition>
+
+        <TaskList
+          :updateWithThisTask="taskPassUpdate"
+          @askToUpdateTask4="openFormWithTask"
+          :listColour="taskTrackerColour"
+          v-if="tasks"
+          v-model:tasks="tasks"
+          @askToDeleteTask="deleteTask"
+          @sendUpTaskPositonAgain="0"
+          @sendTaskPositions="passTaskPositonsToModal"
         />
       </div>
+      <p v-if="emptyMessage">You have no Actions on <br />this list yet.</p>
 
-      <transition name="fade">
-        <TaskForm
-          v-if="buttonText !== 'Add a Task'"
-          :task="task"
-          :isUpdate="isPatch"
-          @finishUpdate="finishedPatch"
-          :taskCount="totalTaskCount"
-          @newTaskCreated="addNewTaskToTasks"
-          :formColour="taskTrackerColour"
-        />
-      </transition>
-
-      <p v-if="emptyMessage">You have no Tasks on this list yet.</p>
-      <TaskList
-        :updateWithThisTask="taskPassUpdate"
-        @askToUpdateTask4="openFormWithTask"
-        :listColour="taskTrackerColour"
-        v-if="tasks"
-        v-model:tasks="tasks"
-        @askToDeleteTask="deleteTask"
-        @sendUpTaskPositonAgain="0"
-        @click="toggleModal"
-        @sendTaskPositions="passTaskPositonsToModal"
-      />
       <div class="task-tracker__bottom-bar">
         <Tooltip position="bottom" :tooltipText="'Choose list colour'">
           <ClickableIcon
@@ -72,6 +74,7 @@
             @iconClicked="changeButton"
             class="add__action"
             :style="addIconBg()"
+            v-if="buttonText == 'Add a Task'"
           />
         </Tooltip>
         <Tooltip position="bottom" :tooltipText="'Delete list'">
@@ -113,6 +116,7 @@ import { TaskPosition } from "@/types/TaskPosition";
 import { TasksPositionObject } from "@/types/TasksPositionObject";
 import { TrackerDimensions } from "@/types/Dimensions";
 import _ from "lodash";
+
 import tinyColor from "tinycolor2";
 
 export default defineComponent({
@@ -179,7 +183,6 @@ export default defineComponent({
       };
     },
     updateTaskTrackerTitle: function (newTitle: string): void {
-      console.log("Update the title");
       this.title = newTitle;
     },
     updateColor: function (newColor: string): void {
@@ -188,7 +191,6 @@ export default defineComponent({
       this.toggleP5Canvas();
     },
     toggleP5Canvas: function (): void {
-      console.log("Toggle Canvas CAleed");
       this.showTasks ? (this.showTasks = false) : (this.showTasks = true);
       this.taskTrackDimensions();
     },
@@ -352,7 +354,7 @@ export default defineComponent({
 
 .task-tracker-wrap {
   padding: 1.5rem 3rem;
-  border-radius: 10px;
+  border-radius: 1rem;
   width: 300px;
   margin: 0px auto;
   box-sizing: border-box;
@@ -360,7 +362,7 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   box-sizing: content-box;
-  min-height: 30rem;
+  min-height: 33rem;
 }
 
 .task-tracker-wrap:hover .hiding__icon {
@@ -404,6 +406,12 @@ export default defineComponent({
   border-radius: 0.8rem;
 }
 
+.task_tracker_display {
+  min-height: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .add__action.icon:hover {
   transform: scale(1.1);
 }

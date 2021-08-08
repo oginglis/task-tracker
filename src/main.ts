@@ -9,4 +9,6 @@ const app = createApp(App)
 
 directives(app);
 
-app.use(vClickOutside).use(createMetaManager()).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
+app.directive('clickOutside', vClickOutside)
+
+app.use(createMetaManager()).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
