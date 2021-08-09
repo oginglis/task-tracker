@@ -52,6 +52,8 @@
           @askToDeleteTask="deleteTask"
           @sendUpTaskPositonAgain="0"
           @sendTaskPositions="passTaskPositonsToModal"
+          :showActionAdder="showAddTask"
+          @clickedOutsideActionAdder="toggleActionAdder"
         />
       </div>
       <p v-if="emptyMessage">You have no Actions on <br />this list yet.</p>
@@ -71,7 +73,7 @@
           <ClickableIcon
             type="plus"
             :bgColor="taskTrackerColour"
-            @iconClicked="changeButton"
+            @iconClicked="toggleActionAdder"
             class="add__action"
             :style="addIconBg()"
             v-if="buttonText == 'Add a Task'"
@@ -150,6 +152,7 @@ export default defineComponent({
       taskPositionsObjectParent: {} as TasksPositionObject,
       taskTrackerColour: "hsl(39, 81%, 73%)",
       showTasks: true,
+      showAddTask: false,
       colours: [
         { colour: "hsl(39, 81%, 73%)", active: true },
         { colour: "hsl(13, 80%, 48%)", active: false },
@@ -175,6 +178,10 @@ export default defineComponent({
     };
   },
   methods: {
+    toggleActionAdder: function () {
+      this.showAddTask = !this.showAddTask;
+      console.log(this.showAddTask)
+    },
     addIconBg: function (): object {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
       let hsl: string[] = hslReg.exec(this.taskTrackerColour!)!.slice(1, 4);

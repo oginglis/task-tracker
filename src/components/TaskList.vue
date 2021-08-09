@@ -32,7 +32,11 @@
         />
       </template>
     </draggable>
-    <NewAction :bgColor="listColour" />
+    <NewAction
+      :bgColor="listColour"
+      v-if="showActionAdder"
+      @clickOutsideActionAdder="emitToggleActionAdder"
+    />
   </div>
 </template>
 
@@ -72,6 +76,9 @@ export default defineComponent({
       default: () => ({
         title: "Arrow Function Expression",
       }),
+    },
+    showActionAdder: {
+      type: Boolean,
     },
     listColour: String,
     tasks: {
@@ -128,6 +135,9 @@ export default defineComponent({
     this.updateAndSendPositions();
   },
   methods: {
+    emitToggleActionAdder: function () {
+      this.$emit("clickedOutsideActionAdder");
+    },
     backgroundColor: function (index: number): object {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
 

@@ -1,18 +1,11 @@
 <template>
-  <button @click="show = !show">show</button>
   <transition name="slide-fade">
     <div
-      v-if="show"
       class="New-action"
       :style="newBGColor"
       v-click-outside="clickOutsideHandler"
     >
-      <p
-        class="enter-text"
-        contenteditable="true"
-        v-focus
-        v-if="inputIsVisible"
-      ></p>
+      <p class="enter-text" contenteditable="true" v-focus></p>
 
       <p class="faded-text">New Action</p>
     </div>
@@ -21,14 +14,11 @@
 
 <script  lang="ts">
 import { defineComponent } from "vue";
-import vClickOutside from "v-click-outside";
+
 export default defineComponent({
   name: "NewAction",
   data: function () {
-    return {
-      show: true,
-      inputIsVisible: true,
-    };
+    return {};
   },
   props: {
     bgColor: {
@@ -36,14 +26,11 @@ export default defineComponent({
       default: "hsl(39, 81%, 73%)",
     },
   },
-  directives: {
-    clickOutside: vClickOutside.directive,
-  },
+
   mounted() {},
   methods: {
     clickOutsideHandler: function (): void {
-      this.show = false;
-      console.log("Click Outside the thing triggeres");
+      this.$emit("clickOutsideActionAdder");
     },
   },
   computed: {
