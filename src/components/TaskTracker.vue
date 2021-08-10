@@ -76,7 +76,7 @@
             @iconClicked="toggleActionAdder"
             class="add__action"
             :style="addIconBg()"
-            v-if="buttonText == 'Add a Task'"
+            v-if="!showAddTask"
           />
         </Tooltip>
         <Tooltip position="bottom" :tooltipText="'Delete list'">
@@ -180,7 +180,7 @@ export default defineComponent({
   methods: {
     toggleActionAdder: function () {
       this.showAddTask = !this.showAddTask;
-      console.log(this.showAddTask)
+      console.log("ACTION ADDER TOGGLE", this.showAddTask);
     },
     addIconBg: function (): object {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;

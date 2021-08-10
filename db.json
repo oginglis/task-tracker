@@ -4,7 +4,22 @@
       "title": "New Task for the list",
       "reminder": false,
       "completed": false,
-      "id": 1
+      "id": 1,
+      "position": 2
+    },
+    {
+      "title": "Ollie here is new tasks",
+      "reminder": false,
+      "completed": false,
+      "id": 2,
+      "position": 1
+    },
+    {
+      "title": "Add anothje one here",
+      "reminder": false,
+      "completed": false,
+      "id": 3,
+      "position": 0
     }
   ],
   "comments": [

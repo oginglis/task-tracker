@@ -73,6 +73,12 @@ export default defineComponent({
       default: "hsl(39, 81%, 73%)",
     },
   },
+  mounted() {
+    console.log("Action Adder mounted");
+  },
+  unmounted() {
+    console.log("Action Adder removed");
+  },
   methods: {
     handleCalendarClick: function (): void {
       this.isCalendarVisible = !this.isCalendarVisible;

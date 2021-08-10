@@ -32,11 +32,13 @@
         />
       </template>
     </draggable>
-    <NewAction
-      :bgColor="listColour"
-      v-if="showActionAdder"
-      @clickOutsideActionAdder="emitToggleActionAdder"
-    />
+    <transition name="slide-fade">
+      <NewAction
+        :bgColor="listColour"
+        v-if="showActionAdder"
+        @clickOutsideActionAdder="emitToggleActionAdder"
+      />
+    </transition>
   </div>
 </template>
 
@@ -253,5 +255,16 @@ export default defineComponent({
 
 .task-list--remove-padding {
   padding-left: 0;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  opacity: 0;
+  width: 0;
+  transform: scale(0);
 }
 </style>
