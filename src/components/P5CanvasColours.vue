@@ -152,8 +152,7 @@ export default defineComponent({
             let dy = this.others[i].y - this.y;
             let distance = p.sqrt(dx * dx + dy * dy);
             let minDist = this.others[i].diameter / 2 + this.diameter / 2;
-            //   console.log(distance);
-            //console.log(minDist);
+
             if (distance < minDist) {
               //console.log("2");
               let angle = p.atan2(dy, dx);

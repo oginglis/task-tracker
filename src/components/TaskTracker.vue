@@ -410,6 +410,7 @@ export default defineComponent({
   font-size: 1.5rem;
   font-weight: 0.5rem;
   margin-top: 0.5rem;
+  height: 4rem;
 }
 
 .icon__bottoms {

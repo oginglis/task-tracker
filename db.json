@@ -5,7 +5,7 @@
       "reminder": false,
       "completed": false,
       "id": 2,
-      "position": 3
+      "position": 1
     },
     {
       "title": "Yolo",
@@ -15,16 +15,12 @@
     {
       "title": "This is a new task",
       "id": 9,
-      "position": 2
+      "position": 3
     },
     {
       "title": "this is a new action",
       "id": 10,
-      "position": 1
-    },
-    {
-      "title": "Ollie this is a new tast",
-      "id": 11
+      "position": 4
     }
   ],
   "comments": [
