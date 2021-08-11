@@ -1,45 +1,30 @@
 {
   "tasks": [
     {
-      "title": "New Task for the list",
-      "reminder": false,
-      "completed": false,
-      "id": 1,
-      "position": 0
-    },
-    {
       "title": "Ollie here is new tasks",
       "reminder": false,
       "completed": false,
       "id": 2,
-      "position": 1
-    },
-    {
-      "title": "Add anothje one here",
-      "reminder": false,
-      "completed": false,
-      "id": 3,
-      "position": 2
-    },
-    {
-      "title": "More stuff",
-      "reminder": false,
-      "completed": false,
-      "id": 4,
       "position": 3
     },
     {
-      "title": "New action to add",
-      "position": 6,
-      "id": 8
+      "title": "Yolo",
+      "id": 8,
+      "position": 0
     },
     {
-      "title": "New ollie method",
-      "id": 9
+      "title": "This is a new task",
+      "id": 9,
+      "position": 2
     },
     {
-      "title": "Why does this add twice",
-      "id": 10
+      "title": "this is a new action",
+      "id": 10,
+      "position": 1
+    },
+    {
+      "title": "Ollie this is a new tast",
+      "id": 11
     }
   ],
   "comments": [

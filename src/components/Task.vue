@@ -22,9 +22,6 @@
       <h1 class="task__body__content task__body__content--restrict noselect">
         {{ task.title }}
       </h1>
-      <h2 class="task__body__date noselect">
-        {{ momentDate }}
-      </h2>
     </div>
     <ClickableIcon
       type="check"
@@ -168,11 +165,10 @@ export default defineComponent({
 .task__body__content {
   font-size: 1em;
   font-weight: initial;
-}
-
-.task__body__date {
-  font-size: 0.6rem;
-  font-weight: initial;
+  min-height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .task__body__content--restrict {

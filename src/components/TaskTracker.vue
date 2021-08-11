@@ -185,7 +185,6 @@ export default defineComponent({
     },
     toggleActionAdder: function () {
       this.showAddTask = !this.showAddTask;
-      console.log("ACTION ADDER TOGGLE", this.showAddTask);
     },
     addIconBg: function (): object {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
@@ -410,6 +409,7 @@ export default defineComponent({
   width: 100%;
   font-size: 1.5rem;
   font-weight: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .icon__bottoms {
@@ -419,7 +419,7 @@ export default defineComponent({
 .hiding__icon {
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.1s ease;
 }
 
 .hiding__icon:hover {

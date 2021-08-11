@@ -10,10 +10,11 @@
         contenteditable="true"
         v-focus
         @blur="createAction($event)"
-        @keydown.enter.prevent="createAction($event)"
+        @keydown.enter.prevent="triggerBlur($event)"
+        @keydown="updateActionTitle($event)"
       ></p>
 
-      <p class="faded-text" v-if="action.title != {}">New Action</p>
+      <p class="faded-text" v-if="action.title != ``">New Action</p>
     </div>
   </transition>
 </template>
@@ -38,19 +39,24 @@ export default defineComponent({
 
   mounted() {},
   methods: {
+    updateActionTitle: function (e: any): void {
+      this.action.title = e.target.innerText;
+    },
     clickOutsideHandler: function (): void {
       this.$emit("clickOutsideActionAdder");
     },
     createAction: function (e: any): void {
       this.action.title = e.target.innerText;
-      if (this.action != null) {
+      if (this.action.title != "") {
         TaskService.postTask(this.action).catch(function (error) {
           console.log(error);
         });
-        console.log("Ask tot update");
         this.$emit("addNewAction", this.action);
       }
       this.action = {} as TaskType;
+    },
+    triggerBlur: function (e: any): void {
+      e.target.blur();
     },
   },
   computed: {
@@ -82,7 +88,7 @@ export default defineComponent({
   position: relative;
 }
 .New-action:hover {
-  cursor: grab;
+  cursor: text;
   filter: brightness(0.95);
 }
 

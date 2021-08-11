@@ -75,7 +75,7 @@ export default defineComponent({
   margin: 0px;
   border-radius: 50%;
   padding: 0.3rem;
-  transition: transform 0.1s cubic-bezier(0.36, 0.75, 0.67, 1.46);
+  transition: transform 0.05s cubic-bezier(0.36, 0.75, 0.67, 1.46);
 }
 .icon--hidden {
   opacity: 0;
