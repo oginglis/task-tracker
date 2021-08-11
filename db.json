@@ -5,7 +5,7 @@
       "reminder": false,
       "completed": false,
       "id": 1,
-      "position": 2
+      "position": 0
     },
     {
       "title": "Ollie here is new tasks",
@@ -19,7 +19,27 @@
       "reminder": false,
       "completed": false,
       "id": 3,
-      "position": 0
+      "position": 2
+    },
+    {
+      "title": "More stuff",
+      "reminder": false,
+      "completed": false,
+      "id": 4,
+      "position": 3
+    },
+    {
+      "title": "New action to add",
+      "position": 6,
+      "id": 8
+    },
+    {
+      "title": "New ollie method",
+      "id": 9
+    },
+    {
+      "title": "Why does this add twice",
+      "id": 10
     }
   ],
   "comments": [

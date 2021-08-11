@@ -37,6 +37,7 @@
         :bgColor="listColour"
         v-if="showActionAdder"
         @clickOutsideActionAdder="emitToggleActionAdder"
+        @addNewAction="passActionUp"
       />
     </transition>
   </div>
@@ -137,6 +138,9 @@ export default defineComponent({
     this.updateAndSendPositions();
   },
   methods: {
+    passActionUp: function (newAction: any): void {
+      this.$emit("addTempActionToList", newAction);
+    },
     emitToggleActionAdder: function () {
       this.$emit("clickedOutsideActionAdder");
     },
@@ -231,9 +235,9 @@ export default defineComponent({
 .task_list {
   width: 100%;
 }
-.padding-end:last-child {
+/* .padding-end:last-child {
   padding-bottom: 10px;
-}
+} */
 .flip-list-move {
   transition: transform 0.5s;
 }
@@ -255,6 +259,8 @@ export default defineComponent({
 
 .task-list--remove-padding {
   padding-left: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .slide-fade-leave-active {

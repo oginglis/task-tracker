@@ -5,20 +5,29 @@
       :style="newBGColor"
       v-click-outside="clickOutsideHandler"
     >
-      <p class="enter-text" contenteditable="true" v-focus></p>
+      <p
+        class="enter-text"
+        contenteditable="true"
+        v-focus
+        @blur="createAction($event)"
+        @keydown.enter.prevent="createAction($event)"
+      ></p>
 
-      <p class="faded-text">New Action</p>
+      <p class="faded-text" v-if="action.title != {}">New Action</p>
     </div>
   </transition>
 </template>
 
 <script  lang="ts">
 import { defineComponent } from "vue";
-
+import TaskService from "../services/TaskService";
+import { TaskType } from "@/types/Task";
 export default defineComponent({
   name: "NewAction",
   data: function () {
-    return {};
+    return {
+      action: {} as TaskType,
+    };
   },
   props: {
     bgColor: {
@@ -31,6 +40,17 @@ export default defineComponent({
   methods: {
     clickOutsideHandler: function (): void {
       this.$emit("clickOutsideActionAdder");
+    },
+    createAction: function (e: any): void {
+      this.action.title = e.target.innerText;
+      if (this.action != null) {
+        TaskService.postTask(this.action).catch(function (error) {
+          console.log(error);
+        });
+        console.log("Ask tot update");
+        this.$emit("addNewAction", this.action);
+      }
+      this.action = {} as TaskType;
     },
   },
   computed: {

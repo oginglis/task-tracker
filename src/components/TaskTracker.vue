@@ -54,6 +54,7 @@
           @sendTaskPositions="passTaskPositonsToModal"
           :showActionAdder="showAddTask"
           @clickedOutsideActionAdder="toggleActionAdder"
+          @addTempActionToList="addActiontoList"
         />
       </div>
       <p v-if="emptyMessage">You have no Actions on <br />this list yet.</p>
@@ -178,6 +179,10 @@ export default defineComponent({
     };
   },
   methods: {
+    addActiontoList: function (newAction: TaskType) {
+      this.showAddTask = false;
+      this.addNewTaskToTasks(newAction);
+    },
     toggleActionAdder: function () {
       this.showAddTask = !this.showAddTask;
       console.log("ACTION ADDER TOGGLE", this.showAddTask);
@@ -319,9 +324,21 @@ export default defineComponent({
     iconBGHover: function (): object {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
       let hsl: string[] = hslReg.exec(this.taskTrackerColour!)!.slice(1, 4);
-      return {
-        "--bg-hov-color": `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 10}%`,
-      };
+      if (this.showAddTask) {
+        return {
+          "--bg-hov-color": `hsl(${hsl[0]},${hsl[1]}%,${
+            parseInt(hsl[2]) + 10
+          }%`,
+          visibility: "visible",
+          opacity: "1",
+        };
+      } else {
+        return {
+          "--bg-hov-color": `hsl(${hsl[0]},${hsl[1]}%,${
+            parseInt(hsl[2]) + 10
+          }%`,
+        };
+      }
     },
     totalTaskCount: function (): number {
       var length: number = 0;
