@@ -5,17 +5,21 @@
       "reminder": false,
       "completed": false,
       "id": 2,
-      "position": 1
+      "position": 0
     },
     {
       "title": "yes l",
       "id": 17,
-      "position": 2
+      "position": 1
     },
     {
       "title": "work",
       "id": 18,
-      "position": 0
+      "position": 2
+    },
+    {
+      "title": "task added",
+      "id": 20
     }
   ],
   "comments": [

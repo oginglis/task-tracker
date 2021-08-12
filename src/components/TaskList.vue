@@ -32,7 +32,7 @@
         />
       </template>
     </draggable>
-    <transition name="slide-fade">
+    <transition :name="transitonName">
       <NewAction
         :bgColor="listColour"
         v-if="showActionAdder"
@@ -72,6 +72,7 @@ export default defineComponent({
       drag: false,
       positionsObject: {} as TasksPositionObject,
       componentKey: 0,
+      transitonName: "slide-fade",
     };
   },
   props: {
@@ -144,8 +145,15 @@ export default defineComponent({
       this.componentKey += 1;
     },
     passActionUp: function (newAction: any): void {
-      this.$emit("addTempActionToList", newAction);
-      this.forceRerenderActionAdder();
+      if (newAction == ({} as TaskType)) {
+        this.transitonName = "slide-fade";
+        this.$emit("addTempActionToList", newAction);
+        this.forceRerenderActionAdder();
+      } else {
+        this.transitonName = "fade";
+        this.$emit("addTempActionToList", newAction);
+        this.forceRerenderActionAdder();
+      }
     },
     emitToggleActionAdder: function () {
       this.$emit("clickedOutsideActionAdder");
@@ -275,6 +283,16 @@ export default defineComponent({
 
 .slide-fade-enter-from,
 .slide-fade-leave-to {
+  opacity: 0;
+  width: 0;
+  transform: scale(0);
+}
+
+.fade-enter-active {
+  transition: all 0.2s ease-in;
+}
+
+.fade-enter-from {
   opacity: 0;
   width: 0;
   transform: scale(0);

@@ -75,15 +75,15 @@ export default defineComponent({
       };
     },
   },
-  unmounted() {
-    if (this.action.title) {
-      this.transitonName = "fade";
-      console.log("Fade added");
-    } else {
-      this.transitonName = "slide-fade";
-      console.log("Slide Fade added");
-    }
-  },
+  // beforeUnmount() {
+  //   if (this.action.title) {
+  //     this.transitonName = "fade";
+  //     console.log("Fade added");
+  //   } else {
+  //     this.transitonName = "slide-fade";
+  //     console.log("Slide Fade added");
+  //   }
+  // },
 });
 </script>
 
