@@ -146,11 +146,11 @@ export default defineComponent({
     },
     passActionUp: function (newAction: any): void {
       if (newAction == ({} as TaskType)) {
-        this.transitonName = "slide-fade";
+        this.transitonName = "fade";
         this.$emit("addTempActionToList", newAction);
         this.forceRerenderActionAdder();
       } else {
-        this.transitonName = "fade";
+        this.transitonName = "slide-fade";
         this.$emit("addTempActionToList", newAction);
         this.forceRerenderActionAdder();
       }
