@@ -38,6 +38,7 @@
         v-if="showActionAdder"
         @clickOutsideActionAdder="emitToggleActionAdder"
         @addNewAction="passActionUp"
+        :key="componentKey"
       />
     </transition>
   </div>
@@ -70,6 +71,7 @@ export default defineComponent({
       info: [] as TaskType[],
       drag: false,
       positionsObject: {} as TasksPositionObject,
+      componentKey: 0,
     };
   },
   props: {
@@ -138,8 +140,12 @@ export default defineComponent({
     this.updateAndSendPositions();
   },
   methods: {
+    forceRerenderActionAdder() {
+      this.componentKey += 1;
+    },
     passActionUp: function (newAction: any): void {
       this.$emit("addTempActionToList", newAction);
+      this.forceRerenderActionAdder();
     },
     emitToggleActionAdder: function () {
       this.$emit("clickedOutsideActionAdder");

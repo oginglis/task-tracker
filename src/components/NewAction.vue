@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide-fade">
+  <transition :name="transitonName">
     <div
       class="New-action"
       :style="newBGColor"
@@ -14,7 +14,7 @@
         @keydown="updateActionTitle($event)"
       ></p>
 
-      <p class="faded-text" v-if="action.title != ``">New Action</p>
+      <p class="faded-text" v-if="!action.title">New Action</p>
     </div>
   </transition>
 </template>
@@ -28,6 +28,7 @@ export default defineComponent({
   data: function () {
     return {
       action: {} as TaskType,
+      transitonName: "slide-fade",
     };
   },
   props: {
@@ -40,7 +41,11 @@ export default defineComponent({
   mounted() {},
   methods: {
     updateActionTitle: function (e: any): void {
-      this.action.title = e.target.innerText;
+      if (e.target.innerText === "") {
+        this.action.title = e.key;
+      } else {
+        this.action.title = e.target.innerText;
+      }
     },
     clickOutsideHandler: function (): void {
       this.$emit("clickOutsideActionAdder");
@@ -48,12 +53,14 @@ export default defineComponent({
     createAction: function (e: any): void {
       this.action.title = e.target.innerText;
       if (this.action.title != "") {
-        TaskService.postTask(this.action).catch(function (error) {
-          console.log(error);
-        });
-        this.$emit("addNewAction", this.action);
+        TaskService.postTask(this.action)
+          .then((res) => {
+            this.$emit("addNewAction", res.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       }
-      this.action = {} as TaskType;
     },
     triggerBlur: function (e: any): void {
       e.target.blur();
@@ -67,6 +74,15 @@ export default defineComponent({
         backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 10}%`,
       };
     },
+  },
+  unmounted() {
+    if (this.action.title) {
+      this.transitonName = "fade";
+      console.log("Fade added");
+    } else {
+      this.transitonName = "slide-fade";
+      console.log("Slide Fade added");
+    }
   },
 });
 </script>
@@ -122,6 +138,16 @@ export default defineComponent({
 
 .slide-fade-enter-from,
 .slide-fade-leave-to {
+  opacity: 0;
+  width: 0;
+  transform: scale(0);
+}
+
+.fade-enter-active {
+  transition: all 0.2s ease-in;
+}
+
+.fade-enter-from {
   opacity: 0;
   width: 0;
   transform: scale(0);

@@ -135,10 +135,7 @@ export default defineComponent({
     P5Canvas,
   },
   created() {
-    TaskService.getTasks().then((response): void => {
-      this.tasks = response.data as Array<TaskType>;
-      this.sortIndexes(this.tasks);
-    });
+    this.getAllActions();
   },
   data: function () {
     return {
@@ -179,8 +176,13 @@ export default defineComponent({
     };
   },
   methods: {
-    addActiontoList: function (newAction: TaskType) {
-      this.showAddTask = false;
+    getAllActions: function (): void {
+      TaskService.getTasks().then((response): void => {
+        this.tasks = response.data as Array<TaskType>;
+        this.sortIndexes(this.tasks);
+      });
+    },
+    addActiontoList: function (newAction: TaskType): void {
       this.addNewTaskToTasks(newAction);
     },
     toggleActionAdder: function () {
