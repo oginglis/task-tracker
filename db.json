@@ -1,16 +1,9 @@
 {
   "tasks": [
     {
-      "title": "Ollie here is new tasks",
-      "reminder": false,
-      "completed": false,
-      "id": 2,
-      "position": 5
-    },
-    {
       "title": "yes l",
       "id": 17,
-      "position": 4
+      "position": 3
     },
     {
       "title": "work",
@@ -18,19 +11,14 @@
       "position": 2
     },
     {
-      "title": "task added",
-      "id": 20,
-      "position": 0
-    },
-    {
-      "title": "new action",
-      "id": 21,
-      "position": 3
-    },
-    {
       "title": "Olliw",
       "id": 22,
       "position": 1
+    },
+    {
+      "title": "this is a neq action",
+      "id": 23,
+      "position": 0
     }
   ],
   "comments": [

@@ -1,6 +1,6 @@
 import tooltipDirective from "./Tooltip/";
 import focusDirective from "./focus"
-import vClickOutside from "./clickoutside"
+
 
 // register all directives
 const directives = (app: any) => {
