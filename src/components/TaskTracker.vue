@@ -23,15 +23,15 @@
             @updateTitle="updateTaskTrackerTitle"
             :headerColour="taskTrackerColour"
           />
-          <Button
+          <!-- <Button
             @clickButton="changeButton"
             :buttonText="buttonText"
             :buttonBGColor="taskTrackerColour"
             :style="calculatedTextColor"
-          />
+          /> -->
         </div>
 
-        <transition name="fade">
+        <!-- <transition name="fade">
           <TaskForm
             v-if="buttonText !== 'Add a Task'"
             :task="task"
@@ -41,7 +41,7 @@
             @newTaskCreated="addNewTaskToTasks"
             :formColour="taskTrackerColour"
           />
-        </transition>
+        </transition> -->
 
         <TaskList
           :updateWithThisTask="taskPassUpdate"
@@ -106,8 +106,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Header from "./Header.vue";
-import Button from "./Button.vue";
-import TaskForm from "./TaskForm.vue";
+// import Button from "./Button.vue";
+// import TaskForm from "./TaskForm.vue";
 import TaskList from "./TaskList.vue";
 import ClickableIcon from "./ClickableIcon.vue";
 import Modal from "./Modal.vue";
@@ -126,8 +126,8 @@ export default defineComponent({
   name: "TaskTracker",
   components: {
     Header,
-    Button,
-    TaskForm,
+    // Button,
+    // TaskForm,
     TaskList,
     Modal,
     Tooltip,
@@ -201,6 +201,7 @@ export default defineComponent({
     updateColor: function (newColor: string): void {
       let hslNewColor = tinyColor(newColor).toHslString();
       this.taskTrackerColour = hslNewColor;
+      // Add Persist Colour Here
       this.toggleP5Canvas();
     },
     toggleP5Canvas: function (): void {

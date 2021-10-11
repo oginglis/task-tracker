@@ -105,7 +105,6 @@ export default defineComponent({
         });
 
         if (balls.some((ball: any) => ball.clicked())) {
-          console.log("Emiteeed");
           this.$emit("clickColor", this.clickedColor);
         }
         // if(balls.some((ball: any) => ball.clicked()){
