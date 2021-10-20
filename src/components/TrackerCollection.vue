@@ -1,10 +1,18 @@
 <template>
   <div>
-    <TaskTracker> </TaskTracker>
+    <ul v-for="list in lists" :key="list.id">
+      <TaskTracker
+        v-if="lists"
+        :trackerTitle="list.title"
+        :trackerColor="list.backgroundColour"
+        :taskTrackerID="list.id"
+      >
+      </TaskTracker>
+    </ul>
   </div>
 </template>
 
-<script setup lang="ts">
+<script  lang="ts">
 import { defineComponent } from "vue";
 import ListService from "@/services/ListService";
 import TaskTracker from "./TaskTracker.vue";

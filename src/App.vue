@@ -5,19 +5,19 @@
         content ? `${content} | Task Track App` : `Task Tracker`
       }}</template>
     </metainfo>
-    <TaskTracker />
+    <TrackerCollection />
   </div>
 </template>
 
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import TaskTracker from "./components/TaskTracker.vue";
+import TrackerCollection from "./components/TrackerCollection.vue";
 import { useMeta } from "vue-meta";
 export default defineComponent({
   name: "App",
   components: {
-    TaskTracker,
+    TrackerCollection,
   },
   setup() {
     useMeta({

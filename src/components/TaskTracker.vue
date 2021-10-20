@@ -113,6 +113,7 @@ import ClickableIcon from "./ClickableIcon.vue";
 import Modal from "./Modal.vue";
 import Tooltip from "./Tooltip.vue";
 import TaskService from "@/services/TaskService";
+import ListService from "@/services/ListService";
 import { TaskType } from "@/types/Task";
 import P5Canvas from "./P5CanvasColours.vue";
 import { TaskPosition } from "@/types/TaskPosition";
@@ -137,9 +138,11 @@ export default defineComponent({
   created() {
     this.getAllActions();
   },
+  props: ["trackerTitle", "trackerColor", "taskTrackerID"],
   data: function () {
     return {
-      title: "Task Tracker",
+      trackerID: this.taskTrackerID,
+      title: this.trackerTitle,
       buttonText: "Add a Task",
       tasks: [] as Array<TaskType>,
       task: {} as TaskType,
@@ -148,7 +151,7 @@ export default defineComponent({
       isInputOpen: false,
       taskPassUpdate: {} as TaskType,
       taskPositionsObjectParent: {} as TasksPositionObject,
-      taskTrackerColour: "hsl(39, 81%, 73%)",
+      taskTrackerColour: this.trackerColor,
       showTasks: true,
       showAddTask: false,
       colours: [
@@ -197,10 +200,19 @@ export default defineComponent({
     },
     updateTaskTrackerTitle: function (newTitle: string): void {
       this.title = newTitle;
+      this.saveList();
+    },
+    saveList: function (): void {
+      ListService.patchList(this.trackerID, {
+        title: this.title,
+        backgroundColour: this.taskTrackerColour,
+        id: this.taskTrackerID,
+      });
     },
     updateColor: function (newColor: string): void {
       let hslNewColor = tinyColor(newColor).toHslString();
       this.taskTrackerColour = hslNewColor;
+      this.saveList();
       // Add Persist Colour Here
       this.toggleP5Canvas();
     },
