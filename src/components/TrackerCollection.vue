@@ -1,15 +1,16 @@
 <template>
   <div class="tracker_collection">
-    <ul v-for="list in lists" :key="list.id">
+    <ul v-for="list in lists" :key="list.id" class="tracker_collection__list">
       <TaskTracker
         v-if="lists"
         :trackerTitle="list.title"
         :trackerColor="list.backgroundColour"
         :taskTrackerID="list.id"
+        @sizingUpdate="setCreatorToListHeight()"
       >
       </TaskTracker>
     </ul>
-    <TaskTrackerCreator />
+    <TaskTrackerCreator :style="setCreatorToListHeight()" />
   </div>
 </template>
 
@@ -32,6 +33,7 @@ export default defineComponent({
   data: function () {
     return {
       lists: [] as Array<ListType>,
+      creatorHeight: 0,
     };
   },
   methods: {
@@ -40,6 +42,15 @@ export default defineComponent({
         this.lists = response.data as Array<ListType>;
       });
     },
+    setCreatorToListHeight: function (): void {
+      let largestHeight: number = Math.max.apply(
+        Math,
+        this.lists.map(function (list) {
+          return list.height;
+        })
+      );
+      this.creatorHeight = largestHeight;
+    },
   },
 });
 </script>
@@ -47,5 +58,9 @@ export default defineComponent({
 <style scoped>
 .tracker_collection {
   display: flex;
+}
+.tracker_collection__list {
+  margin: 0;
+  padding: 0;
 }
 </style>

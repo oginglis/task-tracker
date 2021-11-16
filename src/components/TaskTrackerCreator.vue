@@ -44,7 +44,7 @@ export default defineComponent({
   border-radius: 1rem;
   background-color: white;
   width: 300px;
-  margin: 0px auto;
+
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

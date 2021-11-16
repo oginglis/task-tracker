@@ -24,25 +24,7 @@
             @updateTitle="updateTaskTrackerTitle"
             :headerColour="taskTrackerColour"
           />
-          <!-- <Button
-            @clickButton="changeButton"
-            :buttonText="buttonText"
-            :buttonBGColor="taskTrackerColour"
-            :style="calculatedTextColor"
-          /> -->
         </div>
-
-        <!-- <transition name="fade">
-          <TaskForm
-            v-if="buttonText !== 'Add a Task'"
-            :task="task"
-            :isUpdate="isPatch"
-            @finishUpdate="finishedPatch"
-            :taskCount="totalTaskCount"
-            @newTaskCreated="addNewTaskToTasks"
-            :formColour="taskTrackerColour"
-          />
-        </transition> -->
 
         <TaskList
           :updateWithThisTask="taskPassUpdate"
@@ -121,7 +103,6 @@ import { TaskPosition } from "@/types/TaskPosition";
 import { TasksPositionObject } from "@/types/TasksPositionObject";
 import { TrackerDimensions } from "@/types/Dimensions";
 import _ from "lodash";
-
 import tinyColor from "tinycolor2";
 
 export default defineComponent({
@@ -159,6 +140,8 @@ export default defineComponent({
       taskPassUpdate: {} as TaskType,
       taskPositionsObjectParent: {} as TasksPositionObject,
       taskTrackerColour: this.trackerColor,
+      width: 0,
+      height: 0,
       showTasks: true,
       showAddTask: false,
       colours: [
@@ -190,11 +173,10 @@ export default defineComponent({
       let trackerInstance: HTMLElement | null = this.$refs
         .taskTrackerInstance as any;
       if (trackerInstance != null) {
-        this.$emit("trackerHeightUpdate", {
-          width: trackerInstance.clientWidth,
-          height: trackerInstance.clientHeight,
-        });
+        this.width = trackerInstance.clientWidth;
+        this.height = trackerInstance.clientHeight;
       }
+      this.$emit("sizingUpdate");
     },
     getAllActions: function (): void {
       TaskService.getTasks().then((response): void => {
@@ -222,6 +204,8 @@ export default defineComponent({
     saveList: function (): void {
       ListService.patchList(this.trackerID, {
         title: this.title,
+        width: this.width,
+        height: this.height,
         backgroundColour: this.taskTrackerColour,
         id: this.taskTrackerID,
       });
@@ -411,7 +395,7 @@ export default defineComponent({
   padding: 1.5rem 3rem;
   border-radius: 1rem;
   width: 300px;
-  margin: 0px auto;
+  margin: 0 0.5rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

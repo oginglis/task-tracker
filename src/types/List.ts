@@ -1,7 +1,7 @@
 export interface ListType {
   backgroundColour: string;
-  height: number;
   width: number;
+  height: number;
   title: string;
   id: number;
 }
