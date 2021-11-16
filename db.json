@@ -3,37 +3,26 @@
     {
       "title": "work",
       "id": 18,
-      "position": 3
-    },
-    {
-      "title": "this is a neq action",
-      "id": 23,
-      "position": 2
-    },
-    {
-      "title": "Ollie test",
-      "id": 24,
-      "position": 5
-    },
-    {
-      "title": "Test",
-      "id": 25,
       "position": 0
     },
     {
       "title": "New action",
-      "id": 26,
-      "position": 4
+      "id": 19,
+      "position": 2
     },
     {
-      "title": "And another",
-      "id": 27,
+      "title": "Action added",
+      "id": 20,
       "position": 1
+    },
+    {
+      "title": "New task task",
+      "id": 21
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(13, 80%, 48%)",
+      "backgroundColour": "hsl(31, 80%, 54%)",
       "title": "Changing the title",
       "id": 1
     }

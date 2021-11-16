@@ -1,6 +1,7 @@
 <template>
   <div
     class="task-tracker-wrap"
+    ref="taskTrackerInstance"
     :style="[calculatedBackgroundColor, calculatedTextColor]"
   >
     <div v-if="showTasks" class="task_tracker_display" ref="taskDisplay">
@@ -138,6 +139,12 @@ export default defineComponent({
   created() {
     this.getAllActions();
   },
+  mounted() {
+    this.recordHeight();
+  },
+  updated() {
+    this.recordHeight();
+  },
   props: ["trackerTitle", "trackerColor", "taskTrackerID"],
   data: function () {
     return {
@@ -179,6 +186,16 @@ export default defineComponent({
     };
   },
   methods: {
+    recordHeight: function (): void {
+      let trackerInstance: HTMLElement | null = this.$refs
+        .taskTrackerInstance as any;
+      if (trackerInstance != null) {
+        this.$emit("trackerHeightUpdate", {
+          width: trackerInstance.clientWidth,
+          height: trackerInstance.clientHeight,
+        });
+      }
+    },
     getAllActions: function (): void {
       TaskService.getTasks().then((response): void => {
         this.tasks = response.data as Array<TaskType>;

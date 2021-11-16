@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="tracker_collection">
     <ul v-for="list in lists" :key="list.id">
       <TaskTracker
         v-if="lists"
@@ -9,6 +9,7 @@
       >
       </TaskTracker>
     </ul>
+    <TaskTrackerCreator />
   </div>
 </template>
 
@@ -17,11 +18,13 @@ import { defineComponent } from "vue";
 import ListService from "@/services/ListService";
 import TaskTracker from "./TaskTracker.vue";
 import { ListType } from "@/types/List";
+import TaskTrackerCreator from "./TaskTrackerCreator.vue";
 
 export default defineComponent({
   name: "TrackerCollection",
   components: {
     TaskTracker,
+    TaskTrackerCreator,
   },
   created() {
     this.getAllLists();
@@ -42,4 +45,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.tracker_collection {
+  display: flex;
+}
 </style>

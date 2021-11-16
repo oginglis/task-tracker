@@ -2,7 +2,8 @@
   <font-awesome-icon
     @click="clicked"
     :icon="type"
-    :style="styleIcon"
+    :style="[styleIcon]"
+    size="6x"
     class="icon"
     ><span class="tooltiptext">Tooltip text</span></font-awesome-icon
   >
@@ -35,6 +36,10 @@ export default defineComponent({
     width: String,
     height: String,
     borderStyles: Boolean,
+    fontSize: {
+      default: "1em",
+      type: String,
+    },
   },
   methods: {
     clicked: function (): void {
