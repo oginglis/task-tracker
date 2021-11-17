@@ -3,36 +3,36 @@
     {
       "title": "work",
       "id": 18,
-      "position": 4
+      "position": 2
     },
     {
       "title": "New action",
       "id": 19,
-      "position": 0
+      "position": 3
     },
     {
       "title": "Action added",
       "id": 20,
-      "position": 1
+      "position": 0
     },
     {
       "title": "This is a new task",
       "id": 21,
-      "position": 3
+      "position": 1
     },
     {
       "title": "New attemp",
       "id": 22,
-      "position": 2
+      "position": 4
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(195, 23%, 27%)",
+      "backgroundColour": "hsl(316, 38%, 58%)",
       "title": "This is a new title",
       "id": 1,
-      "width": 396,
-      "height": 594
+      "width": 0,
+      "height": 0
     }
   ],
   "comments": [

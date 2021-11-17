@@ -33,6 +33,7 @@ export default defineComponent({
   methods: {
     createAList: function (): void {
       console.log("create a list clicked");
+      this.$emit("createNewList");
     },
   },
 });
@@ -45,12 +46,10 @@ export default defineComponent({
   background-color: white;
   width: 300px;
 
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: content-box;
-  min-height: 33rem;
   justify-content: center;
 }
 
