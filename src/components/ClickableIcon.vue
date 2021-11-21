@@ -43,6 +43,7 @@ export default defineComponent({
   },
   methods: {
     clicked: function (): void {
+      console.log("icon cliked");
       this.$emit("iconClicked");
     },
   },

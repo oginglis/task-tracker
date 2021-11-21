@@ -48,7 +48,10 @@ export default defineComponent({
 
       this.p5Canvas.width = newSize.width;
       this.p5Canvas.height = newSize.height;
-      console.log(this.p5Canvas.title);
+      // this.p5Canvas.showBalls().forEach((ball: any) => {
+      //   ball.pickLocation(newSize.width, newSize.height);
+      // });
+      // console.log(this.p5Canvas.title);
       this.p5Canvas.redraw();
     },
   },
@@ -63,7 +66,12 @@ export default defineComponent({
 
       let balls: any = [];
 
-      let maxSpeed = 3;
+      let maxSpeed = 4;
+
+      const showBalls = function () {
+        return balls;
+      };
+      console.log(showBalls);
 
       p.setup = () => {
         let ctx = p.createCanvas(width || 400, height || 400);
@@ -71,8 +79,8 @@ export default defineComponent({
 
         this.ballColours!.forEach((colour: any, index: number) => {
           let bc = this.hslTorbg(colour.colour);
-          console.log(bc);
-          balls[index] = new Ball(25, bc);
+
+          balls[index] = new Ball(25, bc, width, height);
         });
       };
 
@@ -130,15 +138,15 @@ export default defineComponent({
         v1: any;
         v2: any;
         dist: any;
-        constructor(radius: any, bc: any) {
+        constructor(radius: any, bc: any, w: any, h: any) {
           this.ballColor = bc;
           this.radius = radius;
-          this.pos = this.pickLocation();
+          this.pos = this.pickLocation(w, h);
           this.speed = p.createVector(
             p.random(-maxSpeed, maxSpeed),
             p.random(-maxSpeed, maxSpeed)
           );
-          this.mass = 1;
+          this.mass = 2;
         }
 
         clicked() {
@@ -152,7 +160,7 @@ export default defineComponent({
           }
         }
 
-        pickLocation() {
+        pickLocation(width: any, height: any) {
           //spawn within canvas
           let xOption = p.random(this.radius, width - this.radius);
           let yOption = p.random(this.radius, height - this.radius);
@@ -218,7 +226,7 @@ export default defineComponent({
           this.dist = this.direction.mag();
           this.direction.normalize();
           //this is 60 because that is the radius you give them times two
-          this.correction = 60 - this.dist;
+          this.correction = 50 - this.dist;
           this.pos.sub(P5.Vector.mult(this.direction, this.correction / 2));
           other.pos.add(P5.Vector.mult(this.direction, this.correction / 2));
           this.v1 = this.direction.dot(this.speed) * 0.5;
