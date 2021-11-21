@@ -217,6 +217,7 @@ export default defineComponent({
       this.tasksModel.forEach((task) => {
         let refName: string = `Task ${task.id}`;
         let top: number, left: number;
+
         top = (this.$refs[refName] as any).$el.getBoundingClientRect().top;
         left = (this.$refs[refName] as any).$el.getBoundingClientRect().left;
         let posObject: TaskPosition = { top: top, left: left };

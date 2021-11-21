@@ -4,7 +4,7 @@
     ref="taskTrackerInstance"
     :style="[calculatedBackgroundColor, calculatedTextColor]"
   >
-    <div v-if="showTasks" class="task_tracker_display" ref="taskDisplay">
+    <div v-show="showTasks" class="task_tracker_display" ref="taskDisplay">
       <Modal
         @toggleOpenModal="toggleModal"
         @rerender="updateList"
@@ -75,7 +75,7 @@
       </div>
     </div>
     <P5Canvas
-      v-else
+      v-show="!showTasks"
       :canvasSize="taskTrackDimensions()"
       :bgColor="taskTrackerColour"
       :ballColours="colours"
@@ -211,15 +211,23 @@ export default defineComponent({
       });
     },
     updateColor: function (newColor: string): void {
+      console.log("update color recieved = ", newColor);
       let hslNewColor = tinyColor(newColor).toHslString();
       this.taskTrackerColour = hslNewColor;
       this.saveList();
-      // Add Persist Colour Here
+      console.log(
+        "About to toggle P5 Canvas off, is it currently visible",
+        !this.showTasks
+      );
       this.toggleP5Canvas();
+      console.log("is the canvas turned visible", !this.showTasks);
+      this.taskTrackDimensions();
+      // Add Persist Colour Here
     },
     toggleP5Canvas: function (): void {
-      this.showTasks ? (this.showTasks = false) : (this.showTasks = true);
       this.taskTrackDimensions();
+      this.showTasks = !this.showTasks;
+      console.log("P5 Canvas Visible ", !this.showTasks);
     },
     taskTrackDimensions: function (): TrackerDimensions {
       let taskDisplay = this.$refs["taskDisplay"] as any;

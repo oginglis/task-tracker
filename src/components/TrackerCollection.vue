@@ -15,7 +15,7 @@
       @createNewList="toggleColorPicker"
       ref="taskCreator"
     />
-    <P5CanvasColours :canvasSize="{ height: 100, width: 2000 }" />
+    <!-- <P5CanvasColours :canvasSize="{ height: 100, width: 2000 }" /> -->
   </div>
 </template>
 
@@ -25,14 +25,14 @@ import ListService from "@/services/ListService";
 import TaskTracker from "./TaskTracker.vue";
 import { ListType } from "@/types/List";
 import TaskTrackerCreator from "./TaskTrackerCreator.vue";
-import P5CanvasColours from "./P5CanvasColours.vue";
+// import P5CanvasColours from "./P5CanvasColours.vue";
 import { TrackerDimensions } from "@/types/Dimensions";
 export default defineComponent({
   name: "TrackerCollection",
   components: {
     TaskTracker,
     TaskTrackerCreator,
-    P5CanvasColours,
+    // P5CanvasColours,
   },
   created() {
     this.getAllLists();

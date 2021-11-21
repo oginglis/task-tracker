@@ -8,7 +8,6 @@ import { defineComponent, PropType } from "vue";
 import { TrackerDimensions } from "../types/Dimensions";
 import tinyColor from "tinycolor2";
 import { Color } from "../types/Color";
-
 export default defineComponent({
   name: "P5Canvas",
   data: function () {
@@ -27,30 +26,6 @@ export default defineComponent({
     },
     ballColours: {
       type: Array as PropType<Array<Color>>,
-      default(): Array<{}> {
-        return [
-          { colour: "hsl(39, 81%, 73%)", active: true },
-          { colour: "hsl(13, 80%, 48%)", active: false },
-          { colour: "hsl(341, 67%, 47%)", active: false },
-          { colour: "hsl(75, 56%, 38%)", active: false },
-          { colour: "hsl(10, 30%, 62%)", active: false },
-          { colour: "hsl(0, 0%, 100%)", active: false },
-          { colour: "hsl(319, 57%, 39%)", active: false },
-          { colour: "hsl(2, 73%, 43%)", active: false },
-          { colour: "hsl(207, 15%, 12%)", active: false },
-          { colour: "hsl(196, 44%, 51%)", active: false },
-          { colour: "hsl(12, 73%, 51%)", active: false },
-          { colour: "hsl(164, 35%, 52%)", active: false },
-          { colour: "hsl(31, 80%, 54%)", active: false },
-          { colour: "hsl(205, 80%, 40%)", active: false },
-          { colour: "hsl(41, 62%, 51%)", active: false },
-          { colour: "hsl(186, 56%, 42%)", active: false },
-          { colour: "hsl(195, 23%, 27%)", active: false },
-          { colour: "hsl(316, 38%, 58%)", active: false },
-          { colour: "hsl(207, 15%, 12%)", active: false },
-          { colour: "hsl(212, 73%, 36%)", active: false },
-        ];
-      },
     },
     title: {
       type: String,
@@ -66,9 +41,200 @@ export default defineComponent({
       return col.toRgbString();
     },
   },
+  beforeUpdate() {},
+  watch: {
+    canvasSize: function (newSize) {
+      this.p5Canvas.resizeCanvas(newSize.width, newSize.height);
+
+      this.p5Canvas.width = newSize.width;
+      this.p5Canvas.height = newSize.height;
+      console.log(this.p5Canvas.title);
+      this.p5Canvas.redraw();
+    },
+  },
   mounted() {
+    console.log("P5 Mounted");
+
     this.textColor;
     console.log(this.canvasSize);
+    let sketch2 = (p: P5) => {
+      let width = (this as any).canvasSize!.width;
+      let height = this.canvasSize!.height;
+
+      let balls: any = [];
+
+      let maxSpeed = 3;
+
+      p.setup = () => {
+        let ctx = p.createCanvas(width || 400, height || 400);
+        ctx.parent(this.$el);
+
+        this.ballColours!.forEach((colour: any, index: number) => {
+          let bc = this.hslTorbg(colour.colour);
+          console.log(bc);
+          balls[index] = new Ball(25, bc);
+        });
+      };
+
+      const isHovered = function (currentValue: any) {
+        if (p.dist(p.mouseX, p.mouseY, currentValue.x, currentValue.y) < 30) {
+          return true;
+        } else {
+          return false;
+        }
+      };
+      p.draw = () => {
+        p.background(this.hslTorbg(this.bgColor));
+        p.textAlign("center");
+        p.textFont("aktiv-grotesk");
+        p.textSize(15);
+        p.fill(this.textColor!.color);
+        p.text("Choose a colour for " + this.title, width / 2, height / 2);
+        for (let i = 0; i < balls.length; i++) {
+          balls[i].move(
+            (this as any).canvasSize!.width,
+            this.canvasSize!.height
+          );
+        }
+        for (let i = 0; i < balls.length; i++) {
+          balls[i].show();
+        }
+        if (balls.some(isHovered)) {
+          p.cursor(p.HAND);
+        } else {
+          p.cursor(p.ARROW);
+        }
+      };
+
+      p.mouseClicked = () => {
+        if (balls.some((ball: any) => ball.clicked())) {
+          let clickedBall = balls.find((ball: any) => {
+            return ball.clicked() === true;
+          });
+
+          this.clickedColor = clickedBall.ballColor;
+          console.log(this.clickedColor);
+
+          this.$emit("clickColor", this.clickedColor);
+        }
+      };
+
+      class Ball {
+        radius: any;
+        ballColor: any;
+        pos: any;
+        speed: any;
+        mass: any;
+        direction: any;
+        correction: any;
+        v1: any;
+        v2: any;
+        dist: any;
+        constructor(radius: any, bc: any) {
+          this.ballColor = bc;
+          this.radius = radius;
+          this.pos = this.pickLocation();
+          this.speed = p.createVector(
+            p.random(-maxSpeed, maxSpeed),
+            p.random(-maxSpeed, maxSpeed)
+          );
+          this.mass = 1;
+        }
+
+        clicked() {
+          if (
+            p.dist(p.mouseX, p.mouseY, this.pos.x, this.pos.y) <
+            this.radius * 2
+          ) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+
+        pickLocation() {
+          //spawn within canvas
+          let xOption = p.random(this.radius, width - this.radius);
+          let yOption = p.random(this.radius, height - this.radius);
+
+          // check whether spawning on this location doesn't overlap other circles
+          for (let i = 0; i < balls.length; i++) {
+            // don't check for current circle
+            if (balls[i] != this) {
+              // get distance to other circle
+              let d = p.dist(xOption, yOption, balls[i].pos.x, balls[i].pos.y);
+              // check whether overlapping
+              if (d <= this.radius + balls[i].radius) {
+                // generate new location and rerun check
+                console.log("overlapping another circle, trying new location");
+                xOption = p.random(this.radius, width - this.radius);
+                yOption = p.random(this.radius, height - this.radius);
+                i = -1;
+              }
+            }
+          }
+          return p.createVector(xOption, yOption);
+        }
+
+        move(width: any, height: any) {
+          for (let i = 0; i < balls.length; i++) {
+            if (balls[i] != this) {
+              let d = p.dist(
+                this.pos.x,
+                this.pos.y,
+                balls[i].pos.x,
+                balls[i].pos.y
+              );
+              if (d < this.radius + balls[i].radius) {
+                this.collision(balls[i]);
+              }
+            }
+          }
+
+          if (
+            this.pos.x - this.radius < 0 ||
+            this.pos.x + this.radius > width
+          ) {
+            this.speed.x *= -1;
+          }
+          if (
+            this.pos.y - this.radius < 0 ||
+            this.pos.y + this.radius > height
+          ) {
+            this.speed.y *= -1;
+          }
+
+          this.pos.x += this.speed.x * 0.99;
+          this.pos.y += this.speed.y * 0.99;
+          this.pos.x = p.constrain(this.pos.x, 0, 500);
+          this.pos.y = p.constrain(this.pos.y, 0, 500);
+        }
+
+        // takes ball object as input, sets speedvector to new x,y speed
+        collision(other: any) {
+          this.v1 = 0;
+          this.v2 = 0;
+          this.direction = P5.Vector.sub(other.pos, this.pos);
+          this.dist = this.direction.mag();
+          this.direction.normalize();
+          //this is 60 because that is the radius you give them times two
+          this.correction = 60 - this.dist;
+          this.pos.sub(P5.Vector.mult(this.direction, this.correction / 2));
+          other.pos.add(P5.Vector.mult(this.direction, this.correction / 2));
+          this.v1 = this.direction.dot(this.speed) * 0.5;
+          this.v2 = this.direction.dot(other.speed) * 0.5;
+          this.direction.mult(this.v1 - this.v2);
+          this.speed.sub(P5.Vector.mult(this.direction, 1));
+          other.speed.add(P5.Vector.mult(this.direction, 1));
+        }
+
+        show() {
+          p.fill(this.ballColor as any);
+          p.noStroke();
+          p.ellipse(this.pos.x, this.pos.y, this.radius * 2);
+        }
+      }
+    };
     let sketch = (p: P5) => {
       let spring = 0.05;
       let gravity = -0.01;
@@ -80,7 +246,6 @@ export default defineComponent({
       p.setup = () => {
         let ctx = p.createCanvas(width || 400, height || 400);
         ctx.parent(this.$el);
-
         this.ballColours!.forEach((ball: any, index: number) => {
           let bc = this.hslTorbg(ball.colour);
           balls[index] = new Ball(
@@ -113,35 +278,26 @@ export default defineComponent({
         p.text("Choose a colour for " + this.title, width / 2, height / 2);
         balls.forEach((ball: any) => {
           ball.collide();
-          ball.move();
+          ball.move((this as any).canvasSize!.width, this.canvasSize!.height);
           ball.display();
         });
-
         if (balls.some(isHovered)) {
           p.cursor(p.HAND);
         } else {
           p.cursor(p.ARROW);
         }
       };
-
-      p.mousePressed = () => {
-        balls.forEach((ball: any) => {
-          if (ball.clicked()) {
-            this.clickedColor = ball.color;
-          }
-        });
-
+      p.mouseClicked = () => {
         if (balls.some((ball: any) => ball.clicked())) {
+          let clickedBall = balls.find((ball: any) => {
+            return ball.clicked() === true;
+          });
+
+          this.clickedColor = clickedBall.color;
+          console.log("click ball emitted - Check this");
           this.$emit("clickColor", this.clickedColor);
         }
-        // if(balls.some((ball: any) => ball.clicked()){
-        //     this.clickedColor = ball.color;
-        //     this.$emit("clickColor", this.clickedColor);
-        //   }
-
-        // });
       };
-
       class Ball {
         x: number;
         y: number;
@@ -170,7 +326,6 @@ export default defineComponent({
           this.others = oin;
           this.color = color;
         }
-
         collide() {
           for (let i = this.id + 1; i < numBalls; i++) {
             // console.log(others[i]);
@@ -178,7 +333,6 @@ export default defineComponent({
             let dy = this.others[i].y - this.y;
             let distance = p.sqrt(dx * dx + dy * dy);
             let minDist = this.others[i].diameter / 2 + this.diameter / 2;
-
             if (distance < minDist) {
               //console.log("2");
               let angle = p.atan2(dy, dx);
@@ -193,7 +347,7 @@ export default defineComponent({
             }
           }
         }
-        move() {
+        move(width: any, height: any) {
           this.vy += gravity;
           this.x += this.vx;
           this.y += this.vy;
@@ -212,7 +366,6 @@ export default defineComponent({
             this.vy *= friction;
           }
         }
-
         display() {
           p.fill(this.color as any);
           p.ellipse(this.x, this.y, this.diameter, this.diameter);
@@ -226,9 +379,11 @@ export default defineComponent({
         }
       }
     };
-    this.p5Canvas = new P5(sketch);
+    console.log(sketch);
+    this.p5Canvas = new P5(sketch2);
   },
   unmounted() {
+    console.log("UNMOUNTED CALLED");
     this.p5Canvas = null;
   },
 });

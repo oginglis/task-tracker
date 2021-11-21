@@ -1,14 +1,9 @@
 {
   "tasks": [
     {
-      "title": "work",
-      "id": 18,
-      "position": 2
-    },
-    {
       "title": "New action",
       "id": 19,
-      "position": 3
+      "position": 2
     },
     {
       "title": "Action added",
@@ -18,21 +13,29 @@
     {
       "title": "This is a new task",
       "id": 21,
-      "position": 1
+      "position": 3
     },
     {
       "title": "New attemp",
       "id": 22,
-      "position": 4
+      "position": 1
+    },
+    {
+      "title": "Add another task",
+      "id": 23
+    },
+    {
+      "title": "and another",
+      "id": 24
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(316, 38%, 58%)",
+      "backgroundColour": "hsl(164, 35%, 52%)",
       "title": "This is a new title",
       "id": 1,
-      "width": 0,
-      "height": 0
+      "width": 396,
+      "height": 676
     }
   ],
   "comments": [
