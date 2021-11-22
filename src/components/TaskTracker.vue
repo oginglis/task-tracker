@@ -127,6 +127,11 @@ export default defineComponent({
     this.recordHeight();
   },
   props: ["trackerTitle", "trackerColor", "taskTrackerID"],
+  watch: {
+    showTasks: function (newval: any, oldval: any) {
+      console.log(newval, oldval);
+    },
+  },
   data: function () {
     return {
       trackerID: this.taskTrackerID,
@@ -211,33 +216,43 @@ export default defineComponent({
       });
     },
     updateColor: function (newColor: string): void {
-      console.log("update color recieved = ", newColor);
       let hslNewColor = tinyColor(newColor).toHslString();
       this.taskTrackerColour = hslNewColor;
       this.saveList();
-
+      console.log("update Colour called");
       this.toggleP5Canvas();
 
       this.taskTrackDimensions();
       // Add Persist Colour Here
     },
+    getAbsoluteHeight: function (el: any) {
+      // Get the DOM Node if you pass in a string
+      el = typeof el === "string" ? document.querySelector(el) : el;
+
+      var styles = window.getComputedStyle(el);
+      var margin =
+        parseFloat(styles["marginTop"]) + parseFloat(styles["marginBottom"]);
+
+      return Math.ceil(el.offsetHeight + margin);
+    },
     toggleP5Canvas: function (): void {
       this.taskTrackDimensions();
+      console.log("Toggle P5 Called");
       this.showTasks = !this.showTasks;
     },
     taskTrackDimensions: function (): TrackerDimensions {
       let taskDisplay = this.$refs["taskDisplay"] as any;
       if (taskDisplay) {
-        let cs = getComputedStyle(taskDisplay);
+        // let cs = getComputedStyle(taskDisplay);
 
-        let paddingY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+        // let paddingY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
 
-        let borderY =
-          parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+        // let borderY =
+        //   parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
 
         // Element width and height minus padding and border
 
-        let elementHeight = taskDisplay.offsetHeight - paddingY - borderY;
+        let elementHeight = this.getAbsoluteHeight(taskDisplay);
         if (elementHeight < 450) {
           elementHeight = 450;
         }

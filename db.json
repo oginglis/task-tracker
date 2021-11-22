@@ -3,31 +3,31 @@
     {
       "title": "New action",
       "id": 19,
-      "position": 3
+      "position": 2
     },
     {
       "title": "Action added",
       "id": 20,
-      "position": 0
-    },
-    {
-      "title": "This is a new task",
-      "id": 21,
-      "position": 1
+      "position": 3
     },
     {
       "title": "Add another task",
       "id": 23,
-      "position": 2
+      "position": 0
+    },
+    {
+      "title": "New task",
+      "id": 24,
+      "position": 1
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(207, 15%, 12%)",
-      "title": "This is the list of things to work on",
+      "backgroundColour": "hsl(196, 44%, 51%)",
+      "title": "This is the list of things to",
       "id": 1,
       "width": 396,
-      "height": 576
+      "height": 580
     }
   ],
   "comments": [

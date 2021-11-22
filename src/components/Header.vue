@@ -54,7 +54,6 @@ export default defineComponent({
     updateTitle: function (e: any): void {
       this.isFocus = false;
       this.headerTitle = e.target.innerText;
-      console.log("Ask tot update");
       this.$emit("updateTitle", this.headerTitle);
     },
   },
