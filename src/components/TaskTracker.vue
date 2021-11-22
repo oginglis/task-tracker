@@ -80,7 +80,7 @@
       :bgColor="taskTrackerColour"
       :ballColours="colours"
       @clickColor="updateColor"
-      :title="title"
+      :title="p5Message"
       :textColor="calculatedTextColor"
     />
   </div>
@@ -348,6 +348,9 @@ export default defineComponent({
   },
 
   computed: {
+    p5Message: function (): string {
+      return "Choose a colour for " + this.title;
+    },
     emptyMessage: function (): Boolean {
       if (this.tasks.length == 0) {
         return true;

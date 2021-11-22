@@ -1,11 +1,6 @@
 {
   "tasks": [
     {
-      "title": "New action",
-      "id": 19,
-      "position": 2
-    },
-    {
       "title": "Action added",
       "id": 20,
       "position": 3
@@ -13,17 +8,22 @@
     {
       "title": "Add another task",
       "id": 23,
-      "position": 0
+      "position": 2
     },
     {
       "title": "New task",
       "id": 24,
       "position": 1
+    },
+    {
+      "title": "This is a new actioon",
+      "id": 25,
+      "position": 0
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(196, 44%, 51%)",
+      "backgroundColour": "hsl(31, 80%, 54%)",
       "title": "This is the list of things to",
       "id": 1,
       "width": 396,

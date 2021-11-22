@@ -88,7 +88,7 @@ export default defineComponent({
         p.textFont("aktiv-grotesk");
         p.textSize(15);
         p.fill(this.textColor!.color);
-        p.text("Choose a colour for " + this.title, width / 2, height / 2);
+        p.text(this.title, width / 2, height / 2);
         for (let i = 0; i < balls.length; i++) {
           balls[i].move(
             (this as any).canvasSize!.width,
@@ -103,11 +103,9 @@ export default defineComponent({
             return ball.clicked() === true;
           })
         ) {
-          console.log("Cursor to hand called");
           p.cursor(p.HAND);
         } else {
           p.cursor(p.ARROW);
-          console.log("Cursor to arrow called");
         }
       };
 
@@ -119,7 +117,6 @@ export default defineComponent({
 
           this.clickedColor = clickedBall.ballColor;
           console.log("Ball Clicked + Emitting Click Colour Event");
-
           this.$emit("clickColor", this.clickedColor);
         }
       };
