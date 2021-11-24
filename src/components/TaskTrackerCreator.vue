@@ -45,11 +45,10 @@ export default defineComponent({
   border-radius: 1rem;
   background-color: white;
   width: 300px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-sizing: content-box;
+  box-sizing: border-box;
   justify-content: center;
 }
 

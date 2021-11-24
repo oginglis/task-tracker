@@ -5,7 +5,7 @@
     :style="[calculatedBackgroundColor, calculatedTextColor]"
   >
     <div v-if="showTasks" class="task_tracker_display" ref="taskDisplay">
-      <Modal
+      <!-- <Modal
         @toggleOpenModal="toggleModal"
         @rerender="updateList"
         :isOpen="isModalOpen"
@@ -16,7 +16,7 @@
         :modalColour="taskTrackerColour"
         @toggleReminder="updateTaskReminder"
       >
-      </Modal>
+      </Modal> -->
       <div>
         <div class="text-inline">
           <Header
@@ -93,7 +93,7 @@ import Header from "./Header.vue";
 // import TaskForm from "./TaskForm.vue";
 import TaskList from "./TaskList.vue";
 import ClickableIcon from "./ClickableIcon.vue";
-import Modal from "./Modal.vue";
+// import Modal from "./Modal.vue";
 import Tooltip from "./Tooltip.vue";
 import TaskService from "@/services/TaskService";
 import ListService from "@/services/ListService";
@@ -112,7 +112,7 @@ export default defineComponent({
     // Button,
     // TaskForm,
     TaskList,
-    Modal,
+    // Modal,
     Tooltip,
     ClickableIcon,
     P5Canvas,
@@ -180,8 +180,9 @@ export default defineComponent({
       if (trackerInstance != null) {
         this.width = trackerInstance.clientWidth;
         this.height = trackerInstance.clientHeight;
+        this.saveList();
       }
-      this.$emit("sizingUpdate");
+      this.$emit("sizingUpdate", this.height);
     },
     getAllActions: function (): void {
       TaskService.getTasks().then((response): void => {
@@ -194,6 +195,7 @@ export default defineComponent({
     },
     toggleActionAdder: function () {
       this.showAddTask = !this.showAddTask;
+      this.recordHeight();
     },
     addIconBg: function (): object {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;

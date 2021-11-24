@@ -6,19 +6,19 @@
         :trackerTitle="list.title"
         :trackerColor="list.backgroundColour"
         :taskTrackerID="list.id"
-        @sizingUpdate="setCreatorToListHeight()"
+        @sizingUpdate="setCreatorToListHeight"
       >
       </TaskTracker>
     </ul>
     <TaskTrackerCreator
-      :style="setCreatorToListHeight()"
+      :style="creatorDimensionsPixels"
       @createNewList="toggleColorPicker"
       ref="taskCreator"
       v-if="!showColorPicker"
     />
     <P5CanvasColours
       v-else
-      :canvasSize="{ width: 400, height: 600 }"
+      :canvasSize="creatorDimensionsNumber"
       :ballColours="colours"
       :title="`Choose a colour for new list`"
       :bgColor="`hsl(0, 0%, 96%)`"
@@ -49,8 +49,10 @@ export default defineComponent({
   data: function () {
     return {
       lists: [] as Array<ListType>,
-      creatorHeight: 0,
+      creatorDimensionsNumber: { width: 600, height: 600 },
+      creatorDimensionsPixels: { width: "600px", height: "600px" },
       showColorPicker: false,
+
       colours: [
         { colour: "hsl(39, 81%, 73%)", active: true },
         { colour: "hsl(13, 80%, 48%)", active: false },
@@ -75,6 +77,12 @@ export default defineComponent({
       ],
     };
   },
+  watch: {
+    creatorDimensionsPixels: function (old, newHeight) {
+      console.log("Picker Size Changed from ", old, " to ", newHeight);
+      this.creatorDimensionsPixels.height = newHeight;
+    },
+  },
   methods: {
     handleclickColor: function (): void {
       this.toggleColorPicker();
@@ -85,16 +93,12 @@ export default defineComponent({
       });
     },
     toggleColorPicker: function (): void {
-      console.log(
-        "show colour picker called, this value before",
-        this.showColorPicker
-      );
       this.showColorPicker = !this.showColorPicker;
-      console.log(this.showColorPicker);
     },
     getAbsoluteHeight: function (el: any) {
       // Get the DOM Node if you pass in a string
-      el = typeof el === "string" ? document.querySelector(el) : el;
+      // el = typeof el === "string" ? document.querySelector(el) : el;
+      console.log(el);
 
       var styles = window.getComputedStyle(el);
       var margin =
@@ -103,35 +107,50 @@ export default defineComponent({
       return Math.ceil(el.offsetHeight + margin);
     },
     colorPickerDimensions: function (): TrackerDimensions {
-      let taskCreator = this.$refs["taskCreator"] as any as any;
-      console.log("this.$refs ", this.$refs);
-      console.log("Task Creator Ref : ", taskCreator.ownKeys);
-      if (taskCreator) {
-        // let cs = getComputedStyle(taskDisplay);
+      if (this.$refs["taskCreator"]) {
+        let taskCreator = this.$refs["taskCreator"] as any as any;
+        console.log("this.$refs ", this.$refs);
+        console.log("Task Creator Ref : ", taskCreator.ownKeys);
+        if (taskCreator) {
+          // let cs = getComputedStyle(taskDisplay);
 
-        // let paddingY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+          // let paddingY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
 
-        // let borderY =
-        //   parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+          // let borderY =
+          //   parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
 
-        // Element width and height minus padding and border
+          // Element width and height minus padding and border
 
-        let elementHeight = this.getAbsoluteHeight(taskCreator);
-        if (elementHeight < 450) {
-          elementHeight = 450;
+          let elementHeight = this.getAbsoluteHeight(taskCreator);
+          if (elementHeight < 450) {
+            elementHeight = 450;
+          }
+
+          return { height: elementHeight, width: this.$el.offsetWidth };
         }
-        return { height: elementHeight, width: this.$el.offsetWidth };
-      }
-      return { height: 100, width: 2000 };
+        return { height: 100, width: 2000 };
+      } else return { height: 100, width: 2000 };
     },
-    setCreatorToListHeight: function (): void {
+    setCreatorToListHeight: function (newHeight: any): void {
+      console.log("new height ", newHeight);
+      this.getAllLists();
       let largestHeight: number = Math.max.apply(
         Math,
         this.lists.map(function (list) {
           return list.height;
         })
       );
-      this.creatorHeight = largestHeight;
+      let largestWidth: number = Math.max.apply(
+        Math,
+        this.lists.map(function (list) {
+          return list.width;
+        })
+      );
+      largestHeight;
+      this.creatorDimensionsNumber.height = newHeight;
+      this.creatorDimensionsNumber.width = largestWidth;
+      this.creatorDimensionsPixels.height = newHeight + "px";
+      this.creatorDimensionsPixels.width = largestWidth + "px";
     },
   },
 });

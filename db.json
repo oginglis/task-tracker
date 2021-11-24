@@ -3,7 +3,7 @@
     {
       "title": "Action added",
       "id": 20,
-      "position": 3
+      "position": 0
     },
     {
       "title": "Add another task",
@@ -11,23 +11,26 @@
       "position": 2
     },
     {
-      "title": "New task",
-      "id": 24,
+      "title": "This is a new actioon",
+      "id": 25,
       "position": 1
     },
     {
-      "title": "This is a new actioon",
-      "id": 25,
-      "position": 0
+      "title": "Lion king 2",
+      "id": 26
+    },
+    {
+      "title": "This is a new actinos",
+      "id": 27
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(31, 80%, 54%)",
+      "backgroundColour": "hsl(205, 80%, 40%)",
       "title": "This is the list of things to",
       "id": 1,
       "width": 396,
-      "height": 580
+      "height": 655
     }
   ],
   "comments": [
