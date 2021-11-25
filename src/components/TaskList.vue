@@ -76,8 +76,10 @@ export default defineComponent({
     };
   },
   updated() {
-    this.$emit("removedActions");
-    console.log("Action list has been updated, Remove ACtions emmitted");
+    this.$nextTick(() => {
+      console.log("NEXT TICK Task LIST Has been update");
+      this.$emit("removedActions");
+    });
   },
   props: {
     taskData: Object as PropType<TaskType>,

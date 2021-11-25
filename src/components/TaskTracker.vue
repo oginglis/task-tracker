@@ -6,8 +6,9 @@
     :class="{ add__padding: showTasks, remove_padding: !showTasks }"
   >
     <div v-if="showTasks" class="task_tracker_display" ref="taskDisplay">
-      <!-- <Modal
-        @toggleOpenModal="toggleModal"xs
+      <Modal
+        @toggleOpenModal="toggleModal"
+        xs
         @rerender="updateList"
         :isOpen="isModalOpen"
         :task="task"
@@ -17,7 +18,7 @@
         :modalColour="taskTrackerColour"
         @toggleReminder="updateTaskReminder"
       >
-      </Modal> -->
+      </Modal>
       <div>
         <div class="text-inline">
           <Header
@@ -96,7 +97,7 @@ import Header from "./Header.vue";
 // import TaskForm from "./TaskForm.vue";
 import TaskList from "./TaskList.vue";
 import ClickableIcon from "./ClickableIcon.vue";
-// import Modal from "./Modal.vue";
+import Modal from "./Modal.vue";
 import Tooltip from "./Tooltip.vue";
 import TaskService from "@/services/TaskService";
 import ListService from "@/services/ListService";
@@ -115,7 +116,7 @@ export default defineComponent({
     // Button,
     // TaskForm,
     TaskList,
-    // Modal,
+    Modal,
     Tooltip,
     ClickableIcon,
     P5Canvas,
@@ -124,11 +125,21 @@ export default defineComponent({
     this.getAllActions();
   },
   mounted() {
-    // this.recordHeight();
+    let trackerInstance: HTMLElement | null = this.$refs
+      .taskTrackerInstance as any;
+    let trackerSize = trackerInstance!.getBoundingClientRect();
+
+    this.width = Math.trunc(trackerSize.width);
+    this.height = Math.trunc(trackerSize.height);
+    // initialize the observer on mount
+    this.initObserver();
   },
   updated() {
-    this.recordHeight();
-    console.log("Task Tracker Has been update");
+    this.$nextTick(() => {
+      console.log("NEXT TICK Task Tracker Has been update");
+      (this as any).recordHeight();
+    });
+    console.log("UPDATED");
   },
   props: ["trackerTitle", "trackerColor", "taskTrackerID"],
   watch: {
@@ -159,6 +170,7 @@ export default defineComponent({
       taskTrackerColour: this.trackerColor,
       width: 0,
       height: 0,
+      observer: null as unknown,
       showTasks: true,
       showAddTask: false,
       colours: [
@@ -186,15 +198,46 @@ export default defineComponent({
     };
   },
   methods: {
+    initObserver() {
+      console.log("If observer called");
+      const tracker: HTMLElement | null = this.$refs.taskTrackerInstance as any,
+        vm = this,
+        config = {
+          attributes: true,
+        };
+      // create the observer
+      const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          // check if the mutation is attributes and update the width and height data if it is.
+          if (mutation.type === "attributes") {
+            let { width, height } = tracker!.style;
+
+            vm.width = parseInt(width, 10);
+            vm.height = parseInt(height, 10);
+            console.log("Height called insde mutation observer");
+            vm.recordHeight();
+          }
+        });
+      });
+
+      // observe element's specified mutations
+      observer.observe(tracker as Node, config);
+      // add the observer to data so we can disconnect it later
+      this.observer = observer;
+    },
+
     recordHeight: function (): void {
-      if (this.$refs.taskTrackerInstance != null) {
-        let trackerInstance: HTMLElement | null = this.$refs
-          .taskTrackerInstance as any;
-        this.width = trackerInstance!.clientWidth;
-        this.height = trackerInstance!.clientHeight;
-        this.saveList();
-      }
-      this.$emit("sizingUpdate", this.height);
+      this.$nextTick(() => {
+        if (this.$refs.taskTrackerInstance != null) {
+          let trackerInstance: HTMLElement | null = this.$refs
+            .taskTrackerInstance as any;
+          this.width = trackerInstance!.clientWidth;
+          this.height = trackerInstance!.clientHeight;
+          this.saveList();
+        }
+        console.log("Record Height Called");
+        this.$emit("sizingUpdate", this.height);
+      });
     },
     getAllActions: function (): void {
       TaskService.getTasks().then((response): void => {
@@ -358,6 +401,7 @@ export default defineComponent({
           this.tasks = this.tasks.filter((task) => {
             return task.id !== id;
           });
+
           this.recordHeight();
         })
         .catch(function (error) {

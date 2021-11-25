@@ -3,38 +3,39 @@
     {
       "title": "Add another task",
       "id": 23,
-      "position": 0
+      "position": 1
     },
     {
       "title": "This is a new actioon",
       "id": 25,
-      "position": 1
-    },
-    {
-      "title": "Lion king 2",
-      "id": 26,
-      "position": 1
+      "position": 0
     },
     {
       "title": "Tast",
-      "id": 27
+      "id": 27,
+      "position": 3
+    },
+    {
+      "title": "New",
+      "id": 31,
+      "position": 2
     },
     {
       "title": "New task",
-      "id": 30
+      "id": 32
     },
     {
-      "title": "New line",
-      "id": 31
+      "title": "New task",
+      "id": 33
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(205, 80%, 40%)",
-      "title": "Thisis the list of things to",
+      "backgroundColour": "hsl(2, 73%, 43%)",
+      "title": "THIS IS AN ACTION ADDER LIST",
       "id": 1,
       "width": 396,
-      "height": 753
+      "height": 737
     }
   ],
   "comments": [
