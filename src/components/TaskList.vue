@@ -32,7 +32,7 @@
         />
       </template>
     </draggable>
-    <transition :name="transitonName">
+    <transition :name="transitonName" v-on:after-leave="afterLeave">
       <NewAction
         :bgColor="listColour"
         v-if="showActionAdder"
@@ -74,6 +74,10 @@ export default defineComponent({
       componentKey: 0,
       transitonName: "slide-fade",
     };
+  },
+  updated() {
+    this.$emit("removedActions");
+    console.log("Action list has been updated, Remove ACtions emmitted");
   },
   props: {
     taskData: Object as PropType<TaskType>,
@@ -129,6 +133,7 @@ export default defineComponent({
   created() {
     window.addEventListener("resize", this.updateAndSendPositions);
   },
+
   watch: {
     updateWithThisTask: function () {
       var foundIndex = this.info.findIndex(
@@ -141,6 +146,10 @@ export default defineComponent({
     this.updateAndSendPositions();
   },
   methods: {
+    afterLeave: function (): void {
+      console.log("adder left");
+      this.$emit("adderLeft");
+    },
     forceRerenderActionAdder() {
       this.componentKey += 1;
     },

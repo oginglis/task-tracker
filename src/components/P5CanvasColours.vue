@@ -1,5 +1,10 @@
 <template>
-  <div id="canvas" ref="canva" class="flexcanvas"></div>
+  <div
+    id="canvas"
+    ref="canva"
+    class="flexcanvas"
+    :style="pixelCanvasSize"
+  ></div>
 </template>
 
 <script lang="ts">
@@ -33,6 +38,14 @@ export default defineComponent({
     },
     textColor: {
       type: Object,
+    },
+  },
+  computed: {
+    pixelCanvasSize: function (): {} {
+      return {
+        width: this.canvasSize!.width + "px",
+        height: this.canvasSize!.height + "px",
+      };
     },
   },
   methods: {
@@ -70,6 +83,7 @@ export default defineComponent({
 
       p.setup = () => {
         let ctx = p.createCanvas(width || 400, height || 400);
+
         ctx.parent(this.$el);
         let filteredBallColours = this.ballColours!.filter((colour) => {
           return colour.colour !== (this as any).bgColor;
@@ -207,8 +221,8 @@ export default defineComponent({
 
           this.pos.x += this.speed.x;
           this.pos.y += this.speed.y;
-          this.pos.x = p.constrain(this.pos.x, 0, 500);
-          this.pos.y = p.constrain(this.pos.y, 0, 500);
+          this.pos.x = p.constrain(this.pos.x, 0, width);
+          this.pos.y = p.constrain(this.pos.y, 0, height + 4);
         }
 
         // takes ball object as input, sets speedvector to new x,y speed
@@ -251,5 +265,13 @@ export default defineComponent({
 </script>
 
 
-<style scoped>
+<style >
+canvas {
+  border-radius: 1rem;
+}
+
+#defaultCanvas0 {
+  border-radius: 1rem;
+  margin: 0px;
+}
 </style>

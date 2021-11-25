@@ -49,8 +49,8 @@ export default defineComponent({
   data: function () {
     return {
       lists: [] as Array<ListType>,
-      creatorDimensionsNumber: { width: 600, height: 600 },
-      creatorDimensionsPixels: { width: "600px", height: "600px" },
+      creatorDimensionsNumber: { width: 304, height: 528 },
+      creatorDimensionsPixels: { width: "304px", height: "528px" },
       showColorPicker: false,
 
       colours: [
@@ -108,7 +108,7 @@ export default defineComponent({
     },
     colorPickerDimensions: function (): TrackerDimensions {
       if (this.$refs["taskCreator"]) {
-        let taskCreator = this.$refs["taskCreator"] as any as any;
+        let taskCreator = this.$refs["taskCreator"] as any;
         console.log("this.$refs ", this.$refs);
         console.log("Task Creator Ref : ", taskCreator.ownKeys);
         if (taskCreator) {
@@ -132,7 +132,7 @@ export default defineComponent({
       } else return { height: 100, width: 2000 };
     },
     setCreatorToListHeight: function (newHeight: any): void {
-      console.log("new height ", newHeight);
+      console.log("The height sent to Track collection ", newHeight);
       this.getAllLists();
       let largestHeight: number = Math.max.apply(
         Math,

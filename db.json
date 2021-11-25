@@ -1,14 +1,9 @@
 {
   "tasks": [
     {
-      "title": "Action added",
-      "id": 20,
-      "position": 0
-    },
-    {
       "title": "Add another task",
       "id": 23,
-      "position": 2
+      "position": 0
     },
     {
       "title": "This is a new actioon",
@@ -17,20 +12,29 @@
     },
     {
       "title": "Lion king 2",
-      "id": 26
+      "id": 26,
+      "position": 1
     },
     {
-      "title": "This is a new actinos",
+      "title": "Tast",
       "id": 27
+    },
+    {
+      "title": "New task",
+      "id": 30
+    },
+    {
+      "title": "New line",
+      "id": 31
     }
   ],
   "lists": [
     {
       "backgroundColour": "hsl(205, 80%, 40%)",
-      "title": "This is the list of things to",
+      "title": "Thisis the list of things to",
       "id": 1,
       "width": 396,
-      "height": 655
+      "height": 753
     }
   ],
   "comments": [

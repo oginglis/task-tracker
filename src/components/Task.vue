@@ -122,6 +122,9 @@ export default defineComponent({
     this.taskPosition.top = top;
     this.$emit("sendTaskPosition", this.taskPosition);
   },
+  unmounted() {
+    console.log("TASK UNMOUNTED FROM SCREEN");
+  },
 });
 </script>
 

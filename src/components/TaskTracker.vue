@@ -3,10 +3,11 @@
     class="task-tracker-wrap"
     ref="taskTrackerInstance"
     :style="[calculatedBackgroundColor, calculatedTextColor]"
+    :class="{ add__padding: showTasks, remove_padding: !showTasks }"
   >
     <div v-if="showTasks" class="task_tracker_display" ref="taskDisplay">
       <!-- <Modal
-        @toggleOpenModal="toggleModal"
+        @toggleOpenModal="toggleModal"xs
         @rerender="updateList"
         :isOpen="isModalOpen"
         :task="task"
@@ -38,6 +39,8 @@
           :showActionAdder="showAddTask"
           @clickedOutsideActionAdder="toggleActionAdder"
           @addTempActionToList="addActiontoList"
+          @adderLeft="recordHeight"
+          @removedActions="recordHeight"
         />
       </div>
       <p v-if="emptyMessage">You have no Actions on <br />this list yet.</p>
@@ -121,17 +124,26 @@ export default defineComponent({
     this.getAllActions();
   },
   mounted() {
-    this.recordHeight();
+    // this.recordHeight();
   },
   updated() {
     this.recordHeight();
+    console.log("Task Tracker Has been update");
   },
   props: ["trackerTitle", "trackerColor", "taskTrackerID"],
   watch: {
     showTasks: function (newval: any, oldval: any) {
       console.log(newval, oldval);
     },
+    tasks: {
+      deep: true,
+      handler: function (): void {
+        console.log("The list of colours has changed!");
+        this.recordHeight();
+      },
+    },
   },
+
   data: function () {
     return {
       trackerID: this.taskTrackerID,
@@ -175,11 +187,11 @@ export default defineComponent({
   },
   methods: {
     recordHeight: function (): void {
-      let trackerInstance: HTMLElement | null = this.$refs
-        .taskTrackerInstance as any;
-      if (trackerInstance != null) {
-        this.width = trackerInstance.clientWidth;
-        this.height = trackerInstance.clientHeight;
+      if (this.$refs.taskTrackerInstance != null) {
+        let trackerInstance: HTMLElement | null = this.$refs
+          .taskTrackerInstance as any;
+        this.width = trackerInstance!.clientWidth;
+        this.height = trackerInstance!.clientHeight;
         this.saveList();
       }
       this.$emit("sizingUpdate", this.height);
@@ -192,10 +204,10 @@ export default defineComponent({
     },
     addActiontoList: function (newAction: TaskType): void {
       this.addNewTaskToTasks(newAction);
+      this.recordHeight();
     },
     toggleActionAdder: function () {
       this.showAddTask = !this.showAddTask;
-      this.recordHeight();
     },
     addIconBg: function (): object {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
@@ -232,10 +244,11 @@ export default defineComponent({
       el = typeof el === "string" ? document.querySelector(el) : el;
 
       var styles = window.getComputedStyle(el);
-      var margin =
-        parseFloat(styles["marginTop"]) + parseFloat(styles["marginBottom"]);
 
-      return Math.ceil(el.offsetHeight + margin);
+      var padding =
+        parseFloat(styles["paddingTop"]) + parseFloat(styles["paddingBottom"]);
+      padding;
+      return Math.ceil(el.offsetHeight);
     },
     toggleP5Canvas: function (): void {
       this.taskTrackDimensions();
@@ -243,7 +256,7 @@ export default defineComponent({
       this.showTasks = !this.showTasks;
     },
     taskTrackDimensions: function (): TrackerDimensions {
-      let taskDisplay = this.$refs["taskDisplay"] as any;
+      let taskDisplay = this.$refs["taskTrackerInstance"] as any;
       if (taskDisplay) {
         // let cs = getComputedStyle(taskDisplay);
 
@@ -255,6 +268,7 @@ export default defineComponent({
         // Element width and height minus padding and border
 
         let elementHeight = this.getAbsoluteHeight(taskDisplay);
+        console.log("element height", elementHeight);
         if (elementHeight < 450) {
           elementHeight = 450;
         }
@@ -281,6 +295,7 @@ export default defineComponent({
       this.tasks.push(task);
       this.buttonText = "Add a Task";
       this.updatePositionsWithIndexes();
+      this.recordHeight();
     },
     sortIndexes: function (elems: TaskType[]) {
       elems.sort(function (a, b) {
@@ -337,11 +352,13 @@ export default defineComponent({
       });
     },
     deleteTask: function (id: number) {
+      console.log("Delete Task Called");
       TaskService.deleteTask(id)
         .then(() => {
           this.tasks = this.tasks.filter((task) => {
             return task.id !== id;
           });
+          this.recordHeight();
         })
         .catch(function (error) {
           console.log(error);
@@ -479,5 +496,15 @@ export default defineComponent({
 }
 .add__action.icon:hover {
   transform: scale(1.1);
+}
+
+.add__padding {
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.remove_padding {
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 </style>
