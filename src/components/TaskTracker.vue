@@ -25,6 +25,7 @@
             :title="title"
             @updateTitle="updateTaskTrackerTitle"
             :headerColour="taskTrackerColour"
+            :startFocused="false"
           />
         </div>
 

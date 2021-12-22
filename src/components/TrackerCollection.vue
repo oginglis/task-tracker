@@ -10,6 +10,7 @@
       >
       </TaskTracker>
     </ul>
+    <NewListPlaceholder v-if="showNewList" :bgColour="newListBgColor" @hideAdderList="toggleNewList"/>
     <TaskTrackerCreator
       :style="creatorDimensionsPixels"
       @createNewList="toggleColorPicker"
@@ -25,7 +26,6 @@
       :textColor="{ color: `hsl(0, 0%, 0%)` }"
       @clickColor="handleclickColor"
     />
-    <NewListPlaceholder v-if="showNewList" :bgColour="newListBgColor"/>
   </div>
 </template>
 
@@ -38,6 +38,7 @@ import TaskTrackerCreator from "./TaskTrackerCreator.vue";
 import P5CanvasColours from "./P5CanvasColours.vue";
 import { TrackerDimensions } from "@/types/Dimensions";
 import NewListPlaceholder from "./NewListPlaceholder.vue"
+import tinyColor from "tinycolor2";
 export default defineComponent({
   name: "TrackerCollection",
   components: {
@@ -88,10 +89,15 @@ newListBgColor: "hsl(33, 52%, 69%)",
     },
   },
   methods: {
+
     handleclickColor: function (payload: any): void {
       this.toggleColorPicker();
       console.log(payload);
-      this.newListBgColor = payload;
+      // convert payload to HSL
+      console.log("payload", payload)
+      let HSLcol = tinyColor(payload);
+
+      this.newListBgColor = HSLcol.toHslString();
       this.toggleNewList();
 
     },

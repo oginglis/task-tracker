@@ -1,24 +1,34 @@
 <template>
   <div :style="calculatedBackgroundColor" class="task-tracker-wrap">
-    <!-- <Header :title="`New List`" :headerColour="bgColour"/> -->
-    <h1>HELLOW WORD</h1>
+       <Header
+            :title="`New List`"
+            :headerColour="bgColour"
+            v-if="bgColour"
+            :startFocused="true"
+
+            @updateTitle="anotherHandleHideList"
+          />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-// import Header from "./Header.vue";
+import Header from "./Header.vue";
 
 
 import tinyColor from "tinycolor2";
 export default defineComponent({
   name: "NewListPlaceholder",
   components: {
-    // Header,
+    Header,
   },
 
-  props: ["bgColour"],
-
+  props: {
+    bgColour: {
+type: String,
+default: "hsl(33, 52%, 69%)"
+    },
+    },
 
   data: function () {
     return {
@@ -28,7 +38,9 @@ export default defineComponent({
   },
   methods: {
 
-
+anotherHandleHideList: function():void{
+this.$emit('hideAdderList')
+},
   },
   computed: {
 

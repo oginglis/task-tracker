@@ -3,23 +3,26 @@
     <h1
       contenteditable="true"
       @focus="isFocus = true"
-      @blur="updateTitle"
+      @blur="handleEnter"
       class="single-line"
+      @keydown="handleKey"
       @keydown.enter.prevent="handleEnter($event)"
-      :style="setBGColor()"
+      :style="[setBGColor(), calculatedTextColor]"
+      ref="text"
     >
-      {{ title }}
+      {{ headerTitle }}
     </h1>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import tinyColor from "tinycolor2";
 export default defineComponent({
   name: "Header",
   data: function () {
     return {
-      headerTitle: "",
+      headerTitle: "New List",
       isFocus: false,
     };
   },
@@ -31,8 +34,46 @@ export default defineComponent({
     headerColour: {
       type: String,
     },
+    startFocused: {
+      type: Boolean,
+    },
+  },
+  created(){
+    console.log("Header Created", this.startFocused)
+    this.isFocus = this.startFocused;
+  },
+  beforeMount(){
+    console.log("Header Before Mount", this.startFocused)
+    if(this.title){
+ this.headerTitle = this.title;
+    }
+  },
+  mounted(){
+    console.log("Header Mounted", this.startFocused)
+    if(this.startFocused){
+this.focusInput()
+    }
+  },
+  computed: {
+calculatedTextColor: function (): object {
+      if (tinyColor(this.headerColour).isLight()) {
+        return {
+          color: "black",
+        };
+      } else {
+        return {
+          color: "white",
+        };
+      }
+    },
   },
   methods: {
+    handleHideList: function():void {
+      this.$emit("hideList")
+    },
+    handleKey: function (){
+console.log()
+    },
     setBGColor: function () {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
 
@@ -49,13 +90,20 @@ export default defineComponent({
       }
     },
     handleEnter: function (event: any) {
+      event.target.blur()
       event.preventDefault();
+      this.updateTitle();
     },
-    updateTitle: function (e: any): void {
+    updateTitle: function (e?: any): void {
       this.isFocus = false;
       this.headerTitle = e.target.innerText;
       this.$emit("updateTitle", this.headerTitle);
     },
+     focusInput() {
+      (this.$refs['text'] as any).focus();
+      (this.$refs['text'] as any).innerText = ""
+      console.log("Ollie focous input called,",(this.$refs['text'] as any) )
+    }
   },
 });
 </script>

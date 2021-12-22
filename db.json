@@ -3,7 +3,7 @@
     {
       "title": "Add another task",
       "id": 23,
-      "position": 2
+      "position": 0
     },
     {
       "title": "This is a new actioon",
@@ -11,14 +11,13 @@
       "position": 3
     },
     {
-      "title": "Tast",
-      "id": 27,
+      "title": "New task",
+      "id": 33,
       "position": 1
     },
     {
-      "title": "New task",
-      "id": 33,
-      "position": 0
+      "title": "NEw actions",
+      "id": 34
     }
   ],
   "lists": [
@@ -27,7 +26,7 @@
       "title": "THIS IS AN ACTION ADDER LIST",
       "id": 1,
       "width": 396,
-      "height": 576
+      "height": 590
     }
   ],
   "comments": [
