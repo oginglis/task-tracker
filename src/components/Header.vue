@@ -3,10 +3,9 @@
     <h1
       contenteditable="true"
       @focus="isFocus = true"
-      @blur="handleEnter"
+      @blur="updateTitle($event)"
       class="single-line"
-      @keydown="handleKey"
-      @keydown.enter.prevent="handleEnter($event)"
+      @keydown.enter.prevent="updateTitle($event)"
       :style="[setBGColor(), calculatedTextColor]"
       ref="text"
     >
@@ -68,12 +67,7 @@ calculatedTextColor: function (): object {
     },
   },
   methods: {
-    handleHideList: function():void {
-      this.$emit("hideList")
-    },
-    handleKey: function (){
-console.log()
-    },
+
     setBGColor: function () {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
 
@@ -90,12 +84,14 @@ console.log()
       }
     },
     handleEnter: function (event: any) {
-      event.target.blur()
+
       event.preventDefault();
       this.updateTitle();
     },
     updateTitle: function (e?: any): void {
       this.isFocus = false;
+      this.setBGColor();
+      console.log("OLLIE TARGER",e);
       this.headerTitle = e.target.innerText;
       this.$emit("updateTitle", this.headerTitle);
     },
