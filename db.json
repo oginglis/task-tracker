@@ -3,39 +3,31 @@
     {
       "title": "Add another task",
       "id": 23,
-      "position": 1
+      "position": 2
     },
     {
       "title": "This is a new actioon",
       "id": 25,
-      "position": 0
+      "position": 3
     },
     {
       "title": "Tast",
       "id": 27,
-      "position": 3
-    },
-    {
-      "title": "New",
-      "id": 31,
-      "position": 2
+      "position": 1
     },
     {
       "title": "New task",
-      "id": 32
-    },
-    {
-      "title": "New task",
-      "id": 33
+      "id": 33,
+      "position": 0
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(2, 73%, 43%)",
+      "backgroundColour": "hsl(13, 80%, 48%)",
       "title": "THIS IS AN ACTION ADDER LIST",
       "id": 1,
       "width": 396,
-      "height": 737
+      "height": 576
     }
   ],
   "comments": [

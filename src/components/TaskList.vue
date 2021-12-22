@@ -77,7 +77,6 @@ export default defineComponent({
   },
   updated() {
     this.$nextTick(() => {
-      console.log("NEXT TICK Task LIST Has been update");
       this.$emit("removedActions");
     });
   },
@@ -149,7 +148,7 @@ export default defineComponent({
   },
   methods: {
     afterLeave: function (): void {
-      console.log("adder left");
+
       this.$emit("adderLeft");
     },
     forceRerenderActionAdder() {

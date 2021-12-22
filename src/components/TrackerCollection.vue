@@ -25,6 +25,7 @@
       :textColor="{ color: `hsl(0, 0%, 0%)` }"
       @clickColor="handleclickColor"
     />
+    <NewListPlaceholder v-if="showNewList" :bgColour="newListBgColor"/>
   </div>
 </template>
 
@@ -36,12 +37,14 @@ import { ListType } from "@/types/List";
 import TaskTrackerCreator from "./TaskTrackerCreator.vue";
 import P5CanvasColours from "./P5CanvasColours.vue";
 import { TrackerDimensions } from "@/types/Dimensions";
+import NewListPlaceholder from "./NewListPlaceholder.vue"
 export default defineComponent({
   name: "TrackerCollection",
   components: {
     TaskTracker,
     TaskTrackerCreator,
     P5CanvasColours,
+    NewListPlaceholder
   },
   created() {
     this.getAllLists();
@@ -52,7 +55,8 @@ export default defineComponent({
       creatorDimensionsNumber: { width: 304, height: 528 },
       creatorDimensionsPixels: { width: "304px", height: "528px" },
       showColorPicker: false,
-
+showNewList: false,
+newListBgColor: "hsl(33, 52%, 69%)",
       colours: [
         { colour: "hsl(39, 81%, 73%)", active: true },
         { colour: "hsl(13, 80%, 48%)", active: false },
@@ -84,8 +88,15 @@ export default defineComponent({
     },
   },
   methods: {
-    handleclickColor: function (): void {
+    handleclickColor: function (payload: any): void {
       this.toggleColorPicker();
+      console.log(payload);
+      this.newListBgColor = payload;
+      this.toggleNewList();
+
+    },
+    toggleNewList: function():void {
+    this.showNewList = !this.showNewList
     },
     getAllLists: function (): void {
       ListService.getList().then((response): void => {
@@ -98,7 +109,7 @@ export default defineComponent({
     getAbsoluteHeight: function (el: any) {
       // Get the DOM Node if you pass in a string
       // el = typeof el === "string" ? document.querySelector(el) : el;
-      console.log(el);
+
 
       var styles = window.getComputedStyle(el);
       var margin =

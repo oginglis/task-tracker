@@ -136,10 +136,10 @@ export default defineComponent({
   },
   updated() {
     this.$nextTick(() => {
-      console.log("NEXT TICK Task Tracker Has been update");
+
       (this as any).recordHeight();
     });
-    console.log("UPDATED");
+
   },
   props: ["trackerTitle", "trackerColor", "taskTrackerID"],
   watch: {
@@ -199,7 +199,7 @@ export default defineComponent({
   },
   methods: {
     initObserver() {
-      console.log("If observer called");
+
       const tracker: HTMLElement | null = this.$refs.taskTrackerInstance as any,
         vm = this,
         config = {
@@ -214,7 +214,7 @@ export default defineComponent({
 
             vm.width = parseInt(width, 10);
             vm.height = parseInt(height, 10);
-            console.log("Height called insde mutation observer");
+
             vm.recordHeight();
           }
         });
@@ -235,7 +235,7 @@ export default defineComponent({
           this.height = trackerInstance!.clientHeight;
           this.saveList();
         }
-        console.log("Record Height Called");
+
         this.$emit("sizingUpdate", this.height);
       });
     },
@@ -276,7 +276,7 @@ export default defineComponent({
       let hslNewColor = tinyColor(newColor).toHslString();
       this.taskTrackerColour = hslNewColor;
       this.saveList();
-      console.log("update Colour called");
+
       this.toggleP5Canvas();
 
       this.taskTrackDimensions();
@@ -295,7 +295,7 @@ export default defineComponent({
     },
     toggleP5Canvas: function (): void {
       this.taskTrackDimensions();
-      console.log("Toggle P5 Called");
+
       this.showTasks = !this.showTasks;
     },
     taskTrackDimensions: function (): TrackerDimensions {
