@@ -5,8 +5,8 @@
             :headerColour="bgColour"
             v-if="bgColour"
             :startFocused="true"
-
             @updateTitle="anotherHandleHideList"
+            @submitList="anotherHandleHideList"
           />
   </div>
 </template>
@@ -38,8 +38,13 @@ default: "hsl(33, 52%, 69%)"
   },
   methods: {
 
-anotherHandleHideList: function():void{
-this.$emit('hideAdderList')
+anotherHandleHideList: function(payload:any):void{
+  let newListInfo = {
+    title: payload,
+colour: this.bgColour
+  }
+
+this.$emit('createNewListNow', newListInfo)
 },
   },
   computed: {
@@ -61,6 +66,9 @@ this.$emit('hideAdderList')
       }
     },
   },
+  unmounted(){
+    console.log("unmounted called")
+  }
 });
 </script>
 

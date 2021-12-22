@@ -10,7 +10,7 @@
       >
       </TaskTracker>
     </ul>
-    <NewListPlaceholder v-if="showNewList" :bgColour="newListBgColor" @hideAdderList="toggleNewList"/>
+    <NewListPlaceholder v-if="showNewList" :bgColour="newListBgColor" @createNewListNow="createNewList"/>
     <TaskTrackerCreator
       :style="creatorDimensionsPixels"
       @createNewList="toggleColorPicker"
@@ -99,6 +99,25 @@ newListBgColor: "hsl(33, 52%, 69%)",
 
       this.newListBgColor = HSLcol.toHslString();
       this.toggleNewList();
+
+    },
+    createNewList: function(listinfo: any):void {
+
+      this.showNewList = false;
+      if (!listinfo.title){
+return
+      }
+      console.log("Create new list called", listinfo)
+      let  newList = {
+        backgroundColour: listinfo.colour as string,
+        width: this.creatorDimensionsNumber.width,
+        height: this.creatorDimensionsNumber.height,
+        title: listinfo.title as string,
+        id: (this.lists.length+1),
+      }
+      ListService.postList(newList);
+
+      this.lists = [...this.lists, newList]
 
     },
     toggleNewList: function():void {

@@ -5,7 +5,7 @@
       @focus="isFocus = true"
       @blur="updateTitle($event)"
       class="single-line"
-      @keydown.enter.prevent="updateTitle($event)"
+      @keydown.enter.prevent="handleEnter($event)"
       :style="[setBGColor(), calculatedTextColor]"
       ref="text"
     >
@@ -84,9 +84,9 @@ calculatedTextColor: function (): object {
       }
     },
     handleEnter: function (event: any) {
-
       event.preventDefault();
-      this.updateTitle();
+      console.log('CHECK DIs', event.target.innerHTML)
+      this.$emit("submitList", event.target.innerHTML)
     },
     updateTitle: function (e?: any): void {
       this.isFocus = false;
