@@ -1,22 +1,23 @@
 <template>
   <div class="tracker_collection">
     <ul v-for="list in lists" :key="list.id" class="tracker_collection__list">
-      <TaskTracker
+      <List
         v-if="lists"
         :trackerTitle="list.title"
         :trackerColor="list.backgroundColour"
         :taskTrackerID="list.id"
         @sizingUpdate="setCreatorToListHeight"
       >
-      </TaskTracker>
+      </List>
     </ul>
+    <ListPlaceholder v-if="showNewList" :bgColour="newListBgColor" @createNewListNow="createNewList"/>
     <TaskTrackerCreator
       :style="creatorDimensionsPixels"
       @createNewList="toggleColorPicker"
       ref="taskCreator"
       v-if="!showColorPicker"
     />
-    <P5CanvasColours
+    <ColourSelector
       v-else
       :canvasSize="creatorDimensionsNumber"
       :ballColours="colours"
@@ -31,17 +32,20 @@
 <script  lang="ts">
 import { defineComponent } from "vue";
 import ListService from "@/services/ListService";
-import TaskTracker from "./TaskTracker.vue";
+import List from "./List.vue";
 import { ListType } from "@/types/List";
-import TaskTrackerCreator from "./TaskTrackerCreator.vue";
-import P5CanvasColours from "./P5CanvasColours.vue";
+import TaskTrackerCreator from "./ListCreator.vue";
+import ColourSelector from "./ColourSelector.vue";
 import { TrackerDimensions } from "@/types/Dimensions";
+import ListPlaceholder from "./ListPlaceholder.vue"
+import tinyColor from "tinycolor2";
 export default defineComponent({
-  name: "TrackerCollection",
+  name: "ListCollection",
   components: {
-    TaskTracker,
+    List,
     TaskTrackerCreator,
-    P5CanvasColours,
+    ColourSelector,
+    ListPlaceholder
   },
   created() {
     this.getAllLists();
@@ -52,7 +56,8 @@ export default defineComponent({
       creatorDimensionsNumber: { width: 304, height: 528 },
       creatorDimensionsPixels: { width: "304px", height: "528px" },
       showColorPicker: false,
-
+showNewList: false,
+newListBgColor: "hsl(33, 52%, 69%)",
       colours: [
         { colour: "hsl(39, 81%, 73%)", active: true },
         { colour: "hsl(13, 80%, 48%)", active: false },
@@ -84,13 +89,48 @@ export default defineComponent({
     },
   },
   methods: {
-    handleclickColor: function (): void {
+
+    handleclickColor: function (payload: any): void {
       this.toggleColorPicker();
+      console.log(payload);
+      // convert payload to HSL
+      console.log("payload", payload)
+      let HSLcol = tinyColor(payload);
+
+      this.newListBgColor = HSLcol.toHslString();
+      this.toggleNewList();
+
+    },
+    createNewList: function(listinfo: any):void {
+
+      this.showNewList = false;
+      if (!listinfo.title){
+return
+      }
+      console.log("Create new list called", listinfo)
+      let  newList = {
+        backgroundColour: listinfo.colour as string,
+        width: this.creatorDimensionsNumber.width,
+        height: this.creatorDimensionsNumber.height,
+        title: listinfo.title as string,
+        id: (this.lists.length+1),
+      }
+      ListService.postList(newList).catch(function (error) {
+          console.log(error);
+        });
+
+      this.lists = [...this.lists, newList]
+
+    },
+    toggleNewList: function():void {
+    this.showNewList = !this.showNewList
     },
     getAllLists: function (): void {
       ListService.getList().then((response): void => {
         this.lists = response.data as Array<ListType>;
-      });
+      }).catch(function (error) {
+          console.log(error);
+        });
     },
     toggleColorPicker: function (): void {
       this.showColorPicker = !this.showColorPicker;
@@ -98,7 +138,7 @@ export default defineComponent({
     getAbsoluteHeight: function (el: any) {
       // Get the DOM Node if you pass in a string
       // el = typeof el === "string" ? document.querySelector(el) : el;
-      console.log(el);
+
 
       var styles = window.getComputedStyle(el);
       var margin =

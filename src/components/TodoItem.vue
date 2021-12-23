@@ -8,7 +8,7 @@
     :ref="createTaskName"
     @click="askToUpdateTask(task.id)"
   >
-    <ClickableIcon
+    <Icon
       type="trash"
       class="icon icon--hide"
       @iconClicked="askToDeleteTask(task.id)"
@@ -23,7 +23,7 @@
         {{ task.title }}
       </h1>
     </div>
-    <ClickableIcon
+    <Icon
       type="check"
       class="icon icon--hide"
       :bgColor="bgColor"
@@ -40,14 +40,14 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import "animate.css";
 import { faTimes, faCheck, faBell } from "@fortawesome/free-solid-svg-icons";
 import { PropType } from "vue";
-import { TaskType } from "@/types/Task";
+import { TodoType } from "@/types/Todo";
 import { TaskPosition } from "@/types/TaskPosition";
-import ClickableIcon from "./ClickableIcon.vue";
+import Icon from "../common/components/Icon.vue";
 import moment from "moment";
 library.add([faTimes, faCheck, faBell] as any);
 export default defineComponent({
-  name: "Task",
-  components: { ClickableIcon },
+  name: "TodoItem",
+  components: { Icon },
   data() {
     return {
       editTask: false,
@@ -57,7 +57,7 @@ export default defineComponent({
   },
   props: {
     task: {
-      type: Object as PropType<TaskType>,
+      type: Object as PropType<TodoType>,
       default: () => ({
         title: "Arrow Function Expression",
       }),
@@ -123,7 +123,7 @@ export default defineComponent({
     this.$emit("sendTaskPosition", this.taskPosition);
   },
   unmounted() {
-    console.log("TASK UNMOUNTED FROM SCREEN");
+
   },
 });
 </script>

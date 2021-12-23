@@ -47,7 +47,7 @@ import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import vClickOutside from "v-click-outside";
 
 library.add([faTimesCircle] as any);
-import { TaskType } from "@/types/Task";
+import { TodoType } from "@/types/Todo";
 import { TaskPosition } from "@/types/TaskPosition";
 
 export default defineComponent({
@@ -57,7 +57,7 @@ export default defineComponent({
   },
   data: function () {
     return {
-      modalTask: {} as TaskType,
+      modalTask: {} as TodoType,
       focusIn: false,
       dataChanged: false,
     };
@@ -67,7 +67,7 @@ export default defineComponent({
   },
   props: {
     task: {
-      type: Object as PropType<TaskType>,
+      type: Object as PropType<TodoType>,
       default: () => ({
         title: "This is a demo tasks",
         date: "2021-07-07T13:51",
@@ -109,8 +109,6 @@ export default defineComponent({
         completed: this.modalTask.completed,
         id: id,
       };
-
-      // Make Axios request with the data from the task
       TaskService.patchTask(id, update)
         .then(() => {})
         .catch(function (error) {

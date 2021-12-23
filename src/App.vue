@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Homepage from "./components/Homepage.vue";
+import Homepage from "./views/Homepage.vue";
 import { useMeta } from "vue-meta";
 export default defineComponent({
   name: "App",

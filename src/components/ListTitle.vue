@@ -3,39 +3,69 @@
     <h1
       contenteditable="true"
       @focus="isFocus = true"
-      @blur="updateTitle"
+      @blur="updateTitle($event)"
       class="single-line"
       @keydown.enter.prevent="handleEnter($event)"
-      :style="setBGColor()"
+      :style="[setBGColor(), calculatedTextColor]"
+      ref="text"
     >
-      {{ title }}
+      {{ headerTitle }}
     </h1>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import tinyColor from "tinycolor2";
 export default defineComponent({
-  name: "Header",
+  name: "ListTitle",
   data: function () {
     return {
-      headerTitle: "",
+      headerTitle: "New List",
       isFocus: false,
     };
   },
   props: {
     title: {
       type: String,
-      defult: "Hello Thered",
+      default: "Hello Thered",
     },
     headerColour: {
       type: String,
+    },
+    startFocused: {
+      type: Boolean,
+    },
+  },
+  created(){
+    this.isFocus = this.startFocused;
+  },
+  beforeMount(){
+    if(this.title){
+ this.headerTitle = this.title;
+    }
+  },
+  mounted(){
+    if(this.startFocused){
+      this.focusInput()
+    }
+  },
+  computed: {
+    calculatedTextColor: function (): object {
+      if (tinyColor(this.headerColour).isLight()) {
+        return {
+          color: "black",
+        };
+      } else {
+        return {
+          color: "white",
+        };
+      }
     },
   },
   methods: {
     setBGColor: function () {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
-
       let hsl: string[] = hslReg.exec(this.headerColour!)!.slice(1, 4);
       if (this.isFocus) {
         return {
@@ -50,12 +80,21 @@ export default defineComponent({
     },
     handleEnter: function (event: any) {
       event.preventDefault();
+      console.log('CHECK DIs', event.target.innerHTML)
+      this.$emit("submitList", event.target.innerHTML)
     },
-    updateTitle: function (e: any): void {
+    updateTitle: function (e?: any): void {
       this.isFocus = false;
+      this.setBGColor();
+      console.log("OLLIE TARGER",e);
       this.headerTitle = e.target.innerText;
       this.$emit("updateTitle", this.headerTitle);
     },
+     focusInput() {
+      (this.$refs['text'] as any).focus();
+      (this.$refs['text'] as any).innerText = ""
+      console.log("Ollie focous input called,",(this.$refs['text'] as any) )
+    }
   },
 });
 </script>

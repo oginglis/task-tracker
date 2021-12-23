@@ -1,4 +1,4 @@
-import tooltipDirective from "./Tooltip/";
+import tooltipDirective from "./tooltip";
 import focusDirective from "./focus"
 
 

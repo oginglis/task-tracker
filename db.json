@@ -3,39 +3,44 @@
     {
       "title": "Add another task",
       "id": 23,
+      "listid": 1,
       "position": 1
     },
     {
-      "title": "This is a new actioon",
-      "id": 25,
+      "title": "New task",
+      "id": 33,
+      "listid": 1,
       "position": 0
-    },
-    {
-      "title": "Tast",
-      "id": 27,
-      "position": 3
-    },
-    {
-      "title": "New",
-      "id": 31,
-      "position": 2
-    },
-    {
-      "title": "New task",
-      "id": 32
-    },
-    {
-      "title": "New task",
-      "id": 33
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(2, 73%, 43%)",
-      "title": "THIS IS AN ACTION ADDER LIST",
+      "backgroundColour": "hsl(212, 73%, 36%)",
+      "title": "This is the list ttle",
       "id": 1,
       "width": 396,
-      "height": 737
+      "height": 576
+    },
+    {
+      "backgroundColour": "hsl(31, 80%, 54%)",
+      "width": 396,
+      "height": 576,
+      "title": "New list",
+      "id": 2
+    },
+    {
+      "backgroundColour": "hsl(164, 35%, 52%)",
+      "width": 396,
+      "height": 576,
+      "title": "New list",
+      "id": 3
+    },
+    {
+      "backgroundColour": "hsl(319, 57%, 39%)",
+      "width": 396,
+      "height": 576,
+      "title": "New list",
+      "id": 4
     }
   ],
   "comments": [

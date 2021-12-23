@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { TaskType } from '../types/Task'
+import { TodoType } from '../types/Todo'
 
 const apiClient = axios.create({
   baseURL: 'http://localhost:3000',
@@ -20,7 +20,7 @@ export default {
   postTask(task: Object) {
     return apiClient.post('/tasks/', task)
   },
-  patchTask(id: Number, update: TaskType) {
+  patchTask(id: Number, update: TodoType) {
     return apiClient.patch('/tasks/' + id, update)
   }
 }

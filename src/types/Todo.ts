@@ -1,4 +1,4 @@
-export interface TaskType {
+export interface TodoType {
   title: string;
   date: string;
   reminder: Boolean;

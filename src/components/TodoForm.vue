@@ -46,7 +46,7 @@
 <script lang="ts">
 import TaskService from "@/services/TaskService";
 import { defineComponent } from "vue";
-import { TaskType } from "@/types/Task";
+import { TodoType } from "@/types/Todo";
 import Datepicker from "vue3-datepicker";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import "animate.css";
@@ -55,10 +55,10 @@ import { faCalendarAlt, faBell } from "@fortawesome/free-solid-svg-icons";
 library.add([faCalendarAlt, faBell] as any);
 
 export default defineComponent({
-  name: "TaskForm",
+  name: "TodoForm",
   data: function () {
     return {
-      task: {} as TaskType,
+      task: {} as TodoType,
       isCalendarVisible: false,
     };
   },
