@@ -123,7 +123,7 @@ export default defineComponent({
     this.$emit("sendTaskPosition", this.taskPosition);
   },
   unmounted() {
-    console.log("TASK UNMOUNTED FROM SCREEN");
+
   },
 });
 </script>

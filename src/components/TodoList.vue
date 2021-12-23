@@ -113,7 +113,6 @@ export default defineComponent({
       ],
     },
   },
-
   computed: {
     dragOptions() {
       return {
@@ -213,7 +212,9 @@ export default defineComponent({
       const serviceArray: Promise<any>[] = [];
       this.tasksModel.forEach((task) => {
         if (task.position <= largestIndex) {
-          serviceArray.push(TaskService.patchTask(task.id, task));
+          serviceArray.push(TaskService.patchTask(task.id, task).catch(function (error) {
+          console.log(error);
+        }));
         }
       });
       Promise.all(serviceArray).catch((errors) => {

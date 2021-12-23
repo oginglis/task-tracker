@@ -226,7 +226,9 @@ export default defineComponent({
       TaskService.getTasks().then((response): void => {
         this.tasks = response.data as Array<TodoType>;
         this.sortIndexes(this.tasks);
-      });
+      }).catch(function (error) {
+          console.log(error);
+        });
     },
     addActiontoList: function (newAction: TodoType): void {
       this.addNewTaskToTasks(newAction);
@@ -253,7 +255,9 @@ export default defineComponent({
         height: this.height,
         backgroundColour: this.taskTrackerColour,
         id: this.taskTrackerID,
-      });
+      }).catch(function (error) {
+          console.log(error);
+        });
     },
     updateColor: function (newColor: string): void {
       let hslNewColor = tinyColor(newColor).toHslString();

@@ -115,7 +115,9 @@ return
         title: listinfo.title as string,
         id: (this.lists.length+1),
       }
-      ListService.postList(newList);
+      ListService.postList(newList).catch(function (error) {
+          console.log(error);
+        });
 
       this.lists = [...this.lists, newList]
 
@@ -126,7 +128,9 @@ return
     getAllLists: function (): void {
       ListService.getList().then((response): void => {
         this.lists = response.data as Array<ListType>;
-      });
+      }).catch(function (error) {
+          console.log(error);
+        });
     },
     toggleColorPicker: function (): void {
       this.showColorPicker = !this.showColorPicker;

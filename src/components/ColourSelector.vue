@@ -61,18 +61,11 @@ export default defineComponent({
 
       this.p5Canvas.width = newSize.width;
       this.p5Canvas.height = newSize.height;
-      // this.p5Canvas.showBalls().forEach((ball: any) => {
-      //   ball.pickLocation(newSize.width, newSize.height);
-      // });
-      // console.log(this.p5Canvas.title);
       this.p5Canvas.redraw();
     },
   },
   mounted() {
-    console.log("P5 Mounted");
-
-    this.textColor;
-
+   this.textColor;
     let sketch2 = (p: P5) => {
       let width = (this as any).canvasSize!.width;
       let height = this.canvasSize!.height;
@@ -83,15 +76,12 @@ export default defineComponent({
 
       p.setup = () => {
         let ctx = p.createCanvas(width || 400, height || 400);
-
         ctx.parent(this.$el);
         let filteredBallColours = this.ballColours!.filter((colour) => {
           return colour.colour !== (this as any).bgColor;
         });
-
         filteredBallColours!.forEach((colour: any, index: number) => {
           let bc = this.hslTorbg(colour.colour);
-
           balls[index] = new Ball(25, bc, width, height);
         });
       };
@@ -128,9 +118,7 @@ export default defineComponent({
           let clickedBall = balls.find((ball: any) => {
             return ball.clicked() === true;
           });
-
           this.clickedColor = clickedBall.ballColor;
-          console.log("Ball Clicked + Emitting Click Colour Event");
           this.$emit("clickColor", this.clickedColor);
         }
       };
