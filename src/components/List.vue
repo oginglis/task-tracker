@@ -74,6 +74,7 @@
             class="hiding__icon"
             :borderStyles="false"
             :style="iconBGHover"
+            @click="deleteList"
           />
         </Tooltip>
       </div>
@@ -189,6 +190,9 @@ export default defineComponent({
     };
   },
   methods: {
+    deleteList: function():void{
+      this.$emit("requestDeleteList",this.trackerID )
+    },
     initObserver() {
 
       const tracker: HTMLElement | null = this.$refs.taskTrackerInstance as any,

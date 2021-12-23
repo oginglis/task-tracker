@@ -80,20 +80,17 @@ export default defineComponent({
     },
     handleEnter: function (event: any) {
       event.preventDefault();
-      console.log('CHECK DIs', event.target.innerHTML)
       this.$emit("submitList", event.target.innerHTML)
     },
     updateTitle: function (e?: any): void {
       this.isFocus = false;
       this.setBGColor();
-      console.log("OLLIE TARGER",e);
       this.headerTitle = e.target.innerText;
       this.$emit("updateTitle", this.headerTitle);
     },
      focusInput() {
       (this.$refs['text'] as any).focus();
       (this.$refs['text'] as any).innerText = ""
-      console.log("Ollie focous input called,",(this.$refs['text'] as any) )
     }
   },
 });

@@ -65,7 +65,6 @@ this.$emit('createNewListNow', newListInfo)
     },
   },
   unmounted(){
-    console.log("unmounted called")
   }
 });
 </script>

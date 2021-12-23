@@ -7,6 +7,7 @@
         :trackerColor="list.backgroundColour"
         :taskTrackerID="list.id"
         @sizingUpdate="setCreatorToListHeight"
+        @requestDeleteList="deleteList"
       >
       </List>
     </ul>
@@ -102,12 +103,11 @@ newListBgColor: "hsl(33, 52%, 69%)",
 
     },
     createNewList: function(listinfo: any):void {
-
       this.showNewList = false;
       if (!listinfo.title){
 return
       }
-      console.log("Create new list called", listinfo)
+
       let  newList = {
         backgroundColour: listinfo.colour as string,
         width: this.creatorDimensionsNumber.width,
@@ -132,6 +132,15 @@ return
           console.log(error);
         });
     },
+    deleteList: function(listID: number): void {
+      ListService.deleteList(listID).catch(function (error) {
+          console.log(error);
+      });
+      var index = this.lists.findIndex(function(o){
+        return o.id === listID;
+      })
+      if (index !== -1) this.lists.splice(index, 1);
+    },
     toggleColorPicker: function (): void {
       this.showColorPicker = !this.showColorPicker;
     },
@@ -149,30 +158,18 @@ return
     colorPickerDimensions: function (): TrackerDimensions {
       if (this.$refs["taskCreator"]) {
         let taskCreator = this.$refs["taskCreator"] as any;
-        console.log("this.$refs ", this.$refs);
-        console.log("Task Creator Ref : ", taskCreator.ownKeys);
+
         if (taskCreator) {
-          // let cs = getComputedStyle(taskDisplay);
-
-          // let paddingY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
-
-          // let borderY =
-          //   parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
-
-          // Element width and height minus padding and border
-
           let elementHeight = this.getAbsoluteHeight(taskCreator);
           if (elementHeight < 450) {
             elementHeight = 450;
           }
-
           return { height: elementHeight, width: this.$el.offsetWidth };
         }
         return { height: 100, width: 2000 };
       } else return { height: 100, width: 2000 };
     },
     setCreatorToListHeight: function (newHeight: any): void {
-      console.log("The height sent to Track collection ", newHeight);
       this.getAllLists();
       let largestHeight: number = Math.max.apply(
         Math,

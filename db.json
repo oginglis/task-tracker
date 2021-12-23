@@ -4,43 +4,46 @@
       "title": "Add another task",
       "id": 23,
       "listid": 1,
-      "position": 1
+      "position": 2
     },
     {
       "title": "New task",
       "id": 33,
       "listid": 1,
+      "position": 3
+    },
+    {
+      "title": "This is a task",
+      "id": 34,
+      "position": 1
+    },
+    {
+      "title": "And another",
+      "id": 35,
       "position": 0
     }
   ],
   "lists": [
     {
       "backgroundColour": "hsl(212, 73%, 36%)",
-      "title": "This is the list ttle",
+      "title": "List Number 3",
       "id": 1,
       "width": 396,
       "height": 576
     },
     {
-      "backgroundColour": "hsl(31, 80%, 54%)",
+      "backgroundColour": "hsl(13, 80%, 48%)",
       "width": 396,
       "height": 576,
-      "title": "New list",
+      "title": "Another list",
       "id": 2
     },
     {
-      "backgroundColour": "hsl(164, 35%, 52%)",
+      "backgroundColour": "hsl(31, 80%, 54%)",
       "width": 396,
       "height": 576,
-      "title": "New list",
+      "title": "Third List",
       "id": 3
-    },
-    {
-      "backgroundColour": "hsl(319, 57%, 39%)",
-      "width": 396,
-      "height": 576,
-      "title": "New list",
-      "id": 4
     }
   ],
   "comments": [
