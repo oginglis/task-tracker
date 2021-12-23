@@ -21,15 +21,14 @@
       </Modal>
       <div>
         <div class="text-inline">
-          <Header
+          <ListTitle
             :title="title"
             @updateTitle="updateTaskTrackerTitle"
             :headerColour="taskTrackerColour"
             :startFocused="false"
           />
         </div>
-
-        <TaskList
+        <TodoList
           :updateWithThisTask="taskPassUpdate"
           @askToUpdateTask4="openFormWithTask"
           :listColour="taskTrackerColour"
@@ -49,7 +48,7 @@
 
       <div class="task-tracker__bottom-bar">
         <Tooltip position="bottom" :tooltipText="'Choose list colour'">
-          <ClickableIcon
+          <Icon
             type="palette"
             class="hiding__icon"
             :bgColor="taskTrackerColour"
@@ -59,7 +58,7 @@
           />
         </Tooltip>
         <Tooltip position="bottom" :tooltipText="'Create action'">
-          <ClickableIcon
+          <Icon
             type="plus"
             :bgColor="taskTrackerColour"
             @iconClicked="toggleActionAdder"
@@ -69,7 +68,7 @@
           />
         </Tooltip>
         <Tooltip position="bottom" :tooltipText="'Delete list'">
-          <ClickableIcon
+          <Icon
             type="trash"
             :bgColor="taskTrackerColour"
             class="hiding__icon"
@@ -79,7 +78,7 @@
         </Tooltip>
       </div>
     </div>
-    <P5Canvas
+    <ColourSelector
       v-else
       :canvasSize="taskTrackDimensions()"
       :bgColor="taskTrackerColour"
@@ -93,17 +92,15 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Header from "./Header.vue";
-// import Button from "./Button.vue";
-// import TaskForm from "./TaskForm.vue";
-import TaskList from "./TaskList.vue";
-import ClickableIcon from "./ClickableIcon.vue";
-import Modal from "./Modal.vue";
-import Tooltip from "./Tooltip.vue";
+import ListTitle from "./ListTitle.vue";
+import TodoList from "./TodoList.vue";
+import Icon from "../common/components/Icon.vue";
+import Modal from "../common/components/Modal.vue";
+import Tooltip from "../common/components/Tooltip.vue";
 import TaskService from "@/services/TaskService";
 import ListService from "@/services/ListService";
-import { TaskType } from "@/types/Task";
-import P5Canvas from "./P5CanvasColours.vue";
+import { TodoType } from "@/types/Todo";
+import ColourSelector from "./ColourSelector.vue";
 import { TaskPosition } from "@/types/TaskPosition";
 import { TasksPositionObject } from "@/types/TasksPositionObject";
 import { TrackerDimensions } from "@/types/Dimensions";
@@ -111,16 +108,14 @@ import _ from "lodash";
 import tinyColor from "tinycolor2";
 
 export default defineComponent({
-  name: "TaskTracker",
+  name: "List",
   components: {
-    Header,
-    // Button,
-    // TaskForm,
-    TaskList,
+    ListTitle,
+    TodoList,
     Modal,
     Tooltip,
-    ClickableIcon,
-    P5Canvas,
+    Icon,
+    ColourSelector,
   },
   created() {
     this.getAllActions();
@@ -140,17 +135,12 @@ export default defineComponent({
 
       (this as any).recordHeight();
     });
-
   },
   props: ["trackerTitle", "trackerColor", "taskTrackerID"],
   watch: {
-    showTasks: function (newval: any, oldval: any) {
-      console.log(newval, oldval);
-    },
     tasks: {
       deep: true,
       handler: function (): void {
-        console.log("The list of colours has changed!");
         this.recordHeight();
       },
     },
@@ -161,12 +151,12 @@ export default defineComponent({
       trackerID: this.taskTrackerID,
       title: this.trackerTitle,
       buttonText: "Add a Task",
-      tasks: [] as Array<TaskType>,
-      task: {} as TaskType,
+      tasks: [] as Array<TodoType>,
+      task: {} as TodoType,
       isPatch: false,
       isModalOpen: false,
       isInputOpen: false,
-      taskPassUpdate: {} as TaskType,
+      taskPassUpdate: {} as TodoType,
       taskPositionsObjectParent: {} as TasksPositionObject,
       taskTrackerColour: this.trackerColor,
       width: 0,
@@ -206,24 +196,17 @@ export default defineComponent({
         config = {
           attributes: true,
         };
-      // create the observer
       const observer = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutation) {
-          // check if the mutation is attributes and update the width and height data if it is.
           if (mutation.type === "attributes") {
             let { width, height } = tracker!.style;
-
             vm.width = parseInt(width, 10);
             vm.height = parseInt(height, 10);
-
             vm.recordHeight();
           }
         });
       });
-
-      // observe element's specified mutations
       observer.observe(tracker as Node, config);
-      // add the observer to data so we can disconnect it later
       this.observer = observer;
     },
 
@@ -236,17 +219,16 @@ export default defineComponent({
           this.height = trackerInstance!.clientHeight;
           this.saveList();
         }
-
         this.$emit("sizingUpdate", this.height);
       });
     },
     getAllActions: function (): void {
       TaskService.getTasks().then((response): void => {
-        this.tasks = response.data as Array<TaskType>;
+        this.tasks = response.data as Array<TodoType>;
         this.sortIndexes(this.tasks);
       });
     },
-    addActiontoList: function (newAction: TaskType): void {
+    addActiontoList: function (newAction: TodoType): void {
       this.addNewTaskToTasks(newAction);
       this.recordHeight();
     },
@@ -277,18 +259,12 @@ export default defineComponent({
       let hslNewColor = tinyColor(newColor).toHslString();
       this.taskTrackerColour = hslNewColor;
       this.saveList();
-
       this.toggleP5Canvas();
-
       this.taskTrackDimensions();
-      // Add Persist Colour Here
     },
     getAbsoluteHeight: function (el: any) {
-      // Get the DOM Node if you pass in a string
       el = typeof el === "string" ? document.querySelector(el) : el;
-
       var styles = window.getComputedStyle(el);
-
       var padding =
         parseFloat(styles["paddingTop"]) + parseFloat(styles["paddingBottom"]);
       padding;
@@ -296,23 +272,12 @@ export default defineComponent({
     },
     toggleP5Canvas: function (): void {
       this.taskTrackDimensions();
-
       this.showTasks = !this.showTasks;
     },
     taskTrackDimensions: function (): TrackerDimensions {
       let taskDisplay = this.$refs["taskTrackerInstance"] as any;
       if (taskDisplay) {
-        // let cs = getComputedStyle(taskDisplay);
-
-        // let paddingY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
-
-        // let borderY =
-        //   parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
-
-        // Element width and height minus padding and border
-
         let elementHeight = this.getAbsoluteHeight(taskDisplay);
-        console.log("element height", elementHeight);
         if (elementHeight < 450) {
           elementHeight = 450;
         }
@@ -320,7 +285,7 @@ export default defineComponent({
       }
       return { height: 100, width: 2000 };
     },
-    updateTaskReminder: function (task: TaskType) {
+    updateTaskReminder: function (task: TodoType) {
       this.task.reminder = !this.task.reminder;
       TaskService.patchTask(task.id, this.task).catch(function (error) {
         console.log(error);
@@ -335,13 +300,13 @@ export default defineComponent({
     passTaskPositonsToModal: function (taskPositons: TasksPositionObject) {
       this.taskPositionsObjectParent = taskPositons;
     },
-    addNewTaskToTasks: function (task: TaskType): void {
+    addNewTaskToTasks: function (task: TodoType): void {
       this.tasks.push(task);
       this.buttonText = "Add a Task";
       this.updatePositionsWithIndexes();
       this.recordHeight();
     },
-    sortIndexes: function (elems: TaskType[]) {
+    sortIndexes: function (elems: TodoType[]) {
       elems.sort(function (a, b) {
         return a.position - b.position;
       });
@@ -378,11 +343,10 @@ export default defineComponent({
     toggleModal: function () {
       this.isModalOpen = !this.isModalOpen;
     },
-    updateList: function (task: TaskType): void {
+    updateList: function (task: TodoType): void {
       this.taskPassUpdate = task;
       this.tasks;
       let indexOld: number = _.keys(_.pickBy(this.tasks, { id: task.id }));
-      // Find matching task index, then splice replace
       this.tasks.splice(indexOld, 1, task);
     },
     onClickOutside() {
@@ -396,13 +360,11 @@ export default defineComponent({
       });
     },
     deleteTask: function (id: number) {
-      console.log("Delete Task Called");
       TaskService.deleteTask(id)
         .then(() => {
           this.tasks = this.tasks.filter((task) => {
             return task.id !== id;
           });
-
           this.recordHeight();
         })
         .catch(function (error) {

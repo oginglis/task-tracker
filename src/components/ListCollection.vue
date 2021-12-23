@@ -1,23 +1,23 @@
 <template>
   <div class="tracker_collection">
     <ul v-for="list in lists" :key="list.id" class="tracker_collection__list">
-      <TaskTracker
+      <List
         v-if="lists"
         :trackerTitle="list.title"
         :trackerColor="list.backgroundColour"
         :taskTrackerID="list.id"
         @sizingUpdate="setCreatorToListHeight"
       >
-      </TaskTracker>
+      </List>
     </ul>
-    <NewListPlaceholder v-if="showNewList" :bgColour="newListBgColor" @createNewListNow="createNewList"/>
+    <ListPlaceholder v-if="showNewList" :bgColour="newListBgColor" @createNewListNow="createNewList"/>
     <TaskTrackerCreator
       :style="creatorDimensionsPixels"
       @createNewList="toggleColorPicker"
       ref="taskCreator"
       v-if="!showColorPicker"
     />
-    <P5CanvasColours
+    <ColourSelector
       v-else
       :canvasSize="creatorDimensionsNumber"
       :ballColours="colours"
@@ -32,20 +32,20 @@
 <script  lang="ts">
 import { defineComponent } from "vue";
 import ListService from "@/services/ListService";
-import TaskTracker from "./TaskTracker.vue";
+import List from "./List.vue";
 import { ListType } from "@/types/List";
-import TaskTrackerCreator from "./TaskTrackerCreator.vue";
-import P5CanvasColours from "./P5CanvasColours.vue";
+import TaskTrackerCreator from "./ListCreator.vue";
+import ColourSelector from "./ColourSelector.vue";
 import { TrackerDimensions } from "@/types/Dimensions";
-import NewListPlaceholder from "./NewListPlaceholder.vue"
+import ListPlaceholder from "./ListPlaceholder.vue"
 import tinyColor from "tinycolor2";
 export default defineComponent({
-  name: "TrackerCollection",
+  name: "ListCollection",
   components: {
-    TaskTracker,
+    List,
     TaskTrackerCreator,
-    P5CanvasColours,
-    NewListPlaceholder
+    ColourSelector,
+    ListPlaceholder
   },
   created() {
     this.getAllLists();

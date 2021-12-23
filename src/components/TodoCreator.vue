@@ -22,12 +22,12 @@
 <script  lang="ts">
 import { defineComponent } from "vue";
 import TaskService from "../services/TaskService";
-import { TaskType } from "@/types/Task";
+import { TodoType } from "@/types/Todo";
 export default defineComponent({
-  name: "NewAction",
+  name: "TodoCreator",
   data: function () {
     return {
-      action: {} as TaskType,
+      action: {} as TodoType,
       transitonName: "slide-fade",
     };
   },
@@ -75,15 +75,6 @@ export default defineComponent({
       };
     },
   },
-  // beforeUnmount() {
-  //   if (this.action.title) {
-  //     this.transitonName = "fade";
-  //     console.log("Fade added");
-  //   } else {
-  //     this.transitonName = "slide-fade";
-  //     console.log("Slide Fade added");
-  //   }
-  // },
 });
 </script>
 

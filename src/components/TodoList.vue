@@ -18,7 +18,7 @@
       class="task-list--remove-padding"
     >
       <template #item="{ element, index }">
-        <Task
+        <TodoItem
           @toggleTaskReminder="convertRemind(element)"
           @sendTaskPosition="sendUpTaskPosition(element.id, $event)"
           :task="element"
@@ -33,7 +33,7 @@
       </template>
     </draggable>
     <transition :name="transitonName" v-on:after-leave="afterLeave">
-      <NewAction
+      <TodoCreator
         :bgColor="listColour"
         v-if="showActionAdder"
         @clickOutsideActionAdder="emitToggleActionAdder"
@@ -45,30 +45,30 @@
 </template>
 
 <script lang="ts">
-import Task from "./Task.vue";
-import { TaskType } from "@/types/Task";
+import TodoItem from "./TodoItem.vue";
+import { TodoType } from "@/types/Todo";
 import draggable from "vuedraggable";
 import { TaskPosition } from "@/types/TaskPosition";
 import { TasksPositionObject } from "@/types/TasksPositionObject";
 import { defineComponent, PropType } from "vue";
 import TaskService from "@/services/TaskService";
-import NewAction from "./NewAction.vue";
+import TodoCreator from "./TodoCreator.vue";
 
 export default defineComponent({
-  name: "TaskList",
+  name: "TodoList",
   components: {
-    Task,
+    TodoItem,
     draggable,
-    NewAction,
+    TodoCreator,
   },
   filters: {
-    reverse: function (value: Array<TaskType>) {
+    reverse: function (value: Array<TodoType>) {
       return value.slice().reverse();
     },
   },
   data() {
     return {
-      info: [] as TaskType[],
+      info: [] as TodoType[],
       drag: false,
       positionsObject: {} as TasksPositionObject,
       componentKey: 0,
@@ -81,9 +81,9 @@ export default defineComponent({
     });
   },
   props: {
-    taskData: Object as PropType<TaskType>,
+    taskData: Object as PropType<TodoType>,
     updateWithThisTask: {
-      type: Object as PropType<TaskType>,
+      type: Object as PropType<TodoType>,
       default: () => ({
         title: "Arrow Function Expression",
       }),
@@ -93,7 +93,7 @@ export default defineComponent({
     },
     listColour: String,
     tasks: {
-      type: Array as PropType<Array<TaskType>>,
+      type: Array as PropType<Array<TodoType>>,
       default: () => [
         {
           title: "New tasks ",
@@ -107,6 +107,7 @@ export default defineComponent({
           date: "2021-06-30T21:55",
           reminder: false,
           position: 0,
+          listid: 1,
           id: 14028,
         },
       ],
@@ -123,10 +124,10 @@ export default defineComponent({
       };
     },
     tasksModel: {
-      get(): Array<TaskType> {
+      get(): Array<TodoType> {
         return this.tasks;
       },
-      set(value: TaskType) {
+      set(value: TodoType) {
         this.$emit("update:tasks", value);
       },
     },
@@ -155,7 +156,7 @@ export default defineComponent({
       this.componentKey += 1;
     },
     passActionUp: function (newAction: any): void {
-      if (newAction == ({} as TaskType)) {
+      if (newAction == ({} as TodoType)) {
         this.transitonName = "fade";
         this.$emit("addTempActionToList", newAction);
         this.forceRerenderActionAdder();
@@ -187,7 +188,7 @@ export default defineComponent({
       let taskToUpdate = this.tasks.filter((task) => task.id == id);
       this.$emit("askToUpdateTask4", taskToUpdate);
     },
-    convertRemind: function (task: TaskType): void {
+    convertRemind: function (task: TodoType): void {
       if (task.reminder == false) {
         task.reminder = true;
       } else {
@@ -241,7 +242,7 @@ export default defineComponent({
         task.position = 0;
       });
     },
-    saveOrder: function (array: Array<TaskType>) {
+    saveOrder: function (array: Array<TodoType>) {
       // TO DO: Make patch requests on all tasks that have had their position updated using their id
       return array;
     },
@@ -261,9 +262,6 @@ export default defineComponent({
 .task_list {
   width: 100%;
 }
-/* .padding-end:last-child {
-  padding-bottom: 10px;
-} */
 .flip-list-move {
   transition: transform 0.5s;
 }

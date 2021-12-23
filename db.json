@@ -3,17 +3,19 @@
     {
       "title": "Add another task",
       "id": 23,
-      "position": 0
+      "listid": 1,
+      "position": 1
     },
     {
       "title": "New task",
       "id": 33,
-      "position": 1
+      "listid": 1,
+      "position": 0
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(13, 80%, 48%)",
+      "backgroundColour": "hsl(39, 81%, 73%)",
       "title": "This is the list ttle",
       "id": 1,
       "width": 396,
@@ -27,7 +29,7 @@
       "id": 2
     },
     {
-      "backgroundColour": "hsl(319, 57%, 39%)",
+      "backgroundColour": "hsl(164, 35%, 52%)",
       "width": 396,
       "height": 576,
       "title": "New list",

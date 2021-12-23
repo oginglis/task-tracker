@@ -1,19 +1,17 @@
 <template>
-  <TrackerCollection />
+  <ListCollection />
 </template>
 
 <script  lang="ts">
-// import "vue-navigation-bar/dist/vue-navigation-bar.css";
-import TrackerCollection from "./TrackerCollection.vue";
-// import the library
-// import VueNavigationBar from "vue-navigation-bar";
+
+import ListCollection from "../components/ListCollection.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "Homepage",
   components: {
     // VueNavigationBar,
-    TrackerCollection,
+    ListCollection,
   },
   created() {},
   data: function () {

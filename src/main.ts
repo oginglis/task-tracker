@@ -1,9 +1,9 @@
 import { createApp } from 'vue';
 import App from './App.vue'
-import vClickOutside from "./directives/clickoutside"
+import vClickOutside from "./common/directives/clickoutside"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { createMetaManager } from 'vue-meta'
-import directives from "./directives/";
+import directives from "./common/directives";
 // javascript import for when you're importing the css directly in your javascript
 
 

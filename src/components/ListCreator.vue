@@ -1,7 +1,7 @@
 <template>
   <div class="list_creator">
     <Tooltip position="bottom" :tooltipText="'Create new list'">
-      <ClickableIcon
+      <Icon
         type="plus"
         :bgColor="`hsl(0, 0%, 90%)`"
         class="hiding__icon"
@@ -15,14 +15,14 @@
 <script  lang="ts">
 import { defineComponent } from "vue";
 import { ListType } from "@/types/List";
-import Tooltip from "./Tooltip.vue";
-import ClickableIcon from "./ClickableIcon.vue";
+import Tooltip from "../common/components/Tooltip.vue";
+import Icon from "../common/components/Icon.vue";
 
 export default defineComponent({
   name: "ListCreator",
   components: {
     Tooltip,
-    ClickableIcon,
+    Icon,
   },
   created() {},
   data: function () {
@@ -32,7 +32,6 @@ export default defineComponent({
   },
   methods: {
     createAList: function (): void {
-      console.log("create a list clicked");
       this.$emit("createNewList");
     },
   },

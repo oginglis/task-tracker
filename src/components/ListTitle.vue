@@ -18,7 +18,7 @@
 import { defineComponent } from "vue";
 import tinyColor from "tinycolor2";
 export default defineComponent({
-  name: "Header",
+  name: "ListTitle",
   data: function () {
     return {
       headerTitle: "New List",
@@ -28,7 +28,7 @@ export default defineComponent({
   props: {
     title: {
       type: String,
-      defult: "Hello Thered",
+      default: "Hello Thered",
     },
     headerColour: {
       type: String,
@@ -38,23 +38,20 @@ export default defineComponent({
     },
   },
   created(){
-    console.log("Header Created", this.startFocused)
     this.isFocus = this.startFocused;
   },
   beforeMount(){
-    console.log("Header Before Mount", this.startFocused)
     if(this.title){
  this.headerTitle = this.title;
     }
   },
   mounted(){
-    console.log("Header Mounted", this.startFocused)
     if(this.startFocused){
-this.focusInput()
+      this.focusInput()
     }
   },
   computed: {
-calculatedTextColor: function (): object {
+    calculatedTextColor: function (): object {
       if (tinyColor(this.headerColour).isLight()) {
         return {
           color: "black",
@@ -67,10 +64,8 @@ calculatedTextColor: function (): object {
     },
   },
   methods: {
-
     setBGColor: function () {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
-
       let hsl: string[] = hslReg.exec(this.headerColour!)!.slice(1, 4);
       if (this.isFocus) {
         return {

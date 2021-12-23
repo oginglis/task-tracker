@@ -23,7 +23,7 @@ import {
 library.add([faTimes, faCheck, faBell, faPlus, faTrash, faPalette] as any);
 
 export default defineComponent({
-  name: "ClickableIcon",
+  name: "Icon",
   data: function () {
     return {};
   },

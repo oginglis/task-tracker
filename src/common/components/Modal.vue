@@ -109,8 +109,6 @@ export default defineComponent({
         completed: this.modalTask.completed,
         id: id,
       };
-
-      // Make Axios request with the data from the task
       TaskService.patchTask(id, update)
         .then(() => {})
         .catch(function (error) {
