@@ -13,7 +13,6 @@
         @keydown.enter.prevent="triggerBlur($event)"
         @keydown="updateActionTitle($event)"
       ></p>
-
       <p class="faded-text" v-if="!action.title">New Action</p>
     </div>
   </transition>
@@ -40,28 +39,19 @@ export default defineComponent({
 
   mounted() {},
   methods: {
-    updateActionTitle: function (e: any): void {
-      if (e.target.innerText === "") {
+    updateActionTitle: function (e: KeyboardEvent): void {
+      if ((e.target as HTMLInputElement).innerText === "") {
         this.action.title = e.key;
       } else {
-        this.action.title = e.target.innerText;
+        this.action.title = (e.target as HTMLInputElement).innerText;
       }
     },
     clickOutsideHandler: function (): void {
       this.$emit("clickOutsideActionAdder");
     },
-    createAction: function (e: any): void {
-      console.log(typeof e, e)
-      this.action.title = e.target.innerText;
+    createAction: function (e: Event): void {
+      this.action.title = (e.target as HTMLInputElement).innerText;
       if (this.action.title != "") {
-        this.action.reminder = false;
-        this.action = {
-          title: e.target.innerText,
-          date: (new Date()).toString(),
-          reminder: false,
-          position: 0,
-          completed: false
-        }
         TaskService.postTask(this.action)
           .then((res) => {
             this.$emit("addNewAction", res.data);
@@ -71,8 +61,8 @@ export default defineComponent({
           });
       }
     },
-    triggerBlur: function (e: any): void {
-      e.target.blur();
+    triggerBlur: function (e: Event): void {
+      (e.target as HTMLElement).blur();
     },
   },
   computed: {

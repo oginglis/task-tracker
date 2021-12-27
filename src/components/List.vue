@@ -123,7 +123,7 @@ export default defineComponent({
   },
   mounted() {
     let trackerInstance: HTMLElement | null = this.$refs
-      .taskTrackerInstance as any;
+      .taskTrackerInstance as HTMLElement;
     let trackerSize = trackerInstance!.getBoundingClientRect();
 
     this.width = Math.trunc(trackerSize.width);
@@ -134,7 +134,7 @@ export default defineComponent({
   updated() {
     this.$nextTick(() => {
 
-      (this as any).recordHeight();
+      this.recordHeight();
     });
   },
   props: ["trackerTitle", "trackerColor", "taskTrackerID"],
@@ -194,8 +194,7 @@ export default defineComponent({
       this.$emit("requestDeleteList",this.trackerID )
     },
     initObserver() {
-
-      const tracker: HTMLElement | null = this.$refs.taskTrackerInstance as any,
+      const tracker: HTMLElement | null = this.$refs.taskTrackerInstance as HTMLElement,
         vm = this,
         config = {
           attributes: true,
@@ -213,12 +212,11 @@ export default defineComponent({
       observer.observe(tracker as Node, config);
       this.observer = observer;
     },
-
     recordHeight: function (): void {
       this.$nextTick(() => {
         if (this.$refs.taskTrackerInstance != null) {
-          let trackerInstance: HTMLElement | null = this.$refs
-            .taskTrackerInstance as any;
+          let trackerInstance: HTMLElement  = this.$refs
+            .taskTrackerInstance as HTMLElement;
           this.width = trackerInstance!.clientWidth;
           this.height = trackerInstance!.clientHeight;
           this.saveList();
@@ -270,20 +268,20 @@ export default defineComponent({
       this.toggleP5Canvas();
       this.taskTrackDimensions();
     },
-    getAbsoluteHeight: function (el: any) {
-      el = typeof el === "string" ? document.querySelector(el) : el;
-      var styles = window.getComputedStyle(el);
+    getAbsoluteHeight: function (el: Element | null ) {
+      el = typeof el === "string" ? document.querySelector(el): el;
+      var styles = window.getComputedStyle(el as Element);
       var padding =
         parseFloat(styles["paddingTop"]) + parseFloat(styles["paddingBottom"]);
       padding;
-      return Math.ceil(el.offsetHeight);
+      return Math.ceil((el as HTMLElement).offsetHeight);
     },
     toggleP5Canvas: function (): void {
       this.taskTrackDimensions();
       this.showTasks = !this.showTasks;
     },
     taskTrackDimensions: function (): TrackerDimensions {
-      let taskDisplay = this.$refs["taskTrackerInstance"] as any;
+      let taskDisplay = this.$refs["taskTrackerInstance"] as HTMLElement;
       console.log("Task Displayt", taskDisplay)
       if (taskDisplay) {
         let elementHeight = this.getAbsoluteHeight(taskDisplay);
@@ -334,14 +332,14 @@ export default defineComponent({
         (this.task.date = ""),
         (this.task.reminder = false);
     },
-    openFormWithTask: function (task: any) {
+    openFormWithTask: function () {
       if (this.isModalOpen == false) {
-        this.isModalOpen = true;
-        this.task.date = task[0].date;
-        this.task.reminder = task[0].reminder;
-        this.task.title = task[0].title;
-        this.task.completed = task[0].completed;
-        this.task.id = parseInt(task[0].id);
+        // this.isModalOpen = true;
+        // this.task.date = task[0].date;
+        // this.task.reminder = task[0].reminder;
+        // this.task.title = task[0].title;
+        // this.task.completed = task[0].completed;
+        // this.task.id = parseInt(task[0].id);
       } else if (this.isModalOpen == true) {
         this.isModalOpen = false;
       }
@@ -369,11 +367,11 @@ export default defineComponent({
       });
     },
     deleteTask: function (id: number) {
+        this.tasks = this.tasks.filter((task) => {
+          return task.id !== id;
+        });
       TaskService.deleteTask(id)
         .then(() => {
-          this.tasks = this.tasks.filter((task) => {
-            return task.id !== id;
-          });
           this.recordHeight();
         })
         .catch(function (error) {

@@ -1,13 +1,13 @@
 <template>
   <div :style="calculatedBackgroundColor" class="task-tracker-wrap">
-       <ListHeader
-            :title="`New List`"
-            :headerColour="bgColour"
-            v-if="bgColour"
-            :startFocused="true"
-            @updateTitle="anotherHandleHideList"
-            @submitList="anotherHandleHideList"
-          />
+    <ListHeader
+      v-if="bgColour"
+      @updateTitle="anotherHandleHideList"
+      @submitList="anotherHandleHideList"
+      :title="`New List`"
+      :headerColour="bgColour"
+      :startFocused="true"
+    />
   </div>
 </template>
 
@@ -20,33 +20,27 @@ export default defineComponent({
   components: {
     ListHeader,
   },
-
   props: {
     bgColour: {
-type: String,
-default: "hsl(33, 52%, 69%)"
+      type: String,
+      default: "hsl(33, 52%, 69%)"
     },
-    },
-
+  },
   data: function () {
     return {
     backgroundColour: "hsl(33, 52%, 69%)"
-
     };
   },
   methods: {
-
-anotherHandleHideList: function(payload:any):void{
-  let newListInfo = {
-    title: payload,
-colour: this.bgColour
-  }
-
-this.$emit('createNewListNow', newListInfo)
-},
+    anotherHandleHideList: function(payload: string):void{
+      let newListInfo = {
+        title: payload,
+        colour: this.bgColour
+      }
+      this.$emit('createNewListNow', newListInfo)
+    },
   },
   computed: {
-
     calculatedBackgroundColor: function (): object {
       return {
         backgroundColor: this.bgColour,
@@ -63,14 +57,11 @@ this.$emit('createNewListNow', newListInfo)
         };
       }
     },
-  },
-  unmounted(){
   }
 });
 </script>
 
 <style scoped>
-
 .task-tracker-wrap {
   padding: 1.5rem 3rem;
   border-radius: 1rem;
@@ -83,5 +74,4 @@ this.$emit('createNewListNow', newListInfo)
   box-sizing: content-box;
   min-height: 33rem;
 }
-
 </style>

@@ -90,24 +90,17 @@ newListBgColor: "hsl(33, 52%, 69%)",
     },
   },
   methods: {
-
-    handleclickColor: function (payload: any): void {
+    handleclickColor: function (payload: string): void {
       this.toggleColorPicker();
-      console.log(payload);
-      // convert payload to HSL
-      console.log("payload", payload)
       let HSLcol = tinyColor(payload);
-
       this.newListBgColor = HSLcol.toHslString();
       this.toggleNewList();
-
     },
-    createNewList: function(listinfo: any):void {
+    createNewList: function(listinfo: {colour: string, title: string}):void {
       this.showNewList = false;
       if (!listinfo.title){
-return
+        return
       }
-
       let  newList = {
         backgroundColour: listinfo.colour as string,
         width: this.creatorDimensionsNumber.width,
@@ -116,11 +109,9 @@ return
         id: (this.lists.length+1),
       }
       ListService.postList(newList).catch(function (error) {
-          console.log(error);
-        });
-
+        console.log(error);
+      });
       this.lists = [...this.lists, newList]
-
     },
     toggleNewList: function():void {
     this.showNewList = !this.showNewList
@@ -144,11 +135,9 @@ return
     toggleColorPicker: function (): void {
       this.showColorPicker = !this.showColorPicker;
     },
-    getAbsoluteHeight: function (el: any) {
+    getAbsoluteHeight: function (el: HTMLElement) {
       // Get the DOM Node if you pass in a string
       // el = typeof el === "string" ? document.querySelector(el) : el;
-
-
       var styles = window.getComputedStyle(el);
       var margin =
         parseFloat(styles["marginTop"]) + parseFloat(styles["marginBottom"]);
@@ -157,7 +146,7 @@ return
     },
     colorPickerDimensions: function (): TrackerDimensions {
       if (this.$refs["taskCreator"]) {
-        let taskCreator = this.$refs["taskCreator"] as any;
+        let taskCreator = this.$refs["taskCreator"] as HTMLElement;
 
         if (taskCreator) {
           let elementHeight = this.getAbsoluteHeight(taskCreator);
@@ -169,7 +158,7 @@ return
         return { height: 100, width: 2000 };
       } else return { height: 100, width: 2000 };
     },
-    setCreatorToListHeight: function (newHeight: any): void {
+    setCreatorToListHeight: function (newHeight: number): void {
       this.getAllLists();
       let largestHeight: number = Math.max.apply(
         Math,

@@ -54,6 +54,7 @@ import { defineComponent, PropType } from "vue";
 import TaskService from "@/services/TaskService";
 import TodoCreator from "./TodoCreator.vue";
 
+
 export default defineComponent({
   name: "TodoList",
   components: {
@@ -153,7 +154,7 @@ export default defineComponent({
     forceRerenderTodoAdder() {
       this.componentKey += 1;
     },
-    emitNewTodo: function (newTodo: any): void {
+    emitNewTodo: function (newTodo: TodoType): void {
       if (newTodo == ({} as TodoType)) {
         this.transitonName = "fade";
         this.$emit("addTempActionToList", newTodo);
@@ -198,7 +199,8 @@ export default defineComponent({
     sortList: function (): void {
       this.info.reverse();
     },
-    onChange: function (e: any) {
+    onChange: function (e: {moved: {oldIndex: number, newIndex: number}}) {
+      console.log(e, typeof e)
       const {
         moved: { oldIndex, newIndex },
       } = e;
@@ -226,9 +228,10 @@ export default defineComponent({
       this.tasksModel.forEach((task) => {
         let refName: string = `Task ${task.id}`;
         let top: number, left: number;
+        console.log("OLLIE CHECK THIS",this.$refs[refName] )
         if (this.$refs[refName]) {
-          top = (this.$refs[refName] as any).$el.getBoundingClientRect().top;
-          left = (this.$refs[refName] as any).$el.getBoundingClientRect().left;
+          top = ((this.$refs[refName] as any).$el as HTMLElement).getBoundingClientRect().top;
+          left = ((this.$refs[refName] as any).$el as HTMLElement).getBoundingClientRect().left;
           let posObject: TaskPosition = { top: top, left: left };
           this.positionsObject[task.id] = posObject;
         }

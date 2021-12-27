@@ -26,11 +26,9 @@
           }"
         ></font-awesome-icon
       ></span>
-
       <label v-if="isCalendarVisible" class="form__date" for="date"
         >Date & Time:</label
       >
-
       <Datepicker
         class="v-spacer form__date--input"
         id="date"
@@ -38,7 +36,6 @@
         :clearable="true"
         v-if="isCalendarVisible"
       />
-
       <button @click="submitForm" class="v-spacer">Save Task</button>
     </form>
   </div>

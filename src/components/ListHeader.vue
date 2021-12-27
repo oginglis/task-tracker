@@ -78,19 +78,19 @@ export default defineComponent({
         };
       }
     },
-    handleEnter: function (event: any) {
+    handleEnter: function (event: Event) {
       event.preventDefault();
-      this.$emit("submitList", event.target.innerHTML)
+      this.$emit("submitList", (event.target as HTMLElement).innerHTML)
     },
-    updateTitle: function (e?: any): void {
+    updateTitle: function (e: Event): void {
       this.isFocus = false;
       this.setBGColor();
-      this.headerTitle = e.target.innerText;
+      this.headerTitle = (e.target as HTMLElement).innerText;
       this.$emit("updateTitle", this.headerTitle);
     },
      focusInput() {
-      (this.$refs['text'] as any).focus();
-      (this.$refs['text'] as any).innerText = ""
+      (this.$refs['text'] as HTMLElement).focus();
+      (this.$refs['text'] as HTMLElement).innerText = ""
     }
   },
 });
