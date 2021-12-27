@@ -21,7 +21,7 @@
       </Modal>
       <div>
         <div class="text-inline">
-          <ListTitle
+          <ListHeader
             :title="title"
             @updateTitle="updateTaskTrackerTitle"
             :headerColour="taskTrackerColour"
@@ -93,7 +93,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import ListTitle from "./ListTitle.vue";
+import ListHeader from "./ListHeader.vue";
 import TodoList from "./TodoList.vue";
 import Icon from "../common/components/Icon.vue";
 import Modal from "../common/components/Modal.vue";
@@ -111,7 +111,7 @@ import tinyColor from "tinycolor2";
 export default defineComponent({
   name: "List",
   components: {
-    ListTitle,
+    ListHeader,
     TodoList,
     Modal,
     Tooltip,
@@ -119,7 +119,7 @@ export default defineComponent({
     ColourSelector,
   },
   created() {
-    this.getAllActions();
+    this.getAllTodos();
   },
   mounted() {
     let trackerInstance: HTMLElement | null = this.$refs
@@ -226,10 +226,21 @@ export default defineComponent({
         this.$emit("sizingUpdate", this.height);
       });
     },
-    getAllActions: function (): void {
+    getAllTodos: function (): void {
       TaskService.getTasks().then((response): void => {
         this.tasks = response.data as Array<TodoType>;
         this.sortIndexes(this.tasks);
+      }).catch(function (error) {
+          console.log(error);
+        });
+    },
+    saveList: function (): void {
+      ListService.patchList(this.trackerID, {
+        title: this.title,
+        width: this.width,
+        height: this.height,
+        backgroundColour: this.taskTrackerColour,
+        id: this.taskTrackerID,
       }).catch(function (error) {
           console.log(error);
         });
@@ -252,17 +263,6 @@ export default defineComponent({
       this.title = newTitle;
       this.saveList();
     },
-    saveList: function (): void {
-      ListService.patchList(this.trackerID, {
-        title: this.title,
-        width: this.width,
-        height: this.height,
-        backgroundColour: this.taskTrackerColour,
-        id: this.taskTrackerID,
-      }).catch(function (error) {
-          console.log(error);
-        });
-    },
     updateColor: function (newColor: string): void {
       let hslNewColor = tinyColor(newColor).toHslString();
       this.taskTrackerColour = hslNewColor;
@@ -284,6 +284,7 @@ export default defineComponent({
     },
     taskTrackDimensions: function (): TrackerDimensions {
       let taskDisplay = this.$refs["taskTrackerInstance"] as any;
+      console.log("Task Displayt", taskDisplay)
       if (taskDisplay) {
         let elementHeight = this.getAbsoluteHeight(taskDisplay);
         if (elementHeight < 450) {

@@ -238,7 +238,6 @@ export default defineComponent({
         }
       }
     };
-
     this.p5Canvas = new P5(sketch2);
   },
   beforeUnmount() {
@@ -246,7 +245,6 @@ export default defineComponent({
     this.p5Canvas = null;
   },
   unmounted() {
-    console.log("P5 Unmounted");
     this.p5Canvas = null;
   },
 });

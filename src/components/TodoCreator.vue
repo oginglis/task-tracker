@@ -51,8 +51,17 @@ export default defineComponent({
       this.$emit("clickOutsideActionAdder");
     },
     createAction: function (e: any): void {
+      console.log(typeof e, e)
       this.action.title = e.target.innerText;
       if (this.action.title != "") {
+        this.action.reminder = false;
+        this.action = {
+          title: e.target.innerText,
+          date: (new Date()).toString(),
+          reminder: false,
+          position: 0,
+          completed: false
+        }
         TaskService.postTask(this.action)
           .then((res) => {
             this.$emit("addNewAction", res.data);

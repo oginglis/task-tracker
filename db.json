@@ -4,44 +4,65 @@
       "title": "Add another task",
       "id": 23,
       "listid": 1,
-      "position": 2
+      "position": 4
     },
     {
       "title": "New task",
       "id": 33,
       "listid": 1,
-      "position": 3
+      "position": 1
     },
     {
       "title": "This is a task",
       "id": 34,
-      "position": 1
+      "position": 0
     },
     {
       "title": "And another",
       "id": 35,
-      "position": 0
+      "position": 4
+    },
+    {
+      "title": "New action",
+      "id": 36,
+      "position": 3
+    },
+    {
+      "title": "New action",
+      "date": "Mon Dec 27 2021 19:09:00 GMT+0000 (Greenwich Mean Time)",
+      "reminder": false,
+      "position": 2,
+      "completed": false,
+      "id": 0.7781145580484645
+    },
+    {
+      "title": "Test",
+      "date": "Mon Dec 27 2021 19:09:49 GMT+0000 (Greenwich Mean Time)",
+      "reminder": false,
+      "position": 0,
+      "completed": false,
+      "id": 0.40643249365927225
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(212, 73%, 36%)",
-      "title": "List Number 3",
+      "backgroundColour": "hsl(186, 56%, 42%)",
+      "title": "New list tile",
       "id": 1,
       "width": 396,
-      "height": 576
+      "height": 818
     },
     {
-      "backgroundColour": "hsl(13, 80%, 48%)",
+      "backgroundColour": "hsl(2, 73%, 43%)",
       "width": 396,
-      "height": 576,
+      "height": 672,
       "title": "Another list",
       "id": 2
     },
     {
       "backgroundColour": "hsl(31, 80%, 54%)",
       "width": 396,
-      "height": 576,
+      "height": 672,
       "title": "Third List",
       "id": 3
     }

@@ -1,6 +1,6 @@
 <template>
   <div :style="calculatedBackgroundColor" class="task-tracker-wrap">
-       <ListTitle
+       <ListHeader
             :title="`New List`"
             :headerColour="bgColour"
             v-if="bgColour"
@@ -13,12 +13,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import ListTitle from "./ListTitle.vue";
+import ListHeader from "./ListHeader.vue";
 import tinyColor from "tinycolor2";
 export default defineComponent({
   name: "ListPlaceholder",
   components: {
-    ListTitle,
+    ListHeader,
   },
 
   props: {

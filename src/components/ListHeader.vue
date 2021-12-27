@@ -18,7 +18,7 @@
 import { defineComponent } from "vue";
 import tinyColor from "tinycolor2";
 export default defineComponent({
-  name: "ListTitle",
+  name: "ListHeader",
   data: function () {
     return {
       headerTitle: "New List",

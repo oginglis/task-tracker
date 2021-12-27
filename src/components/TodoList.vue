@@ -1,9 +1,11 @@
 <template>
   <div class="task_list padding-end">
     <draggable
-      v-model="tasksModel"
+      class="task-list--remove-padding"
       @start="drag = true"
       @end="drag = false"
+      @change="onChange"
+      v-model="tasksModel"
       tag="transition-group"
       item-key="id"
       direction="horizontal"
@@ -14,30 +16,28 @@
         type: 'transition-group',
         name: !drag ? 'flip-list' : null,
       }"
-      @change="onChange"
-      class="task-list--remove-padding"
     >
       <template #item="{ element, index }">
         <TodoItem
           @toggleTaskReminder="convertRemind(element)"
           @sendTaskPosition="sendUpTaskPosition(element.id, $event)"
-          :task="element"
-          :key="index"
-          :style="backgroundColor(index)"
           @askToDeleteTask2="deleteTask2(element.id)"
           @click="askToUpdateTask3"
           @askToUpdateTask2="askToUpdateTask3"
+          :task="element"
+          :key="index"
+          :style="setBackgroundColor(index)"
           :ref="`Task ${element.id}`"
           :bgColor="listColour"
         />
       </template>
     </draggable>
-    <transition :name="transitonName" v-on:after-leave="afterLeave">
+    <transition :name="transitonName" v-on:after-leave="notifyAdderExit">
       <TodoCreator
-        :bgColor="listColour"
         v-if="showActionAdder"
         @clickOutsideActionAdder="emitToggleActionAdder"
-        @addNewAction="passActionUp"
+        @addNewAction="emitNewTodo"
+        :bgColor="listColour"
         :key="componentKey"
       />
     </transition>
@@ -147,32 +147,29 @@ export default defineComponent({
     this.updateAndSendPositions();
   },
   methods: {
-    afterLeave: function (): void {
-
+    notifyAdderExit: function (): void {
       this.$emit("adderLeft");
     },
-    forceRerenderActionAdder() {
+    forceRerenderTodoAdder() {
       this.componentKey += 1;
     },
-    passActionUp: function (newAction: any): void {
-      if (newAction == ({} as TodoType)) {
+    emitNewTodo: function (newTodo: any): void {
+      if (newTodo == ({} as TodoType)) {
         this.transitonName = "fade";
-        this.$emit("addTempActionToList", newAction);
-        this.forceRerenderActionAdder();
+        this.$emit("addTempActionToList", newTodo);
+        this.forceRerenderTodoAdder();
       } else {
         this.transitonName = "slide-fade";
-        this.$emit("addTempActionToList", newAction);
-        this.forceRerenderActionAdder();
+        this.$emit("addTempActionToList", newTodo);
+        this.forceRerenderTodoAdder();
       }
     },
     emitToggleActionAdder: function () {
       this.$emit("clickedOutsideActionAdder");
     },
-    backgroundColor: function (index: number): object {
+    setBackgroundColor: function (index: number): object {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
-
       let hsl: string[] = hslReg.exec(this.listColour!)!.slice(1, 4);
-
       if (index % 2 == 0) {
         return {
           backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 10}%`,
