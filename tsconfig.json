@@ -7,7 +7,6 @@
         "./types/",
     ],
     "target": "esnext",
-
     "strictPropertyInitialization": false,
     "module": "esnext",
     "strict": true,
