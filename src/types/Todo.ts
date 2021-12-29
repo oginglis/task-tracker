@@ -4,5 +4,6 @@ export interface TodoType {
   reminder: Boolean;
   position: number;
   completed: Boolean;
+  listId: number;
   id: number;
 }

@@ -40,6 +40,7 @@
         @addNewAction="emitNewTodo"
         :bgColor="listColour"
         :key="componentKey"
+        :list_id="list_id2"
       />
     </transition>
   </div>
@@ -93,6 +94,7 @@ export default defineComponent({
     showActionAdder: {
       type: Boolean,
     },
+    list_id2: Number,
     listColour: String,
     tasks: {
       type: Array as PropType<Array<TodoType>>,

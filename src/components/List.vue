@@ -42,6 +42,7 @@
           @addTempActionToList="addActiontoList"
           @adderLeft="recordHeight"
           @removedActions="recordHeight"
+          :list_id2="taskTrackerID"
         />
       </div>
       <p v-if="emptyMessage">You have no Actions on <br />this list yet.</p>
@@ -120,9 +121,10 @@ export default defineComponent({
     ColourSelector,
   },
   created() {
-    this.getAllTodos();
+    // this.getAllTodos();
   },
   mounted() {
+    this.tasks = this.tasks2
     let trackerInstance: HTMLElement | null = this.$refs
       .taskTrackerInstance as HTMLElement;
     let trackerSize = trackerInstance!.getBoundingClientRect();
@@ -138,7 +140,7 @@ export default defineComponent({
       this.recordHeight();
     });
   },
-  props: ["trackerTitle", "trackerColor", "taskTrackerID"],
+  props: ["trackerTitle", "trackerColor", "taskTrackerID", "tasks2"],
   watch: {
     tasks: {
       deep: true,
@@ -203,14 +205,6 @@ export default defineComponent({
         }
         this.$emit("sizingUpdate", this.height);
       });
-    },
-    getAllTodos: function (): void {
-      TaskService.getTasks().then((response): void => {
-        this.tasks = response.data as Array<TodoType>;
-        this.sortIndexes(this.tasks);
-      }).catch(function (error) {
-          console.log(error);
-        });
     },
     saveList: function (): void {
       ListService.patchList(this.trackerID, {
@@ -288,6 +282,7 @@ export default defineComponent({
       this.taskPositionsObjectParent = taskPositons;
     },
     addNewTaskToTasks: function (task: TodoType): void {
+      task.id = this.tasks.length + 1;
       this.tasks.push(task);
       this.buttonText = "Add a Task";
       this.updatePositionsWithIndexes();
@@ -438,6 +433,10 @@ export default defineComponent({
 
   min-height: 33rem;
 }
+
+.task-tracker-wrap:first-of-type {
+  margin-left: 0px;
+} 
 
 .task-tracker-wrap:hover .hiding__icon {
   visibility: visible;

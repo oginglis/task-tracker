@@ -41,7 +41,7 @@
 import moment from "moment";
 import Datepicker from "vue3-datepicker";
 import { defineComponent, PropType } from "vue";
-import TaskService from "@/services/TaskService";
+// import TaskService from "@/services/TaskService";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import vClickOutside from "v-click-outside";
@@ -109,11 +109,11 @@ export default defineComponent({
         completed: this.modalTask.completed,
         id: id,
       };
-      TaskService.patchTask(id, update)
-        .then(() => {})
-        .catch(function (error) {
-          console.log(error);
-        });
+      // TaskService.patchTask(id, update)
+      //   .then(() => {})
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
 
       this.$emit("rerender", update);
     },

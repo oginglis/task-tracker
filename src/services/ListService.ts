@@ -12,7 +12,7 @@ const apiClient = axios.create({
 
 export default {
   getList() {
-    return apiClient.get('/lists')
+    return apiClient.get('/lists?_embed=todos')
   },
   deleteList(id: Number) {
     return apiClient.delete('/lists/' + id)
@@ -24,3 +24,5 @@ export default {
     return apiClient.patch('/lists/' + id, update)
   }
 }
+
+

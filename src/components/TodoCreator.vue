@@ -35,9 +35,16 @@ export default defineComponent({
       type: String,
       default: "hsl(39, 81%, 73%)",
     },
+    list_id: Number
+    
   },
 
-  mounted() {},
+  mounted() {
+    if(this.list_id){
+      this.action.listId = this.list_id;
+    }
+
+  },
   methods: {
     updateActionTitle: function (e: KeyboardEvent): void {
       if ((e.target as HTMLInputElement).innerText === "") {
@@ -51,11 +58,13 @@ export default defineComponent({
     },
     createAction: function (e: Event): void {
       this.action.title = (e.target as HTMLInputElement).innerText;
+      
       if (this.action.title != "") {
+        this.$emit("addNewAction",  this.action);
+        this.action.id = Math.random()*100;
+
+        console.log("action before saving", this.action, this.action.id);
         TaskService.postTask(this.action)
-          .then((res) => {
-            this.$emit("addNewAction", res.data);
-          })
           .catch(function (error) {
             console.log(error);
           });

@@ -1,4 +1,5 @@
 <template>
+<h1 class="collection_title">Lists</h1>
   <div class="tracker_collection">
     <ul v-for="list in lists" :key="list.id" class="tracker_collection__list">
       <List
@@ -6,6 +7,7 @@
         :trackerTitle="list.title"
         :trackerColor="list.backgroundColour"
         :taskTrackerID="list.id"
+        :tasks2="checkForTasks(list.todos)"
         @sizingUpdate="setCreatorToListHeight"
         @requestDeleteList="deleteList"
       >
@@ -41,6 +43,7 @@ import { TrackerDimensions } from "@/types/Dimensions";
 import ListPlaceholder from "./ListPlaceholder.vue"
 import tinyColor from "tinycolor2";
 import colours from '../common/colours';
+import { TodoType } from "@/types/Todo";
 export default defineComponent({
   name: "ListCollection",
   components: {
@@ -70,6 +73,13 @@ newListBgColor: "hsl(33, 52%, 69%)",
     },
   },
   methods: {
+    checkForTasks: function(todos: Array<TodoType> | undefined): Array<TodoType>{
+      if (todos == undefined){
+  return []
+      }
+    else 
+    return todos
+    },
     handleclickColor: function (payload: string): void {
       this.toggleColorPicker();
       let HSLcol = tinyColor(payload);
@@ -139,7 +149,6 @@ newListBgColor: "hsl(33, 52%, 69%)",
       } else return { height: 100, width: 2000 };
     },
     setCreatorToListHeight: function (newHeight: number): void {
-      this.getAllLists();
       let largestHeight: number = Math.max.apply(
         Math,
         this.lists.map(function (list) {
@@ -163,6 +172,10 @@ newListBgColor: "hsl(33, 52%, 69%)",
 </script>
 
 <style scoped>
+.collection_title{
+  text-align: left;
+  color: black
+}
 .tracker_collection {
   display: flex;
   flex-wrap: wrap;

@@ -12,15 +12,18 @@ const apiClient = axios.create({
 
 export default {
   getTasks() {
-    return apiClient.get('/tasks')
+    return apiClient.get('/todos')
   },
   deleteTask(id: Number) {
-    return apiClient.delete('/tasks/' + id)
+    return apiClient.delete('/todos/' + id)
   },
   postTask(task: Object) {
-    return apiClient.post('/tasks/', task)
+    return apiClient.post('/todos/', task)
   },
   patchTask(id: Number, update: TodoType) {
-    return apiClient.patch('/tasks/' + id, update)
+    return apiClient.patch('/todos/' + id, update)
   }
 }
+
+
+
