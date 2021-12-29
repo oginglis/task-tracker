@@ -1,12 +1,12 @@
 <template>
-  <div id="app">
+
     <metainfo>
       <template v-slot:title="{ content }">{{
         content ? `${content} | Task Track App` : `Task Tracker`
       }}</template>
     </metainfo>
     <Homepage />
-  </div>
+
 </template>
 
 
@@ -18,6 +18,21 @@ export default defineComponent({
   name: "App",
   components: {
     Homepage,
+  },
+  mounted(){
+console.log(`
+                    ___           ___                                     
+      ___          /  /\\         /  /\\       ___         ___              
+     /__/\\        /  /:/        /  /:/      /__/\\       /  /\\             
+     \\  \\:\\      /  /:/        /  /:/       \\__\\:\\     /  /::\\            
+      \\__\\:\\    /  /:/        /  /:/        /  /::\\   /  /:/\\:\\           
+      /  /::\\  /__/:/     /\\ /__/:/      __/  /:/\\/  /  /::\\ \\:\\          
+     /  /:/\\:\\ \\  \\:\\    /:/ \\  \\:\\     /__/\\/:/~~  /__/:/\\:\\_\\:\\         
+    /  /:/__\\/  \\  \\:\\  /:/   \\  \\:\\    \\  \\::/     \\__\\/  \\:\\/:/         
+   /__/:/        \\  \\:\\/:/     \\  \\:\\    \\  \\:\\          \\  \\::/          
+   \\__\\/          \\  \\::/       \\  \\:\\    \\__\\/           \\__\\/           
+                   \\__\\/         \\__\\/                                    
+`)
   },
   setup() {
     useMeta({

@@ -17,22 +17,35 @@
       "title": "hugo",
       "id": 15.874529093097212,
       "position": 0
+    },
+    {
+      "listId": 3,
+      "title": "New list",
+      "id": 21.641388896506307,
+      "position": 0
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(13, 80%, 48%)",
+      "backgroundColour": "hsl(73, 59%, 58%)",
       "width": 340,
       "height": 576,
       "title": "This is a list",
       "id": 1
     },
     {
-      "backgroundColour": "hsl(330, 100%, 50%)",
+      "backgroundColour": "hsl(2, 73%, 43%)",
       "width": 340,
       "height": 576,
       "title": "New list",
       "id": 2
+    },
+    {
+      "backgroundColour": "hsl(162, 53%, 60%)",
+      "width": 340,
+      "height": 576,
+      "title": "New list",
+      "id": 3
     }
   ],
   "comments": [],
