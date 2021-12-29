@@ -12,7 +12,7 @@
       </List>
     </ul>
     <ListPlaceholder v-if="showNewList" :bgColour="newListBgColor" @createNewListNow="createNewList"/>
-    <TaskTrackerCreator
+    <ListCreator
       :style="creatorDimensionsPixels"
       @createNewList="toggleColorPicker"
       ref="taskCreator"
@@ -35,7 +35,7 @@ import { defineComponent } from "vue";
 import ListService from "@/services/ListService";
 import List from "./List.vue";
 import { ListType } from "@/types/List";
-import TaskTrackerCreator from "./ListCreator.vue";
+import ListCreator from "./ListCreator.vue";
 import ColourSelector from "./ColourSelector.vue";
 import { TrackerDimensions } from "@/types/Dimensions";
 import ListPlaceholder from "./ListPlaceholder.vue"
@@ -44,7 +44,7 @@ export default defineComponent({
   name: "ListCollection",
   components: {
     List,
-    TaskTrackerCreator,
+    ListCreator,
     ColourSelector,
     ListPlaceholder
   },
@@ -185,6 +185,7 @@ newListBgColor: "hsl(33, 52%, 69%)",
 <style scoped>
 .tracker_collection {
   display: flex;
+  flex-wrap: wrap;
 }
 .tracker_collection__list {
   margin: 0;

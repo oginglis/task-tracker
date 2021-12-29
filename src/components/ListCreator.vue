@@ -43,7 +43,10 @@ export default defineComponent({
   padding: 1.5rem 3rem;
   border-radius: 1rem;
   background-color: white;
-  width: 300px;
+    flex-basis: 396px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-left: .6rem;
   display: flex;
   flex-direction: column;
   align-items: center;

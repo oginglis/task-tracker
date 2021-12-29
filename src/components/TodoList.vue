@@ -200,7 +200,7 @@ export default defineComponent({
       this.info.reverse();
     },
     onChange: function (e: {moved: {oldIndex: number, newIndex: number}}) {
-      console.log(e, typeof e)
+
       const {
         moved: { oldIndex, newIndex },
       } = e;
@@ -228,7 +228,6 @@ export default defineComponent({
       this.tasksModel.forEach((task) => {
         let refName: string = `Task ${task.id}`;
         let top: number, left: number;
-        console.log("OLLIE CHECK THIS",this.$refs[refName] )
         if (this.$refs[refName]) {
           top = ((this.$refs[refName] as any).$el as HTMLElement).getBoundingClientRect().top;
           left = ((this.$refs[refName] as any).$el as HTMLElement).getBoundingClientRect().left;

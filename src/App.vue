@@ -43,5 +43,6 @@ export default defineComponent({
   background-color: #f4f4f4;
   min-height: 100vh;
   padding: 2rem;
+  min-width: 100vw;
 }
 </style>

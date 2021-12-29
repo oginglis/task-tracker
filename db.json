@@ -3,7 +3,7 @@
     {
       "title": "This is a task",
       "id": 34,
-      "position": 3
+      "position": 2
     },
     {
       "title": "New action",
@@ -14,18 +14,19 @@
       "title": "Test",
       "date": "Mon Dec 27 2021 19:09:49 GMT+0000 (Greenwich Mean Time)",
       "reminder": false,
-      "position": 2,
+      "position": 3,
       "completed": false,
       "id": 0.40643249365927225
     },
     {
       "title": "New task",
       "id": 37,
-      "position": 0
+      "position": 4
     },
     {
       "title": "New task",
-      "id": 38
+      "id": 38,
+      "position": 0
     }
   ],
   "lists": [
@@ -34,7 +35,7 @@
       "title": "New list tile",
       "id": 1,
       "width": 396,
-      "height": 587
+      "height": 590
     },
     {
       "backgroundColour": "hsl(2, 73%, 43%)",

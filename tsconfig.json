@@ -1,13 +1,6 @@
 {
   "compilerOptions": {
-
-    "noImplicitAny": true,
-    "typeRoots": [
-        "./node_modules/@types",
-        "./types/",
-    ],
     "target": "esnext",
-    "strictPropertyInitialization": false,
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
