@@ -65,13 +65,13 @@ export default defineComponent({
 .task-tracker-wrap {
   padding: 1.5rem 3rem;
   border-radius: 1rem;
-  width: 300px;
+  width: 340px;
   margin: 0 0.5rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-sizing: content-box;
+
   min-height: 33rem;
 }
 </style>

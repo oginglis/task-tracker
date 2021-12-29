@@ -40,6 +40,7 @@ import ColourSelector from "./ColourSelector.vue";
 import { TrackerDimensions } from "@/types/Dimensions";
 import ListPlaceholder from "./ListPlaceholder.vue"
 import tinyColor from "tinycolor2";
+import colours from '../common/colours';
 export default defineComponent({
   name: "ListCollection",
   components: {
@@ -59,28 +60,7 @@ export default defineComponent({
       showColorPicker: false,
 showNewList: false,
 newListBgColor: "hsl(33, 52%, 69%)",
-      colours: [
-        { colour: "hsl(39, 81%, 73%)", active: true },
-        { colour: "hsl(13, 80%, 48%)", active: false },
-        { colour: "hsl(341, 67%, 47%)", active: false },
-        { colour: "hsl(75, 56%, 38%)", active: false },
-        { colour: "hsl(10, 30%, 62%)", active: false },
-        { colour: "hsl(0, 0%, 100%)", active: false },
-        { colour: "hsl(319, 57%, 39%)", active: false },
-        { colour: "hsl(2, 73%, 43%)", active: false },
-        { colour: "hsl(207, 15%, 12%)", active: false },
-        { colour: "hsl(196, 44%, 51%)", active: false },
-        { colour: "hsl(12, 73%, 51%)", active: false },
-        { colour: "hsl(164, 35%, 52%)", active: false },
-        { colour: "hsl(31, 80%, 54%)", active: false },
-        { colour: "hsl(205, 80%, 40%)", active: false },
-        { colour: "hsl(41, 62%, 51%)", active: false },
-        { colour: "hsl(186, 56%, 42%)", active: false },
-        { colour: "hsl(195, 23%, 27%)", active: false },
-        { colour: "hsl(316, 38%, 58%)", active: false },
-        { colour: "hsl(207, 15%, 12%)", active: false },
-        { colour: "hsl(212, 73%, 36%)", active: false },
-      ],
+      colours: colours,
     };
   },
   watch: {

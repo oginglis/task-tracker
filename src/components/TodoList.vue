@@ -1,11 +1,12 @@
 <template>
   <div class="task_list padding-end">
     <draggable
+     v-model="tasksModel"
       class="task-list--remove-padding"
-      @start="drag = true"
+      @start="handleStart"
       @end="drag = false"
       @change="onChange"
-      v-model="tasksModel"
+      @choose="onChoose"
       tag="transition-group"
       item-key="id"
       direction="horizontal"
@@ -148,6 +149,13 @@ export default defineComponent({
     this.updateAndSendPositions();
   },
   methods: {
+    onChoose: function():void {
+console.log("choose event")
+    },
+    handleStart: function():void {
+      console.log("START FUNCTION CLAEED")
+this.drag = true;
+    },
     notifyAdderExit: function (): void {
       this.$emit("adderLeft");
     },
@@ -200,7 +208,7 @@ export default defineComponent({
       this.info.reverse();
     },
     onChange: function (e: {moved: {oldIndex: number, newIndex: number}}) {
-
+      console.log("On Change Caleed")
       const {
         moved: { oldIndex, newIndex },
       } = e;

@@ -82,7 +82,7 @@ export default defineComponent({
         });
         filteredBallColours!.forEach((colour: any, index: number) => {
           let bc = this.hslTorbg(colour.colour);
-          balls[index] = new Ball(25, bc, width, height);
+          balls[index] = new Ball(18, bc, width, height);
         });
       };
 
@@ -221,7 +221,7 @@ export default defineComponent({
           this.dist = this.direction.mag();
           this.direction.normalize();
           //this is 60 because that is the radius you give them times two
-          this.correction = 50 - this.dist;
+          this.correction = (18*2) - this.dist;
           this.pos.sub(P5.Vector.mult(this.direction, this.correction / 2));
           other.pos.add(P5.Vector.mult(this.direction, this.correction / 2));
           this.v1 = this.direction.dot(this.speed) * 0.5;

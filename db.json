@@ -8,7 +8,7 @@
     {
       "title": "New action",
       "id": 36,
-      "position": 1
+      "position": 0
     },
     {
       "title": "Test",
@@ -20,29 +20,36 @@
     },
     {
       "title": "New task",
-      "id": 37,
-      "position": 4
+      "id": 38,
+      "position": 1
     },
     {
-      "title": "New task",
-      "id": 38,
-      "position": 0
+      "title": "This is what hapne if you add a really long tast to the task tarcker okay",
+      "id": 39,
+      "position": 2
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(196, 44%, 51%)",
-      "title": "New list tile",
+      "backgroundColour": "hsl(12, 73%, 51%)",
+      "title": "List One",
       "id": 1,
-      "width": 396,
-      "height": 590
+      "width": 340,
+      "height": 576
     },
     {
-      "backgroundColour": "hsl(2, 73%, 43%)",
-      "width": 396,
-      "height": 590,
-      "title": "Another list",
+      "backgroundColour": "hsl(311, 20%, 79%)",
+      "width": 340,
+      "height": 604,
+      "title": "List Two",
       "id": 2
+    },
+    {
+      "backgroundColour": "hsl(347, 72%, 37%)",
+      "width": 340,
+      "height": 576,
+      "title": "List Three",
+      "id": 3
     }
   ],
   "comments": [

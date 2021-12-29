@@ -43,7 +43,7 @@ export default defineComponent({
   padding: 1.5rem 3rem;
   border-radius: 1rem;
   background-color: white;
-    flex-basis: 396px;
+    flex-basis: 340px;
     flex-grow: 0;
     flex-shrink: 0;
     margin-left: .6rem;

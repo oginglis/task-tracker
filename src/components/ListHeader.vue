@@ -98,7 +98,7 @@ export default defineComponent({
 
 <style scoped>
 h1 {
-  font-weight: initial;
+  font-weight: 500;
   margin: 0.5rem 0;
   font-size: 1.2rem;
   cursor: pointer;
