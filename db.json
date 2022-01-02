@@ -2,50 +2,49 @@
   "todos": [
     {
       "listId": 1,
-      "title": "This is a firsrt action",
-      "position": 1,
-      "id": 1
+      "title": "MAke the action list dissapear when adding to it",
+      "id": 96.66515077227689,
+      "position": 1
     },
     {
-      "listId": 1,
-      "title": "another acrtion",
-      "id": 7.853134858960287,
+      "listId": 2,
+      "title": "Fix the vuejs draggabel",
+      "id": 5.777691078329816,
       "position": 0
     },
     {
       "listId": 2,
-      "title": "hugo",
-      "id": 15.874529093097212,
-      "position": 0
+      "title": "Add navbar and dark mode to background",
+      "id": 2.5601584577064296,
+      "position": 1
     },
     {
-      "listId": 3,
-      "title": "New list",
-      "id": 21.641388896506307,
+      "listId": 1,
+      "title": "Fix the test showing new action when adding a task",
+      "id": 62.13423885098823,
+      "position": 2
+    },
+    {
+      "listId": 1,
+      "title": "Save action when dragging across lists",
+      "id": 3.1053678451455013,
       "position": 0
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(73, 59%, 58%)",
+      "backgroundColour": "hsl(2, 73%, 43%)",
       "width": 340,
       "height": 576,
-      "title": "This is a list",
+      "title": "Things to do",
       "id": 1
     },
     {
-      "backgroundColour": "hsl(2, 73%, 43%)",
+      "backgroundColour": "hsl(215, 72%, 60%)",
       "width": 340,
       "height": 576,
       "title": "New list",
       "id": 2
-    },
-    {
-      "backgroundColour": "hsl(162, 53%, 60%)",
-      "width": 340,
-      "height": 576,
-      "title": "New list",
-      "id": 3
     }
   ],
   "comments": [],

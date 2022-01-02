@@ -5,7 +5,6 @@
       @focus="isFocus = true"
       @blur="updateTitle($event)"
       class="single-line"
-      @keydown.enter.prevent="handleEnter($event)"
       :style="[setBGColor(), calculatedTextColor]"
       ref="text"
     >

@@ -43,19 +43,21 @@
           @adderLeft="recordHeight"
           @removedActions="recordHeight"
           :list_id2="taskTrackerID"
+          @dragBegin="darkenBackground"
+          @dragEnd="lightenBackground"
         />
       </div>
       <p v-if="emptyMessage">You have no Actions on <br />this list yet.</p>
 
       <div class="task-tracker__bottom-bar">
-        <Tooltip position="bottom" :tooltipText="'Choose list colour'">
+        <Tooltip position="bottom" :tooltipText="'Delete list'">
           <Icon
-            type="palette"
-            class="hiding__icon"
+            type="trash"
             :bgColor="taskTrackerColour"
+            class="hiding__icon"
             :borderStyles="false"
             :style="iconBGHover"
-            @iconClicked="toggleP5Canvas"
+            @click="deleteList"
           />
         </Tooltip>
         <Tooltip position="bottom" :tooltipText="'Create action'">
@@ -68,14 +70,14 @@
             v-if="!showAddTask"
           />
         </Tooltip>
-        <Tooltip position="bottom" :tooltipText="'Delete list'">
+        <Tooltip position="bottom" :tooltipText="'Choose list colour'">
           <Icon
-            type="trash"
-            :bgColor="taskTrackerColour"
+            type="palette"
             class="hiding__icon"
+            :bgColor="taskTrackerColour"
             :borderStyles="false"
             :style="iconBGHover"
-            @click="deleteList"
+            @iconClicked="toggleP5Canvas"
           />
         </Tooltip>
       </div>
@@ -172,6 +174,16 @@ export default defineComponent({
     };
   },
   methods: {
+    darkenBackground: function(): void {
+    let trackerInstance: HTMLElement | null = this.$refs
+      .taskTrackerInstance as HTMLElement;
+      trackerInstance.style.filter =  "brightness(95%)";
+    },
+      lightenBackground: function(): void {
+    let trackerInstance: HTMLElement | null = this.$refs
+      .taskTrackerInstance as HTMLElement;
+      trackerInstance.style.filter =  "brightness(100%)";
+    },
     deleteList: function():void{
       this.$emit("requestDeleteList",this.trackerID )
     },
@@ -425,12 +437,12 @@ export default defineComponent({
   padding: 1.5rem 1.5rem;
   border-radius: 1rem;
   width: 340px;
-  margin: 0 0.5rem;
+  margin: 0.5rem 0.5rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-
+transition: filter .1s ease;
   min-height: 33rem;
 }
 
@@ -483,7 +495,7 @@ export default defineComponent({
 
 .task_tracker_display {
   width: 100%;
-  overflow:hidden;
+
   min-height: inherit;
   display: flex;
   flex-direction: column;

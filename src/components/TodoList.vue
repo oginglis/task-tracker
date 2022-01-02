@@ -4,7 +4,7 @@
      v-model="tasksModel"
       class="task-list--remove-padding"
       @start="handleStart"
-      @end="drag = false"
+      @end="handleEnd"
       @change="onChange"
       @choose="onChoose"
       tag="transition-group"
@@ -76,6 +76,7 @@ export default defineComponent({
       positionsObject: {} as TasksPositionObject,
       componentKey: 0,
       transitonName: "slide-fade",
+      testData: [{name: "title 1" }, {name: "title 2"}, {name: "title"}]
     };
   },
   updated() {
@@ -151,12 +152,17 @@ export default defineComponent({
     this.updateAndSendPositions();
   },
   methods: {
+    handleEnd: function():void {
+        this.drag = false;
+      this.$emit("dragEnd")
+
+    },
     onChoose: function():void {
-console.log("choose event")
+
     },
     handleStart: function():void {
-      console.log("START FUNCTION CLAEED")
-this.drag = true;
+      this.drag = true;
+      this.$emit("dragBegin")
     },
     notifyAdderExit: function (): void {
       this.$emit("adderLeft");

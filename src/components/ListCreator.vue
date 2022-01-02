@@ -46,7 +46,7 @@ export default defineComponent({
     flex-basis: 340px;
     flex-grow: 0;
     flex-shrink: 0;
-    margin-left: .6rem;
+    margin-top: 5.rem;
   display: flex;
   flex-direction: column;
   align-items: center;

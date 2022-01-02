@@ -2,10 +2,10 @@
 
     <metainfo>
       <template v-slot:title="{ content }">{{
-        content ? `${content} | Task Track App` : `Task Tracker`
+        content ? `${content}  · Schedule` : `Task Tracker`
       }}</template>
     </metainfo>
-    <Homepage />
+    <Homepage  />
 
 </template>
 
@@ -41,6 +41,9 @@ console.log(`
     });
   },
 });
+
+
+
 </script>
 
 <style>
@@ -57,7 +60,10 @@ console.log(`
   color: #2c3e50;
   background-color: #f4f4f4;
   min-height: 100vh;
-  padding: 2rem;
   min-width: 100vw;
+}
+
+body{
+  margin:0;
 }
 </style>

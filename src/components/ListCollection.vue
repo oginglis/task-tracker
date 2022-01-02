@@ -1,5 +1,5 @@
 <template>
-<h1 class="collection_title">Lists</h1>
+
   <div class="tracker_collection">
     <ul v-for="list in lists" :key="list.id" class="tracker_collection__list">
       <List
@@ -172,10 +172,7 @@ newListBgColor: "hsl(33, 52%, 69%)",
 </script>
 
 <style scoped>
-.collection_title{
-  text-align: left;
-  color: black
-}
+
 .tracker_collection {
   display: flex;
   flex-wrap: wrap;
