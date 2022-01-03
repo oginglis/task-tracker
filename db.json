@@ -7,28 +7,34 @@
       "position": 1
     },
     {
-      "listId": 2,
+      "listId": 1,
       "title": "Fix the vuejs draggabel",
       "id": 5.777691078329816,
-      "position": 1
+      "position": 2
     },
     {
       "listId": 2,
       "title": "Add navbar and dark mode to background",
       "id": 2.5601584577064296,
-      "position": 0
+      "position": 1
     },
     {
       "listId": 1,
       "title": "Fix the test showing new action when adding a task",
       "id": 62.13423885098823,
-      "position": 2
+      "position": 0
     },
     {
-      "listId": 1,
+      "listId": 2,
       "title": "Save action when dragging across lists",
       "id": 3.1053678451455013,
       "position": 0
+    },
+    {
+      "listId": 2,
+      "title": "Task list order not persisting",
+      "id": 59.40124494950645,
+      "position": 2
     }
   ],
   "lists": [

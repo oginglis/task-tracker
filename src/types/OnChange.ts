@@ -13,7 +13,7 @@ interface AddedType {
 
 interface RemovedType {
     removed: {
-        newIndex: number
+        oldIndex: number
     }
 }
 

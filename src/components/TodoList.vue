@@ -6,10 +6,11 @@
       @start="handleStart"
       @end="handleEnd"
       @change="onChange"
-      @choose="onChoose"
+
       tag="transition-group"
       item-key="id"
       direction="horizontal"
+      :draggable="`.todo`"
       delay="10"
       v-bind="dragOptions"
       :component-data="{
@@ -20,6 +21,7 @@
     >
       <template #item="{ element, index }">
         <TodoItem
+          class="todo"
           @toggleTaskReminder="convertRemind(element)"
           @sendTaskPosition="sendUpTaskPosition(element.id, $event)"
           @askToDeleteTask2="deleteTask2(element.id)"
@@ -133,7 +135,6 @@ export default defineComponent({
       },
       set(value: TodoType) {
         this.$emit("update:tasks", value);
-        console.log("task model set")
       },
     },
   },
@@ -142,8 +143,7 @@ export default defineComponent({
   },
 
   watch: {
-    tasksModel:function(newVal: Array<TodoType>, oldVal: Array<TodoType> ){
-      console.log("List Update. New Val ", newVal, " Old Val ", oldVal)
+    tasksModel:function(){
       if(this.list_id2 != undefined){
         this.tasksModel.forEach((task)=> {
           task.listId = (this.list_id2 as number)
@@ -165,9 +165,6 @@ export default defineComponent({
     handleEnd: function():void {
         this.drag = false;
       this.$emit("dragEnd")
-
-    },
-    onChoose: function():void {
 
     },
     handleStart: function():void {
@@ -221,25 +218,18 @@ export default defineComponent({
         console.log(error);
       });
     },
-
     sortList: function (): void {
       this.info.reverse();
     },
-
-
-    onChange: function (e: MovedType | AddedType | RemovedType) {
-      console.log("On Change Caleed by list" , this.list_id2)
-      if("moved" in e){
-        const {
-            moved: { oldIndex, newIndex },
-        } = e;
-        this.tasksModel.forEach((task, index) => {
+    reIndexList: function(): void {
+       this.tasksModel.forEach((task, index) => {
           task.position = index;
         });
-        const largestIndex = Math.max(oldIndex, newIndex);
-        const serviceArray: Promise<any>[] = [];
+    },
+    saveAllTasksUpTo: function(maxValue: number): void {
+      let serviceArray: Promise<any>[] = [];
         this.tasksModel.forEach((task) => {
-          if (task.position <= largestIndex) {
+          if (task.position <= maxValue) {
             serviceArray.push(TaskService.patchTask(task.id, task).catch(function (error) {
             console.log(error);
           }));
@@ -248,10 +238,27 @@ export default defineComponent({
         Promise.all(serviceArray).catch((errors) => {
           console.log(errors);
         });
+    },
+    onChange: function (e: MovedType | AddedType | RemovedType) {
+      if("moved" in e){
+        const {
+            moved: { oldIndex, newIndex },
+        } = e;
+        this.reIndexList();
+        const largestIndex = Math.max(oldIndex, newIndex);
+        this.saveAllTasksUpTo(largestIndex);
       } else if ("added" in e){
-        console.log("added")
+        const {
+          added: { newIndex },
+        } = e;
+        this.reIndexList();
+        this.saveAllTasksUpTo(newIndex);
       } else if ("removed" in e ){
-        console.log("removed")
+        const {
+          removed: { oldIndex },
+        } = e;
+        this.reIndexList();
+        this.saveAllTasksUpTo(oldIndex);
       }
       this.updateAndSendPositions();
     },
