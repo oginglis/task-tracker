@@ -55,7 +55,7 @@ import { TasksPositionObject } from "@/types/TasksPositionObject";
 import { defineComponent, PropType } from "vue";
 import TaskService from "@/services/TaskService";
 import TodoCreator from "./TodoCreator.vue";
-
+import {MovedType, AddedType, RemovedType} from '../types/OnChange'
 
 export default defineComponent({
   name: "TodoList",
@@ -133,6 +133,7 @@ export default defineComponent({
       },
       set(value: TodoType) {
         this.$emit("update:tasks", value);
+        console.log("task model set")
       },
     },
   },
@@ -141,6 +142,15 @@ export default defineComponent({
   },
 
   watch: {
+    tasksModel:function(newVal: Array<TodoType>, oldVal: Array<TodoType> ){
+      console.log("List Update. New Val ", newVal, " Old Val ", oldVal)
+      if(this.list_id2 != undefined){
+        this.tasksModel.forEach((task)=> {
+          task.listId = (this.list_id2 as number)
+        })
+      }
+  
+    },
     updateWithThisTask: function () {
       var foundIndex = this.info.findIndex(
         (x) => x.id == this.updateWithThisTask.id
@@ -215,26 +225,34 @@ export default defineComponent({
     sortList: function (): void {
       this.info.reverse();
     },
-    onChange: function (e: {moved: {oldIndex: number, newIndex: number}}) {
-      console.log("On Change Caleed")
-      const {
-        moved: { oldIndex, newIndex },
-      } = e;
-      this.tasksModel.forEach((task, index) => {
-        task.position = index;
-      });
-      const largestIndex = Math.max(oldIndex, newIndex);
-      const serviceArray: Promise<any>[] = [];
-      this.tasksModel.forEach((task) => {
-        if (task.position <= largestIndex) {
-          serviceArray.push(TaskService.patchTask(task.id, task).catch(function (error) {
-          console.log(error);
-        }));
-        }
-      });
-      Promise.all(serviceArray).catch((errors) => {
-        console.log(errors);
-      });
+
+
+    onChange: function (e: MovedType | AddedType | RemovedType) {
+      console.log("On Change Caleed by list" , this.list_id2)
+      if("moved" in e){
+        const {
+            moved: { oldIndex, newIndex },
+        } = e;
+        this.tasksModel.forEach((task, index) => {
+          task.position = index;
+        });
+        const largestIndex = Math.max(oldIndex, newIndex);
+        const serviceArray: Promise<any>[] = [];
+        this.tasksModel.forEach((task) => {
+          if (task.position <= largestIndex) {
+            serviceArray.push(TaskService.patchTask(task.id, task).catch(function (error) {
+            console.log(error);
+          }));
+          }
+        });
+        Promise.all(serviceArray).catch((errors) => {
+          console.log(errors);
+        });
+      } else if ("added" in e){
+        console.log("added")
+      } else if ("removed" in e ){
+        console.log("removed")
+      }
       this.updateAndSendPositions();
     },
     deleteTask2: function (id: number) {
