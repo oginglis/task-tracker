@@ -41,7 +41,7 @@
         @addNewAction="emitNewTodo"
         :bgColor="listColour"
         :key="componentKey"
-        :list_id="list_id2"
+        :list_id="list_id"
       />
     </transition>
   </div>
@@ -80,11 +80,6 @@ export default defineComponent({
       testData: [{name: "title 1" }, {name: "title 2"}, {name: "title"}]
     };
   },
-  updated() {
-    this.$nextTick(() => {
-      this.$emit("removedActions");
-    });
-  },
   props: {
     taskData: Object as PropType<TodoType>,
     updateWithThisTask: {
@@ -96,9 +91,9 @@ export default defineComponent({
     showActionAdder: {
       type: Boolean,
     },
-    list_id2: Number,
+    list_id: Number,
     listColour: String,
-    tasks: {
+    localTasks: {
       type: Array as PropType<Array<TodoType>>,
       default: () => [
         {
@@ -119,6 +114,11 @@ export default defineComponent({
       ],
     },
   },
+    updated() {
+      this.$nextTick(() => {
+        this.$emit("removedActions");
+      });
+    },
   computed: {
     dragOptions() {
       return {
@@ -130,10 +130,10 @@ export default defineComponent({
     },
     tasksModel: {
       get(): Array<TodoType> {
-        return this.tasks;
+        return this.localTasks;
       },
       set(value: TodoType) {
-        this.$emit("update:tasks", value);
+        this.$emit("update:localTasks", value);
       },
     },
   },
@@ -143,9 +143,9 @@ export default defineComponent({
 
   watch: {
     tasksModel:function(){
-      if(this.list_id2 != undefined){
+      if(this.list_id != undefined){
         this.tasksModel.forEach((task)=> {
-          task.listId = (this.list_id2 as number)
+          task.listId = (this.list_id as number)
         })
       }
   
@@ -204,7 +204,7 @@ export default defineComponent({
       }
     },
     askToUpdateTask3: function (id: Number) {
-      let taskToUpdate = this.tasks.filter((task) => task.id == id);
+      let taskToUpdate = this.localTasks.filter((task) => task.id == id);
       this.$emit("askToUpdateTask4", taskToUpdate);
     },
     convertRemind: function (task: TodoType): void {
@@ -234,8 +234,7 @@ export default defineComponent({
           }));
           }
         });
-        Promise.all(serviceArray).then((res)=>{
-          console.log("promise resolved", res)}).catch((errors) => {
+        Promise.all(serviceArray).catch((errors) => {
           console.log(errors);
         });
     },
@@ -279,7 +278,7 @@ export default defineComponent({
       this.$emit("sendTaskPositions", this.positionsObject);
     },
     updatePositons: function () {
-      this.tasks.forEach((task) => {
+      this.localTasks.forEach((task) => {
         task.position = 0;
       });
     },

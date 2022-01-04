@@ -1,60 +1,77 @@
 <template>
-  <div class="list_creator">
-    <Tooltip position="bottom" :tooltipText="'Create new list'">
-      <Icon
-        type="plus"
-        :bgColor="`hsl(0, 0%, 90%)`"
-        class="hiding__icon"
-        :borderStyles="false"
-        @iconClicked="createAList"
-      />
-    </Tooltip>
+  <div :style="calculatedBackgroundColor" class="task-tracker-wrap">
+    <ListHeader
+      v-if="bgColour"
+      @updateTitle="anotherHandleHideList"
+      @submitList="anotherHandleHideList"
+      :title="`New List`"
+      :headerColour="bgColour"
+      :startFocused="true"
+    />
   </div>
 </template>
 
-<script  lang="ts">
+<script lang="ts">
 import { defineComponent } from "vue";
-import { ListType } from "@/types/List";
-import Tooltip from "../common/components/Tooltip.vue";
-import Icon from "../common/components/Icon.vue";
-
+import ListHeader from "./ListHeader.vue";
+import tinyColor from "tinycolor2";
 export default defineComponent({
   name: "ListCreator",
   components: {
-    Tooltip,
-    Icon,
+    ListHeader,
   },
-  created() {},
+  props: {
+    bgColour: {
+      type: String,
+      default: "hsl(33, 52%, 69%)"
+    },
+  },
   data: function () {
     return {
-      lists: [] as Array<ListType>,
+    backgroundColour: "hsl(33, 52%, 69%)"
     };
   },
   methods: {
-    createAList: function (): void {
-      this.$emit("createNewList");
+    anotherHandleHideList: function(payload: string):void{
+      let newListInfo = {
+        title: payload,
+        colour: this.bgColour
+      }
+      this.$emit('createNewListNow', newListInfo)
     },
   },
+  computed: {
+    calculatedBackgroundColor: function (): object {
+      return {
+        backgroundColor: this.bgColour,
+      };
+    },
+    calculatedTextColor: function (): object {
+      if (tinyColor(this.bgColour).isLight()) {
+        return {
+          color: "black",
+        };
+      } else {
+        return {
+          color: "white",
+        };
+      }
+    },
+  }
 });
 </script>
 
 <style scoped>
-.list_creator {
+.task-tracker-wrap {
   padding: 1.5rem 3rem;
   border-radius: 1rem;
-  background-color: white;
-    flex-basis: 340px;
-    flex-grow: 0;
-    flex-shrink: 0;
-    margin-top: 5.rem;
+  width: 340px;
+  margin: 0.5rem 0.5rem;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-sizing: border-box;
-  justify-content: center;
-}
 
-.hiding__icon {
-  font-size: 19em;
+  min-height: 33rem;
 }
 </style>

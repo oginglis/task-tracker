@@ -4,18 +4,16 @@
     <ul v-for="list in lists" :key="list.id" class="tracker_collection__list">
       <List
         v-if="lists"
-        :trackerTitle="list.title"
-        :trackerColor="list.backgroundColour"
-        :taskTrackerID="list.id"
-        :tasks2="checkForTasks(list.todos)"
+        :list="list"
+        :tasks="checkForTasks(list.todos)"
+        :key="list.id"
         @sizingUpdate="setCreatorToListHeight"
         @requestDeleteList="deleteList"
-
       >
       </List>
     </ul>
-    <ListPlaceholder v-if="showNewList" :bgColour="newListBgColor" @createNewListNow="createNewList"/>
-    <ListCreator
+    <ListCreator v-if="showNewList" :bgColour="newListBgColor" @createNewListNow="createNewList"/>
+    <ListPlaceholder
       :style="creatorDimensionsPixels"
       @createNewList="toggleColorPicker"
       ref="taskCreator"
@@ -38,10 +36,10 @@ import { defineComponent } from "vue";
 import ListService from "@/services/ListService";
 import List from "./List.vue";
 import { ListType } from "@/types/List";
-import ListCreator from "./ListCreator.vue";
+import ListPlaceholder from "./ListPlaceholder.vue";
 import ColourSelector from "./ColourSelector.vue";
 import { TrackerDimensions } from "@/types/Dimensions";
-import ListPlaceholder from "./ListPlaceholder.vue"
+import ListCreator from "./ListCreator.vue"
 import tinyColor from "tinycolor2";
 import colours from '../common/colours';
 import { TodoType } from "@/types/Todo";
@@ -49,9 +47,9 @@ export default defineComponent({
   name: "ListCollection",
   components: {
     List,
-    ListCreator,
+    ListPlaceholder,
     ColourSelector,
-    ListPlaceholder
+    ListCreator
   },
   created() {
     this.getAllLists();

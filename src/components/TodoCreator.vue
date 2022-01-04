@@ -62,8 +62,6 @@ export default defineComponent({
       if (this.action.title != "") {
         this.$emit("addNewAction",  this.action);
         this.action.id = Math.random()*100;
-
-        console.log("action before saving", this.action, this.action.id);
         TaskService.postTask(this.action)
           .catch(function (error) {
             console.log(error);

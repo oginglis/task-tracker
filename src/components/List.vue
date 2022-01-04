@@ -6,54 +6,40 @@
     :class="{ add__padding: showTasks, remove_padding: !showTasks }"
   >
     <div v-if="showTasks" class="task_tracker_display" ref="taskDisplay">
-      <Modal
-        @toggleOpenModal="toggleModal"
-        xs
-        @rerender="updateList"
-        :isOpen="isModalOpen"
-        :task="task"
-        @clickOutside="onClickOutside"
-        v-if="isModalOpen"
-        :taskPosition="calculateTaskPosition(task.id)"
-        :modalColour="taskTrackerColour"
-        @toggleReminder="updateTaskReminder"
-      >
-      </Modal>
       <div>
         <div class="text-inline">
           <ListHeader
-            :title="title"
+            :title="localList.title"
             @updateTitle="updateTaskTrackerTitle"
-            :headerColour="taskTrackerColour"
+            :headerColour="localList.backgroundColour"
             :startFocused="false"
           />
         </div>
         <TodoList
-          :updateWithThisTask="taskPassUpdate"
-          @askToUpdateTask4="openFormWithTask"
-          :listColour="taskTrackerColour"
-          v-if="tasks"
-          v-model:tasks="tasks"
+          v-if="localTasks"
+          v-model:localTasks="localTasks"
+          @dragBegin="darkenBackground"
+          @dragEnd="lightenBackground"
           @askToDeleteTask="deleteTask"
           @sendUpTaskPositonAgain="0"
           @sendTaskPositions="passTaskPositonsToModal"
-          :showActionAdder="showAddTask"
           @clickedOutsideActionAdder="toggleActionAdder"
           @addTempActionToList="addActiontoList"
           @adderLeft="recordHeight"
           @removedActions="recordHeight"
-          :list_id2="taskTrackerID"
-          @dragBegin="darkenBackground"
-          @dragEnd="lightenBackground"
+          :listColour="localList.backgroundColour"
+          :updateWithThisTask="taskPassUpdate"
+          :showActionAdder="showAddTask"
+          :list_id="localList.id"
         />
       </div>
-      <p v-if="emptyMessage">You have no Actions on <br />this list yet.</p>
+      <p v-if="showEmptyMessage">You have no Actions on <br />this list yet.</p>
 
       <div class="task-tracker__bottom-bar">
         <Tooltip position="bottom" :tooltipText="'Delete list'">
           <Icon
             type="trash"
-            :bgColor="taskTrackerColour"
+            :bgColor="this.localList.backgroundColour"
             class="hiding__icon"
             :borderStyles="false"
             :style="iconBGHover"
@@ -63,7 +49,7 @@
         <Tooltip position="bottom" :tooltipText="'Create action'">
           <Icon
             type="plus"
-            :bgColor="taskTrackerColour"
+            :bgColor="this.localList.backgroundColour"
             @iconClicked="toggleActionAdder"
             class="add__action"
             :style="addIconBg()"
@@ -74,7 +60,7 @@
           <Icon
             type="palette"
             class="hiding__icon"
-            :bgColor="taskTrackerColour"
+            :bgColor="this.localList.backgroundColour"
             :borderStyles="false"
             :style="iconBGHover"
             @iconClicked="toggleP5Canvas"
@@ -85,7 +71,7 @@
     <ColourSelector
       v-else
       :canvasSize="taskTrackDimensions()"
-      :bgColor="taskTrackerColour"
+      :bgColor="this.localList.backgroundColour"
       :ballColours="colours"
       @clickColor="updateColor"
       :title="p5Message"
@@ -95,11 +81,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import ListHeader from "./ListHeader.vue";
 import TodoList from "./TodoList.vue";
 import Icon from "../common/components/Icon.vue";
-import Modal from "../common/components/Modal.vue";
 import Tooltip from "../common/components/Tooltip.vue";
 import TaskService from "@/services/TaskService";
 import ListService from "@/services/ListService";
@@ -111,29 +96,28 @@ import { TrackerDimensions } from "@/types/Dimensions";
 import _ from "lodash";
 import colours from '../common/colours'
 import tinyColor from "tinycolor2";
+import { ListType } from "@/types/List";
 
 export default defineComponent({
   name: "List",
   components: {
     ListHeader,
     TodoList,
-    Modal,
     Tooltip,
     Icon,
     ColourSelector,
   },
-  created() {
-    // this.getAllTodos();
+  beforeMount(){
+this.localList = this.list;
   },
-  mounted() {
-    this.tasks = this.tasks2
-    let trackerInstance: HTMLElement | null = this.$refs
-      .taskTrackerInstance as HTMLElement;
-    let trackerSize = trackerInstance!.getBoundingClientRect();
 
-    this.width = Math.trunc(trackerSize.width);
-    this.height = Math.trunc(trackerSize.height);
-    // initialize the observer on mount
+  mounted() {
+    this.localTasks = this.tasks;
+    this.localList = this.list;
+    let trackerInstance: HTMLElement | null = this.$refs.taskTrackerInstance as HTMLElement;
+    let trackerSize = trackerInstance!.getBoundingClientRect();
+    this.localList.width = Math.trunc(trackerSize.width);
+    this.localList.height = Math.trunc(trackerSize.height);
     this.initObserver();
   },
   updated() {
@@ -142,32 +126,41 @@ export default defineComponent({
       this.recordHeight();
     });
   },
-  props: ["trackerTitle", "trackerColor", "taskTrackerID", "tasks2"],
+  props: {
+    list: {
+      type: Object as PropType<ListType>,
+      default: () => { return {
+      "backgroundColour": "hsl(2, 73%, 43%)",
+      "width": 340,
+      "height": 576,
+      "title": "Things to do",
+      "id": 1}}
+    },
+    tasks: {type: Array as PropType<Array<TodoType>>,default: ()=>[  {
+      "listId": 2,
+      "title": "Task list order not persisting",
+      "id": 59.40124494950645,
+      "position": 1
+    },]}
+  },
   watch: {
-    tasks: {
+    localTasks: {
       deep: true,
       handler: function (): void {
-        this.recordHeight();
-        this.$emit("taskListUpdated", this.tasks)
+        this.recordHeight(); 
       },
     },
   },
 
   data: function () {
     return {
-      trackerID: this.taskTrackerID,
-      title: this.trackerTitle,
+      localList: {} as ListType,
       buttonText: "Add a Task",
-      tasks: [] as Array<TodoType>,
+      localTasks: [] as Array<TodoType>,
       task: {} as TodoType,
       isPatch: false,
-      isModalOpen: false,
-      isInputOpen: false,
       taskPassUpdate: {} as TodoType,
       taskPositionsObjectParent: {} as TasksPositionObject,
-      taskTrackerColour: this.trackerColor,
-      width: 0,
-      height: 0,
       observer: null as unknown,
       showTasks: true,
       showAddTask: false,
@@ -186,7 +179,7 @@ export default defineComponent({
       trackerInstance.style.filter =  "brightness(100%)";
     },
     deleteList: function():void{
-      this.$emit("requestDeleteList",this.trackerID )
+      this.$emit("requestDeleteList",this.localList.id )
     },
     initObserver() {
       const tracker: HTMLElement | null = this.$refs.taskTrackerInstance as HTMLElement,
@@ -198,8 +191,8 @@ export default defineComponent({
         mutations.forEach(function (mutation) {
           if (mutation.type === "attributes") {
             let { width, height } = tracker!.style;
-            vm.width = parseInt(width, 10);
-            vm.height = parseInt(height, 10);
+            vm.localList.width = parseInt(width, 10);
+            vm.localList.height = parseInt(height, 10);
             vm.recordHeight();
           }
         });
@@ -212,20 +205,20 @@ export default defineComponent({
         if (this.$refs.taskTrackerInstance != null) {
           let trackerInstance: HTMLElement  = this.$refs
             .taskTrackerInstance as HTMLElement;
-          this.width = trackerInstance!.clientWidth;
-          this.height = trackerInstance!.clientHeight;
+          this.localList.width = trackerInstance!.clientWidth;
+          this.localList.height = trackerInstance!.clientHeight;
           this.saveList();
         }
-        this.$emit("sizingUpdate", this.height);
+        this.$emit("sizingUpdate", this.localList.height);
       });
     },
     saveList: function (): void {
-      ListService.patchList(this.trackerID, {
-        title: this.title,
-        width: this.width,
-        height: this.height,
-        backgroundColour: this.taskTrackerColour,
-        id: this.taskTrackerID,
+      ListService.patchList(this.localList.id, {
+        title: this.localList.title,
+        width: this.localList.width,
+        height: this.localList.height,
+        backgroundColour: this.localList.backgroundColour,
+        id: this.localList.id,
       }).catch(function (error) {
           console.log(error);
         });
@@ -239,18 +232,18 @@ export default defineComponent({
     },
     addIconBg: function (): object {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
-      let hsl: string[] = hslReg.exec(this.taskTrackerColour!)!.slice(1, 4);
+      let hsl: string[] = hslReg.exec(this.localList.backgroundColour!)!.slice(1, 4);
       return {
         backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 10}%`,
       };
     },
     updateTaskTrackerTitle: function (newTitle: string): void {
-      this.title = newTitle;
+      this.localList.title = newTitle;
       this.saveList();
     },
     updateColor: function (newColor: string): void {
       let hslNewColor = tinyColor(newColor).toHslString();
-      this.taskTrackerColour = hslNewColor;
+      this.localList.backgroundColour = hslNewColor;
       this.saveList();
       this.toggleP5Canvas();
       this.taskTrackDimensions();
@@ -269,7 +262,6 @@ export default defineComponent({
     },
     taskTrackDimensions: function (): TrackerDimensions {
       let taskDisplay = this.$refs["taskTrackerInstance"] as HTMLElement;
-      console.log("Task Displayt", taskDisplay)
       if (taskDisplay) {
         let elementHeight = this.getAbsoluteHeight(taskDisplay);
         if (elementHeight < 450) {
@@ -286,7 +278,7 @@ export default defineComponent({
       });
     },
     changeTaskTrackerColour: function (colour: string): void {
-      this.taskTrackerColour = colour;
+      this.localList.backgroundColour = colour;
     },
     calculateTaskPosition: function (id: number): TaskPosition {
       return this.taskPositionsObjectParent[id];
@@ -295,8 +287,8 @@ export default defineComponent({
       this.taskPositionsObjectParent = taskPositons;
     },
     addNewTaskToTasks: function (task: TodoType): void {
-      task.id = this.tasks.length + 1;
-      this.tasks.push(task);
+      task.id = this.localTasks.length + 1;
+      this.localTasks.push(task);
       this.buttonText = "Add a Task";
       this.updatePositionsWithIndexes();
       this.recordHeight();
@@ -305,11 +297,6 @@ export default defineComponent({
       elems.sort(function (a, b) {
         return a.position - b.position;
       });
-    },
-    clickOutsideHandler: function () {
-      if (this.isModalOpen) {
-        this.onClickOutside();
-      }
     },
     changeButton: function () {
       this.buttonText == "Add a Task"
@@ -320,42 +307,21 @@ export default defineComponent({
         (this.task.date = ""),
         (this.task.reminder = false);
     },
-    openFormWithTask: function () {
-      if (this.isModalOpen == false) {
-        // this.isModalOpen = true;
-        // this.task.date = task[0].date;
-        // this.task.reminder = task[0].reminder;
-        // this.task.title = task[0].title;
-        // this.task.completed = task[0].completed;
-        // this.task.id = parseInt(task[0].id);
-      } else if (this.isModalOpen == true) {
-        this.isModalOpen = false;
-      }
-    },
     finishedPatch: function (): void {
       this.isPatch = false;
     },
-    toggleModal: function () {
-      this.isModalOpen = !this.isModalOpen;
-    },
     updateList: function (task: TodoType): void {
       this.taskPassUpdate = task;
-      this.tasks;
-      let indexOld: number = _.keys(_.pickBy(this.tasks, { id: task.id }));
-      this.tasks.splice(indexOld, 1, task);
-    },
-    onClickOutside() {
-      if (this.isModalOpen) {
-        this.isModalOpen = false;
-      }
+      let indexOld: number = _.keys(_.pickBy(this.localTasks, { id: task.id }));
+      this.localTasks.splice(indexOld, 1, task);
     },
     updatePositionsWithIndexes() {
-      this.tasks.forEach((task, index) => {
+      this.localTasks.forEach((task, index) => {
         task.position = index;
       });
     },
     deleteTask: function (id: number) {
-        this.tasks = this.tasks.filter((task) => {
+        this.localTasks = this.localTasks.filter((task) => {
           return task.id !== id;
         });
       TaskService.deleteTask(id)
@@ -369,11 +335,22 @@ export default defineComponent({
   },
 
   computed: {
+    showEmptyMessage: function (): boolean {
+      let show: boolean;
+      if( this.emptyMessage && this.showAddTask){
+        show = false;
+      } else if ( this.emptyMessage  && !this.showAddTask){
+        show = true;
+      } else {
+        show = false;
+      }
+      return show
+    },
     p5Message: function (): string {
-      return "Choose a colour for " + this.title;
+      return "Choose a colour for " + this.localList.title;
     },
     emptyMessage: function (): Boolean {
-      if (this.tasks.length == 0) {
+      if (this.localTasks.length == 0) {
         return true;
       } else {
         return false;
@@ -381,7 +358,7 @@ export default defineComponent({
     },
     iconBGHover: function (): object {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
-      let hsl: string[] = hslReg.exec(this.taskTrackerColour!)!.slice(1, 4);
+      let hsl: string[] = hslReg.exec(this.localList.backgroundColour!)!.slice(1, 4);
       if (this.showAddTask) {
         return {
           "--bg-hov-color": `hsl(${hsl[0]},${hsl[1]}%,${
@@ -400,18 +377,18 @@ export default defineComponent({
     },
     totalTaskCount: function (): number {
       var length: number = 0;
-      if (this.tasks) {
-        length = this.tasks.length;
+      if (this.localTasks) {
+        length = this.localTasks.length;
       }
       return length;
     },
     calculatedBackgroundColor: function (): object {
       return {
-        backgroundColor: this.taskTrackerColour,
+        backgroundColor: this.localList.backgroundColour,
       };
     },
     calculatedTextColor: function (): object {
-      if (tinyColor(this.taskTrackerColour).isLight()) {
+      if (tinyColor(this.localList.backgroundColour).isLight()) {
         return {
           color: "black",
         };
