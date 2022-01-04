@@ -6,7 +6,6 @@
       @start="handleStart"
       @end="handleEnd"
       @change="onChange"
-
       tag="transition-group"
       item-key="id"
       direction="horizontal"
@@ -235,7 +234,8 @@ export default defineComponent({
           }));
           }
         });
-        Promise.all(serviceArray).catch((errors) => {
+        Promise.all(serviceArray).then((res)=>{
+          console.log("promise resolved", res)}).catch((errors) => {
           console.log(errors);
         });
     },

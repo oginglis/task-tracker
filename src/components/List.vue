@@ -148,6 +148,7 @@ export default defineComponent({
       deep: true,
       handler: function (): void {
         this.recordHeight();
+        this.$emit("taskListUpdated", this.tasks)
       },
     },
   },

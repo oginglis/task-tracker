@@ -10,6 +10,7 @@
         :tasks2="checkForTasks(list.todos)"
         @sizingUpdate="setCreatorToListHeight"
         @requestDeleteList="deleteList"
+
       >
       </List>
     </ul>
@@ -68,17 +69,20 @@ newListBgColor: "hsl(33, 52%, 69%)",
   },
   watch: {
     creatorDimensionsPixels: function (old, newHeight) {
-      console.log("Picker Size Changed from ", old, " to ", newHeight);
       this.creatorDimensionsPixels.height = newHeight;
     },
   },
   methods: {
+
     checkForTasks: function(todos: Array<TodoType> | undefined): Array<TodoType>{
       if (todos == undefined){
   return []
       }
-    else 
+    else {
+    todos.sort(({position:a}, {position:b}) => a-b);
     return todos
+    }
+
     },
     handleclickColor: function (payload: string): void {
       this.toggleColorPicker();
