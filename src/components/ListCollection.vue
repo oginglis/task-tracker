@@ -1,33 +1,42 @@
 <template>
 
   <div class="tracker_collection">
-    <ul v-for="list in lists" :key="list.id" class="tracker_collection__list">
-      <List
-        v-if="lists"
-        :list="list"
-        :tasks="checkForTasks(list.todos)"
-        :key="list.id"
-        @sizingUpdate="setCreatorToListHeight"
-        @requestDeleteList="deleteList"
-      >
-      </List>
+    <ul class="tracker_collection__list">
+      <template v-if="lists">
+        <List
+        v-for="(list, index)  in lists"
+          :list="list"
+          :tasks="checkForTasks(list.todos)"
+          :key="index"
+          @sizingUpdate="setCreatorToListHeight"
+          @requestDeleteList="deleteList"
+        >
+        </List>
+        </template>
+      <li> 
+      <ListCreator v-if="showNewList" :bgColour="newListBgColor" @createNewListNow="createNewList"/>
+      </li>
+      <li v-if="!showColorPicker">
+      <ListPlaceholder
+        :style="creatorDimensionsPixels"
+        @createNewList="toggleColorPicker"
+        ref="taskCreator"
+        
+      />
+       </li>
+      <li v-else>
+      <ColourSelector
+        :canvasSize="creatorDimensionsNumber"
+        :ballColours="colours"
+        :title="`Choose a colour for new list`"
+        :bgColor="`hsl(0, 0%, 96%)`"
+        :textColor="{ color: `hsl(0, 0%, 0%)` }"
+        @clickColor="handleclickColor"
+      />
+       </li>
+    
     </ul>
-    <ListCreator v-if="showNewList" :bgColour="newListBgColor" @createNewListNow="createNewList"/>
-    <ListPlaceholder
-      :style="creatorDimensionsPixels"
-      @createNewList="toggleColorPicker"
-      ref="taskCreator"
-      v-if="!showColorPicker"
-    />
-    <ColourSelector
-      v-else
-      :canvasSize="creatorDimensionsNumber"
-      :ballColours="colours"
-      :title="`Choose a colour for new list`"
-      :bgColor="`hsl(0, 0%, 96%)`"
-      :textColor="{ color: `hsl(0, 0%, 0%)` }"
-      @clickColor="handleclickColor"
-    />
+
   </div>
 </template>
 
@@ -180,7 +189,8 @@ newListBgColor: "hsl(33, 52%, 69%)",
   flex-wrap: wrap;
 }
 .tracker_collection__list {
-  margin: 0;
+  margin: 1rem;
   padding: 0;
+  display: inline-flex;
 }
 </style>

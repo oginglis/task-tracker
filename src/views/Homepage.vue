@@ -37,7 +37,7 @@ export default defineComponent({
     ListCollection,
     Icon
   },
-  mounted(){
+  beforeMount(){
     if(localStorage.getItem('theme')){
       let localTheme: string = localStorage.getItem('theme') as string; //gets stored theme value if any
       document.documentElement.setAttribute('data-theme', localTheme);
@@ -74,6 +74,7 @@ export default defineComponent({
 .section_wrap{
   display: flex;
   padding-left: 1rem;
+  min-height: inherit;
 }
 .list_section{
   flex-grow: 3;
@@ -92,10 +93,11 @@ export default defineComponent({
 }
 .schedule_section{
   flex-grow: 1;
-  border-right: solid 3px var(--section-divide-color);
+  border-right: solid 2px var(--section-divide-color);
   transition: border-right 500ms;
   flex-basis: 400px;
   min-width: 300px;
+
 
 }
 

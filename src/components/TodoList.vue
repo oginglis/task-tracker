@@ -11,8 +11,8 @@
       direction="horizontal"
       :draggable="`.todo`"
       delay="10"
-      :emptyInsertThreshold="100"
-      :swapThreshold="300"
+      :emptyInsertThreshold="200"
+      :swapThreshold="200"
       v-bind="dragOptions"
       :component-data="{
         tag: 'ul',
@@ -124,7 +124,7 @@ export default defineComponent({
   computed: {
     dragOptions() {
       return {
-        animation: 200,
+        animation: 100,
         group: "to do list",
         disabled: false,
         ghostClass: "ghost",

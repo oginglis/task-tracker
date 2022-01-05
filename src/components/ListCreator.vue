@@ -66,7 +66,6 @@ export default defineComponent({
   padding: 1.5rem 3rem;
   border-radius: 1rem;
   width: 340px;
-  margin: 0.5rem 0.5rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

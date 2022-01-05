@@ -43,10 +43,9 @@ export default defineComponent({
   padding: 1.5rem 3rem;
   border-radius: 1rem;
   background-color: white;
-    flex-basis: 340px;
-    flex-grow: 0;
-    flex-shrink: 0;
-    margin-top: 5.rem;
+  flex-basis: 340px;
+  flex-grow: 0;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: center;

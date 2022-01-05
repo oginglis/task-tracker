@@ -1,5 +1,5 @@
 <template>
-  <div
+  <li
     class="task-tracker-wrap"
     ref="taskTrackerInstance"
     :style="[calculatedBackgroundColor, calculatedTextColor]"
@@ -77,7 +77,7 @@
       :title="p5Message"
       :textColor="calculatedTextColor"
     />
-  </div>
+  </li>
 </template>
 
 <script lang="ts">
@@ -415,7 +415,6 @@ this.localList = this.list;
   padding: 1.5rem 1.5rem;
   border-radius: 14px;
   width: 340px;
-  margin: 0.5rem 0.5rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

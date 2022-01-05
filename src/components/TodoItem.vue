@@ -139,7 +139,7 @@ export default defineComponent({
   box-sizing: border-box;
   transition: filter 0.2s ease;
   text-overflow: ellipsis;
-  transition: transform 1.5s cubic-bezier(0.64, 0.57, 0.67, 1.53) 
+
 }
 
 .task:hover {
@@ -153,7 +153,7 @@ export default defineComponent({
   opacity: 1;
   transform: scale(1.2);
   background-color: var(--color-hover);
-  transition: transform 1.5s cubic-bezier(0.64, 0.57, 0.67, 1.53) 
+
 }
 
 .task--green-reminder {
@@ -191,7 +191,7 @@ export default defineComponent({
   opacity: 0;
   visibility: hidden;
   overflow: hidden;
-  transition: transform 1.5s cubic-bezier(0.64, 0.57, 0.67, 1.53) 
+  
 }
 
 .noselect {
