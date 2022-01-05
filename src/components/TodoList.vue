@@ -258,11 +258,9 @@ export default defineComponent({
         const largestIndex = Math.max(oldIndex, newIndex);
         this.saveAllTasksUpTo(largestIndex);
       } else if ("added" in e){
-        console.log("Added called to reindex list")
         this.reIndexList();
         this.saveAllTasksUpTo();
       } else if ("removed" in e ){
-
         this.reIndexList();
         this.saveAllTasksUpTo();
       }

@@ -4,7 +4,7 @@
       "listId": 1,
       "title": "This should be top",
       "id": 74.03141534349453,
-      "position": 1
+      "position": 0
     },
     {
       "listId": 2,
@@ -16,7 +16,7 @@
       "listId": 1,
       "title": "thirs",
       "id": 0.019419869326209316,
-      "position": 0
+      "position": 1
     }
   ],
   "lists": [
