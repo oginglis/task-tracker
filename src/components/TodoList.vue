@@ -11,6 +11,8 @@
       direction="horizontal"
       :draggable="`.todo`"
       delay="10"
+      :emptyInsertThreshold="100"
+      :swapThreshold="300"
       v-bind="dragOptions"
       :component-data="{
         tag: 'ul',
@@ -123,9 +125,10 @@ export default defineComponent({
     dragOptions() {
       return {
         animation: 200,
-        group: "description",
+        group: "to do list",
         disabled: false,
         ghostClass: "ghost",
+        easing: "cubic-bezier(0.65, 0, 0.35, 1)"
       };
     },
     tasksModel: {
@@ -220,23 +223,31 @@ export default defineComponent({
     sortList: function (): void {
       this.info.reverse();
     },
-    reIndexList: function(): void {
-       this.tasksModel.forEach((task, index) => {
+    reIndexList: function(): void { 
+       this.tasksModel.forEach((task, index) => {  
           task.position = index;
         });
     },
-    saveAllTasksUpTo: function(maxValue: number): void {
+    saveAllTasksUpTo: function(maxValue?: number): void {
       let serviceArray: Promise<any>[] = [];
         this.tasksModel.forEach((task) => {
-          if (task.position <= maxValue) {
-            serviceArray.push(TaskService.patchTask(task.id, task).catch(function (error) {
-            console.log(error);
-          }));
+          if(maxValue){
+            if (task.position <= maxValue) {
+              serviceArray.push(TaskService.patchTask(task.id, task).catch(function (error) {
+                console.log(error);
+              }));
+            }
+          } else {
+             serviceArray.push(TaskService.patchTask(task.id, task).catch(function (error) {
+                console.log(error);
+              }));
           }
+      
         });
         Promise.all(serviceArray).catch((errors) => {
           console.log(errors);
         });
+       
     },
     onChange: function (e: MovedType | AddedType | RemovedType) {
       if("moved" in e){
@@ -247,17 +258,13 @@ export default defineComponent({
         const largestIndex = Math.max(oldIndex, newIndex);
         this.saveAllTasksUpTo(largestIndex);
       } else if ("added" in e){
-        const {
-          added: { newIndex },
-        } = e;
+        console.log("Added called to reindex list")
         this.reIndexList();
-        this.saveAllTasksUpTo(newIndex);
+        this.saveAllTasksUpTo();
       } else if ("removed" in e ){
-        const {
-          removed: { oldIndex },
-        } = e;
+
         this.reIndexList();
-        this.saveAllTasksUpTo(oldIndex);
+        this.saveAllTasksUpTo();
       }
       this.updateAndSendPositions();
     },

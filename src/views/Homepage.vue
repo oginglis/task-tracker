@@ -76,7 +76,8 @@ export default defineComponent({
 .schedule_section{
   flex-grow: 1;
   border-right: solid 3px hsl(0, 0%, 92%);
-flex-basis: 300px;
+  flex-basis: 300px;
+  min-width: 300px;
 
 }
 

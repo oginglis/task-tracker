@@ -1,40 +1,22 @@
 {
   "todos": [
     {
-      "listId": 2,
-      "title": "First Action",
-      "id": 88.79355439849488,
+      "listId": 1,
+      "title": "This should be top",
+      "id": 74.03141534349453,
       "position": 1
     },
     {
-      "listId": 1,
-      "title": "Second Action",
-      "id": 60.050372655631,
-      "position": 0
-    },
-    {
-      "listId": 1,
-      "title": "Check if this works",
-      "id": 25.78717178323895,
-      "position": 0
-    },
-    {
       "listId": 2,
-      "title": "New action",
-      "id": 25.764735955701212,
+      "title": "And this should be another",
+      "id": 4.423868438439005,
       "position": 0
     },
     {
-      "listId": 2,
-      "title": "This should be a t the top",
-      "id": 1.0895022302098267,
-      "position": 2
-    },
-    {
       "listId": 1,
-      "title": "Fix list indexing error when moving across lists",
-      "id": 17.72674130542864,
-      "position": 2
+      "title": "thirs",
+      "id": 0.019419869326209316,
+      "position": 0
     }
   ],
   "lists": [
