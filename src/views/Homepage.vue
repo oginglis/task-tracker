@@ -7,6 +7,7 @@
       :width="`0.9rem`"
       :height="`0.9rem`"
       :borderStyles="true"
+      @click="toggleTheme"
     />
   </nav>
   <div class="section_wrap">
@@ -36,11 +37,26 @@ export default defineComponent({
     ListCollection,
     Icon
   },
+  mounted(){
+    if(localStorage.getItem('theme')){
+      let localTheme: string = localStorage.getItem('theme') as string; //gets stored theme value if any
+      document.documentElement.setAttribute('data-theme', localTheme);
+    }
+
+  },
   created() {},
   data: function () {
-    return {};
+    return {
+      theme: '',
+    };
   },
-  methods: {},
+  methods: {
+    toggleTheme: function(): void {
+      this.theme = this.theme == 'darkMode' ? '' : 'darkMode'; //toggles theme value
+      document.documentElement.setAttribute('data-theme', this.theme); // sets the data-theme attribute
+      localStorage.setItem('theme', this.theme); // stores theme value on local storage
+    }
+  },
 });
 </script>
 
@@ -48,10 +64,11 @@ export default defineComponent({
 
 .collection_title{
   text-align: left;
-  color: black;
-      font-size: 30px;
-    font-weight: 700;
-    line-height: 1.25;
+  color: var( --text-color);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.25;
+  user-select: none;
 }
 
 .section_wrap{
@@ -75,8 +92,9 @@ export default defineComponent({
 }
 .schedule_section{
   flex-grow: 1;
-  border-right: solid 3px hsl(0, 0%, 92%);
-  flex-basis: 300px;
+  border-right: solid 3px var(--section-divide-color);
+  transition: border-right 500ms;
+  flex-basis: 400px;
   min-width: 300px;
 
 }

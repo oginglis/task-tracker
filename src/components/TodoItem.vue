@@ -131,7 +131,7 @@ export default defineComponent({
 <style scoped>
 .task {
   margin: 5px auto;
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 0.5rem;
   display: flex;
   align-items: center;
@@ -139,6 +139,7 @@ export default defineComponent({
   box-sizing: border-box;
   transition: filter 0.2s ease;
   text-overflow: ellipsis;
+  transition: transform 1.5s cubic-bezier(0.64, 0.57, 0.67, 1.53) 
 }
 
 .task:hover {
@@ -148,11 +149,11 @@ export default defineComponent({
 
 .task:hover .icon--hide {
   height: 0.9rem;
-
   visibility: visible;
   opacity: 1;
   transform: scale(1.2);
   background-color: var(--color-hover);
+  transition: transform 1.5s cubic-bezier(0.64, 0.57, 0.67, 1.53) 
 }
 
 .task--green-reminder {
@@ -190,6 +191,7 @@ export default defineComponent({
   opacity: 0;
   visibility: hidden;
   overflow: hidden;
+  transition: transform 1.5s cubic-bezier(0.64, 0.57, 0.67, 1.53) 
 }
 
 .noselect {
@@ -204,5 +206,6 @@ export default defineComponent({
 
 .task:hover .icon--hide:hover {
   transform: scale(1.5);
+
 }
 </style>

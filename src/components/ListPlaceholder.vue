@@ -4,7 +4,7 @@
       <Icon
         type="plus"
         :bgColor="`hsl(0, 0%, 90%)`"
-        class="hiding__icon"
+        class="hiding__icon black_icon"
         :borderStyles="false"
         @iconClicked="createAList"
       />
@@ -56,5 +56,9 @@ export default defineComponent({
 
 .hiding__icon {
   font-size: 19em;
+}
+
+.black_icon{
+  color: black;
 }
 </style>

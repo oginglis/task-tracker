@@ -33,7 +33,7 @@
           :list_id="localList.id"
         />
       </div>
-      <p v-if="showEmptyMessage">You have no Actions on <br />this list yet.</p>
+      <p v-if="showEmptyMessage" class="message_animations">You have no Actions on <br />this list yet.</p>
 
       <div class="task-tracker__bottom-bar">
         <Tooltip position="bottom" :tooltipText="'Delete list'">
@@ -413,7 +413,7 @@ this.localList = this.list;
 
 .task-tracker-wrap {
   padding: 1.5rem 1.5rem;
-  border-radius: 1rem;
+  border-radius: 14px;
   width: 340px;
   margin: 0.5rem 0.5rem;
   box-sizing: border-box;
@@ -445,7 +445,7 @@ transition: filter .1s ease;
 
 .task-tracker__bottom-bar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 100%;
   font-size: 1.5rem;
   font-weight: 0.5rem;
@@ -492,4 +492,6 @@ transition: filter .1s ease;
   padding-top: 0px;
   padding-bottom: 0px;
 }
+
+
 </style>

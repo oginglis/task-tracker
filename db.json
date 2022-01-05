@@ -1,38 +1,38 @@
 {
   "todos": [
     {
-      "listId": 1,
-      "title": "This should be top",
-      "id": 74.03141534349453,
+      "listId": 2,
+      "title": "And this should be another",
+      "id": 4.423868438439005,
+      "position": 2
+    },
+    {
+      "listId": 2,
+      "title": "thirs",
+      "id": 0.019419869326209316,
       "position": 0
     },
     {
       "listId": 2,
-      "title": "And this should be another",
-      "id": 4.423868438439005,
-      "position": 0
-    },
-    {
-      "listId": 1,
-      "title": "thirs",
-      "id": 0.019419869326209316,
+      "title": "List 2 action",
+      "id": 63.84279868583946,
       "position": 1
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(305, 10%, 79%)",
+      "backgroundColour": "hsl(351, 79%, 56%)",
       "width": 340,
       "height": 576,
-      "title": "Change title",
-      "id": 1
+      "title": "List one",
+      "id": 2
     },
     {
-      "backgroundColour": "hsl(215, 72%, 60%)",
+      "backgroundColour": "hsl(13, 78%, 80%)",
       "width": 340,
       "height": 576,
-      "title": "Another list test",
-      "id": 2
+      "title": "This is list 2",
+      "id": 3
     }
   ],
   "comments": [],
