@@ -35,6 +35,19 @@ const colours: {}[]= [
     { colour: "hsl(4, 77%, 67%)", active: false },
     { colour: "hsl(31, 70%, 86%)", active: false },
     { colour: "hsl(44, 24%, 84%)", active: false },
+    {colour: "hsl(344, 96%, 27%)", active: false},
+    {colour: "hsl(13, 80%, 43%)", active: false},
+    {colour: "hsl(42, 66%, 53%)", active: false},
+    {colour: "hsl(195, 92%, 5%)", active: false},
+    {colour: "hsl(190, 100%, 23%)", active: false},
+    {colour: "hsl(181, 87%, 31%)", active: false},
+    {colour: "hsl(160, 41%, 70%)", active: false},
+    {colour: "hsl(46, 59%, 78%)", active: false},
+    {colour: "hsl(39, 100%, 47%)", active: false},
+    {colour: "hsl(30, 99%, 40%)", active: false},
+    {colour: "hsl(19, 97%, 37%)", active: false},
+    {colour: "hsl(6, 81%, 38%)", active: false},
+    {colour: "hsl(6, 81%, 38%)", active: false},
 
   ]
 

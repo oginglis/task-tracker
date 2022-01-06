@@ -42,14 +42,14 @@
             :bgColor="this.localList.backgroundColour"
             class="hiding__icon"
             :borderStyles="false"
-            :style="iconBGHover"
+            :style="[iconBGHover, addIconBg()]"
             @click="deleteList"
           />
         </Tooltip>
         <Tooltip position="bottom" :tooltipText="'Create action'">
           <Icon
             type="plus"
-            :bgColor="this.localList.backgroundColour"
+            :bgColor="localList.backgroundColour"
             @iconClicked="toggleActionAdder"
             class="add__action"
             :style="addIconBg()"
@@ -59,10 +59,10 @@
         <Tooltip position="bottom" :tooltipText="'Choose list colour'">
           <Icon
             type="palette"
-            class="hiding__icon"
-            :bgColor="this.localList.backgroundColour"
+            class="hiding__icon brighter"
+            :bgColor="localList.backgroundColour"
             :borderStyles="false"
-            :style="iconBGHover"
+            :style="[iconBGHover, addIconBg()]"
             @iconClicked="toggleP5Canvas"
           />
         </Tooltip>
@@ -71,7 +71,7 @@
     <ColourSelector
       v-else
       :canvasSize="taskTrackDimensions()"
-      :bgColor="this.localList.backgroundColour"
+      :bgColor="localList.backgroundColour"
       :ballColours="colours"
       @clickColor="updateColor"
       :title="p5Message"
@@ -234,7 +234,7 @@ this.localList = this.list;
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
       let hsl: string[] = hslReg.exec(this.localList.backgroundColour!)!.slice(1, 4);
       return {
-        backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 10}%`,
+        backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 10}%)`,
       };
     },
     updateTaskTrackerTitle: function (newTitle: string): void {
@@ -430,6 +430,9 @@ transition: filter .1s ease;
 .task-tracker-wrap:hover .hiding__icon {
   visibility: visible;
   opacity: 1;
+  padding: 15px;
+  transform: scale(1);
+
 }
 
 .text-inline {
@@ -460,14 +463,17 @@ transition: filter .1s ease;
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.1s ease;
+  transition: filter .2s ease;
 }
 
 .hiding__icon:hover {
   background-color: var(--bg-hov-color);
+  filter: brightness(1.05);
 }
 .add__action {
   padding: 1rem 2.5rem;
   border-radius: 0.8rem;
+  transition: transform .1s ease;
 }
 
 .task_tracker_display {
@@ -480,6 +486,8 @@ transition: filter .1s ease;
 }
 .add__action.icon:hover {
   transform: scale(1.1);
+  
+  filter: brightness(1.05);
 }
 
 .add__padding {
@@ -491,6 +499,7 @@ transition: filter .1s ease;
   padding-top: 0px;
   padding-bottom: 0px;
 }
+
 
 
 </style>

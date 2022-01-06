@@ -55,9 +55,7 @@ export default defineComponent({
           backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${
             parseInt(hsl[2]) + 20
           }%)`,
-          border: `0.4rem solid hsl(${hsl[0]},${hsl[1]}%,${
-            parseInt(hsl[2]) + 10
-          }% )`,
+         
           "--color-hover": `hsl(${hsl[0]},${hsl[1]}%,${
             parseInt(hsl[2]) + 45
           }%)`,

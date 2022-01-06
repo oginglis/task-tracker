@@ -78,7 +78,7 @@ console.log(`
   color: var(--text-color);
   background-color: var(--background-color);
   min-height: 100vh;
-  min-width: 100vw;
+  width: 100vw;
   transition: background-color 500ms;
 }
 

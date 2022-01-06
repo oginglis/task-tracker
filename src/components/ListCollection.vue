@@ -4,7 +4,7 @@
     <ul class="tracker_collection__list">
       <template v-if="lists">
         <List
-        v-for="(list, index)  in lists"
+          v-for="(list, index)  in lists"
           :list="list"
           :tasks="checkForTasks(list.todos)"
           :key="index"
@@ -12,31 +12,34 @@
           @requestDeleteList="deleteList"
         >
         </List>
-        </template>
-      <li> 
-      <ListCreator v-if="showNewList" :bgColour="newListBgColor" @createNewListNow="createNewList"/>
-      </li>
-      <li v-if="!showColorPicker">
-      <ListPlaceholder
-        :style="creatorDimensionsPixels"
-        @createNewList="toggleColorPicker"
-        ref="taskCreator"
-        
-      />
-       </li>
-      <li v-else>
-      <ColourSelector
-        :canvasSize="creatorDimensionsNumber"
-        :ballColours="colours"
-        :title="`Choose a colour for new list`"
-        :bgColor="`hsl(0, 0%, 96%)`"
-        :textColor="{ color: `hsl(0, 0%, 0%)` }"
-        @clickColor="handleclickColor"
-      />
-       </li>
-    
+      </template>
+      <template v-if="showNewList">
+        <li> 
+          <ListCreator :bgColour="newListBgColor" @createNewListNow="createNewList"/>
+        </li>
+      </template>
+      <template v-if="!showColorPicker">
+        <li >
+        <ListPlaceholder
+          :style="creatorDimensionsPixels"
+          @createNewList="toggleColorPicker"
+          ref="taskCreator"
+        />
+        </li>
+      </template>
+      <template v-else>
+        <li>
+          <ColourSelector
+            :canvasSize="creatorDimensionsNumber"
+            :ballColours="colours"
+            :title="`Choose a colour for new list`"
+            :bgColor="`hsl(0, 0%, 96%)`"
+            :textColor="{ color: `hsl(0, 0%, 0%)` }"
+            @clickColor="handleclickColor"
+          />
+        </li>
+      </template>
     </ul>
-
   </div>
 </template>
 
@@ -191,6 +194,11 @@ newListBgColor: "hsl(33, 52%, 69%)",
 .tracker_collection__list {
   margin: 1rem;
   padding: 0;
-  display: inline-flex;
+   display: flex;
+  flex-wrap: wrap;
+}
+
+.tracker_collection__list li {
+  margin: 4px 4px;
 }
 </style>

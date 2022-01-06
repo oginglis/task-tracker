@@ -77,7 +77,6 @@ export default defineComponent({
     },
     styleIcon: function (): object {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
-
       let hsl: string[] = hslReg.exec(this.bgColor!)!.slice(1, 4);
       return {
         backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 20}%`,
@@ -130,7 +129,7 @@ export default defineComponent({
 
 <style scoped>
 .task {
-  margin: 5px auto;
+  margin: 2.5px auto;
   border-radius: 8px;
   padding: 0.5rem;
   display: flex;
@@ -144,15 +143,15 @@ export default defineComponent({
 
 .task:hover {
   cursor: grab;
-  filter: brightness(0.95);
+  filter: brightness(0.9);
 }
 
 .task:hover .icon--hide {
   height: 0.9rem;
   visibility: visible;
   opacity: 1;
-  transform: scale(1.2);
   background-color: var(--color-hover);
+  animation: overshoot .35s ease-out;
 
 }
 
@@ -191,6 +190,8 @@ export default defineComponent({
   opacity: 0;
   visibility: hidden;
   overflow: hidden;
+  padding: 8px;
+
   
 }
 
@@ -207,5 +208,13 @@ export default defineComponent({
 .task:hover .icon--hide:hover {
   transform: scale(1.5);
 
+}
+
+@keyframes overshoot {
+  0% { transform: scale(.2) }
+  50% { transform: scale(1.3) }
+80%{transform: scale(.8) }
+
+  100% { transform: scale(1) }
 }
 </style>

@@ -6,13 +6,14 @@
       @start="handleStart"
       @end="handleEnd"
       @change="onChange"
+      @add="onAdd"
       tag="transition-group"
       item-key="id"
       direction="horizontal"
       :draggable="`.todo`"
       delay="10"
-      :emptyInsertThreshold="200"
-      :swapThreshold="200"
+      :emptyInsertThreshold="100"
+      :swapThreshold="100"
       v-bind="dragOptions"
       :component-data="{
         tag: 'ul',
@@ -46,7 +47,7 @@
         :list_id="list_id"
       />
     </transition>
-  </div>
+    </div>
 </template>
 
 <script lang="ts">
@@ -164,6 +165,7 @@ export default defineComponent({
     this.updateAndSendPositions();
   },
   methods: {
+    onAdd (e: {item: HTMLElement}) { e.item.classList.add('display-none') },
     handleEnd: function():void {
         this.drag = false;
       this.$emit("dragEnd")
@@ -307,15 +309,13 @@ export default defineComponent({
 .task_list {
   width: 100%;
 }
-.flip-list-move {
-  transition: transform 0.5s;
-}
+
 .no-move {
   transition: transform 0s;
 }
 .ghost {
-  opacity: 0.5;
-  background: #c8ebfb;
+  opacity: 0;
+
 }
 .task--light-grey-background {
   background-color: rgb(233, 233, 233);
@@ -352,4 +352,6 @@ export default defineComponent({
   width: 0;
   transform: scale(0);
 }
+
+.display-none { display: none; }
 </style>
