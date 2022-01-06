@@ -72,7 +72,6 @@
       v-else
       :canvasSize="taskTrackDimensions()"
       :bgColor="localList.backgroundColour"
-      :ballColours="colours"
       @clickColor="updateColor"
       :title="p5Message"
       :textColor="calculatedTextColor"
@@ -94,7 +93,6 @@ import { TaskPosition } from "@/types/TaskPosition";
 import { TasksPositionObject } from "@/types/TasksPositionObject";
 import { TrackerDimensions } from "@/types/Dimensions";
 import _ from "lodash";
-import colours from '../common/colours'
 import tinyColor from "tinycolor2";
 import { ListType } from "@/types/List";
 
@@ -163,8 +161,7 @@ this.localList = this.list;
       taskPositionsObjectParent: {} as TasksPositionObject,
       observer: null as unknown,
       showTasks: true,
-      showAddTask: false,
-      colours: colours,
+      showAddTask: false
     };
   },
   methods: {
@@ -478,7 +475,7 @@ transition: filter .1s ease;
 
 .task_tracker_display {
   width: 100%;
-
+height:100%;
   min-height: inherit;
   display: flex;
   flex-direction: column;

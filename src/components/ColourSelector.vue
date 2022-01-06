@@ -13,12 +13,14 @@ import { defineComponent, PropType } from "vue";
 import { TrackerDimensions } from "../types/Dimensions";
 import tinyColor from "tinycolor2";
 import { Color } from "../types/Color";
+import colours2 from "../common/colours2"
 export default defineComponent({
   name: "ColourSelector",
   data: function () {
     return {
       clickedColor: "",
       p5Canvas: {} as any,
+      ballColours: colours2 as Array<Color>,
     };
   },
   props: {
@@ -29,9 +31,7 @@ export default defineComponent({
       type: String,
       default: "hsl(39, 81%, 73%)",
     },
-    ballColours: {
-      type: Array as PropType<Array<Color>>,
-    },
+
     title: {
       type: String,
       default: "Task Tracker",

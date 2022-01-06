@@ -1,6 +1,7 @@
 <template>
   <div class="list_creator">
     <Tooltip position="bottom" :tooltipText="'Create new list'">
+    <img :src="plusIcon" alt="my-logo" />
       <Icon
         type="plus"
         :bgColor="`hsl(0, 0%, 90%)`"
@@ -17,17 +18,19 @@ import { defineComponent } from "vue";
 import { ListType } from "@/types/List";
 import Tooltip from "../common/components/Tooltip.vue";
 import Icon from "../common/components/Icon.vue";
+import PlusIcon from "@/assets/plus.svg";
 
 export default defineComponent({
   name: "ListPlaceholder",
   components: {
     Tooltip,
-    Icon,
+    Icon
   },
   created() {},
   data: function () {
     return {
       lists: [] as Array<ListType>,
+      plusIcon: PlusIcon
     };
   },
   methods: {
@@ -59,5 +62,17 @@ export default defineComponent({
 
 .black_icon{
   color: black;
+}
+
+.list_creator:hover .hiding__icon{
+  animation: overshoot .3s ease;
+}
+
+@keyframes overshoot {
+  0% { transform: scale(1) }
+  50% { transform: scale(1.8) }
+80%{transform: scale(.8) }
+
+  100% { transform: scale(1) }
 }
 </style>

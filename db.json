@@ -7,28 +7,16 @@
       "position": 0
     },
     {
-      "listId": 3,
-      "title": "add",
-      "id": 14,
-      "position": 0
-    },
-    {
-      "listId": 3,
-      "title": "aadd",
-      "id": 75,
-      "position": 2
-    },
-    {
       "listId": 2,
       "title": "More make it longer",
       "id": 80,
-      "position": 1
+      "position": 5
     },
     {
-      "listId": 3,
+      "listId": 2,
       "title": "more make it longer",
       "id": 60,
-      "position": 1
+      "position": 4
     }
   ],
   "lists": [
@@ -36,22 +24,15 @@
       "backgroundColour": "hsl(344, 96%, 27%)",
       "width": 340,
       "height": 576,
-      "title": "New new",
+      "title": "NewASD new",
       "id": 2
     },
     {
-      "backgroundColour": "hsl(39, 100%, 47%)",
+      "backgroundColour": "hsl(191, 69%, 44%)",
       "width": 340,
       "height": 576,
       "title": "New NEw New",
       "id": 3
-    },
-    {
-      "backgroundColour": "hsl(244, 58%, 58%)",
-      "width": 340,
-      "height": 576,
-      "title": "Anoither another",
-      "id": 4
     }
   ],
   "comments": [],

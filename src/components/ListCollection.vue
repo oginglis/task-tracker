@@ -31,7 +31,6 @@
         <li>
           <ColourSelector
             :canvasSize="creatorDimensionsNumber"
-            :ballColours="colours"
             :title="`Choose a colour for new list`"
             :bgColor="`hsl(0, 0%, 96%)`"
             :textColor="{ color: `hsl(0, 0%, 0%)` }"
@@ -53,7 +52,6 @@ import ColourSelector from "./ColourSelector.vue";
 import { TrackerDimensions } from "@/types/Dimensions";
 import ListCreator from "./ListCreator.vue"
 import tinyColor from "tinycolor2";
-import colours from '../common/colours';
 import { TodoType } from "@/types/Todo";
 export default defineComponent({
   name: "ListCollection",
@@ -73,8 +71,7 @@ export default defineComponent({
       creatorDimensionsPixels: { width: "304px", height: "528px" },
       showColorPicker: false,
 showNewList: false,
-newListBgColor: "hsl(33, 52%, 69%)",
-      colours: colours,
+newListBgColor: "hsl(33, 52%, 69%)"
     };
   },
   watch: {
