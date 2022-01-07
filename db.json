@@ -4,24 +4,24 @@
       "listId": 2,
       "title": "Add",
       "id": 13,
-      "position": 0
+      "position": 1
     },
     {
-      "listId": 2,
+      "listId": 3,
       "title": "More make it longer",
       "id": 80,
-      "position": 5
+      "position": 0
     },
     {
       "listId": 2,
       "title": "more make it longer",
       "id": 60,
-      "position": 4
+      "position": 0
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(344, 96%, 27%)",
+      "backgroundColour": "hsl(31, 100%, 49%)",
       "width": 340,
       "height": 576,
       "title": "NewASD new",

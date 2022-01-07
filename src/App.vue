@@ -1,12 +1,12 @@
 <template >
-
+<div class="app" :class="{transitionColour: !isLoading}">
     <metainfo>
       <template v-slot:title="{ content }">{{
         content ? `${content}  · Schedule` : `Task Tracker`
       }}</template>
     </metainfo>
     <Homepage />
-
+</div>
 </template>
 
 
@@ -23,6 +23,13 @@ export default defineComponent({
   },
   components: {
     Homepage,
+  },
+  methods: {
+    addAnimation: function():Object {
+      return {
+        transition: `background-color 1s ease`
+      }
+    },
   },
   mounted(){
     this.isLoading = false;
@@ -75,15 +82,21 @@ console.log(`
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+}
+
+.app {
   color: var(--text-color);
   background-color: var(--background-color);
   min-height: 100vh;
   width: 100vw;
-  transition: background-color 500ms;
 }
 
 body{
   margin:0;
+}
+
+.transitionColour {
+transition: background-color 500ms;
 }
 
 .preload * {
