@@ -1,14 +1,9 @@
 <template>
   <div class="list_creator">
     <Tooltip position="bottom" :tooltipText="'Create new list'">
-    <img :src="plusIcon" alt="my-logo" />
-      <Icon
-        type="plus"
-        :bgColor="`hsl(0, 0%, 90%)`"
-        class="hiding__icon black_icon"
+    <img :src="plusIcon" alt="my-logo"  class="hiding__icon black_icon plusicon"
         :borderStyles="false"
-        @iconClicked="createAList"
-      />
+        @click="createAList"/>
     </Tooltip>
   </div>
 </template>
@@ -17,14 +12,12 @@
 import { defineComponent } from "vue";
 import { ListType } from "@/types/List";
 import Tooltip from "../common/components/Tooltip.vue";
-import Icon from "../common/components/Icon.vue";
 import PlusIcon from "@/assets/plus.svg";
 
 export default defineComponent({
   name: "ListPlaceholder",
   components: {
-    Tooltip,
-    Icon
+    Tooltip
   },
   created() {},
   data: function () {
@@ -35,6 +28,7 @@ export default defineComponent({
   },
   methods: {
     createAList: function (): void {
+      console.log("Clickde a list cliked")
       this.$emit("createNewList");
     },
   },
@@ -56,23 +50,26 @@ export default defineComponent({
   justify-content: center;
 }
 
-.hiding__icon {
-  font-size: 19em;
+
+.list_creator:hover {
+  cursor: pointer;
 }
 
 .black_icon{
-  color: black;
+  color: pink;
+  height: 6rem;
+  animation: transform 1s ease;
+}
+
+.black_icon:hover{
+
+  cursor: pointer;
 }
 
 .list_creator:hover .hiding__icon{
-  animation: overshoot .3s ease;
+  transform: scale(1.5); 
+  animation: transform 1s ease;
 }
 
-@keyframes overshoot {
-  0% { transform: scale(1) }
-  50% { transform: scale(1.8) }
-80%{transform: scale(.8) }
 
-  100% { transform: scale(1) }
-}
 </style>

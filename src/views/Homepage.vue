@@ -79,6 +79,7 @@ export default defineComponent({
 .list_section{
   flex-grow: 3;
   padding-left: 3rem;
+ flex-basis: 70vw;
 }
 
 .navigation{
@@ -97,7 +98,6 @@ export default defineComponent({
   transition: border-right 500ms;
   flex-basis: 400px;
   min-width: 300px;
-
 
 }
 

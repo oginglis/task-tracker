@@ -2,37 +2,43 @@
   "todos": [
     {
       "listId": 2,
-      "title": "Add",
-      "id": 13,
-      "position": 1
-    },
-    {
-      "listId": 3,
-      "title": "More make it longer",
-      "id": 80,
+      "title": "New task",
+      "id": 66,
       "position": 0
     },
     {
       "listId": 2,
-      "title": "more make it longer",
-      "id": 60,
+      "title": "task",
+      "id": 99,
+      "position": 1
+    },
+    {
+      "listId": 3,
+      "title": "task",
+      "id": 82,
       "position": 0
+    },
+    {
+      "listId": 3,
+      "title": "and another task",
+      "id": 71,
+      "position": 1
     }
   ],
   "lists": [
-    {
-      "backgroundColour": "hsl(31, 100%, 49%)",
-      "width": 340,
-      "height": 576,
-      "title": "NewASD new",
-      "id": 2
-    },
     {
       "backgroundColour": "hsl(191, 69%, 44%)",
       "width": 340,
       "height": 576,
       "title": "New NEw New",
       "id": 3
+    },
+    {
+      "backgroundColour": "hsl(43, 100%, 51%)",
+      "width": 340,
+      "height": 576,
+      "title": "New list",
+      "id": 2
     }
   ],
   "comments": [],

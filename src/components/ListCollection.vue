@@ -1,8 +1,7 @@
 <template>
-
   <div class="tracker_collection">
     <ul class="tracker_collection__list">
-      <template v-if="lists">
+      <template v-if="lists.length >= 0">
         <List
           v-for="(list, index)  in lists"
           :list="list"
@@ -197,5 +196,9 @@ newListBgColor: "hsl(33, 52%, 69%)"
 
 .tracker_collection__list li {
   margin: 4px 4px;
+}
+
+ul {
+  list-style-type: none;
 }
 </style>
