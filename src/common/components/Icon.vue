@@ -48,7 +48,8 @@ export default defineComponent({
   },
   computed: {
     styleIcon: function (): object {
-      let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
+      if (this.bgColor ){
+    let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
       let hsl: string[] = hslReg.exec(this.bgColor!)!.slice(1, 4);
       if (this.borderStyles) {
         return {
@@ -63,9 +64,12 @@ export default defineComponent({
           height: this.height,
         };
       } else {
-        return {};
+        return {backgroundColor: 'none'};
       }
-    },
+      } return {
+        backgroundColor: 'none'
+      };
+    }
   },
 });
 </script>

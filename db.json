@@ -2,39 +2,33 @@
   "todos": [
     {
       "listId": 2,
-      "title": "New task",
-      "id": 66,
+      "title": "Scrolling functionlity on lists",
+      "id": 71,
       "position": 0
     },
     {
       "listId": 2,
-      "title": "task",
-      "id": 99,
+      "title": "Error when pressing enter on list",
+      "id": 77,
       "position": 1
     },
     {
-      "listId": 3,
-      "title": "task",
-      "id": 82,
-      "position": 0
-    },
-    {
-      "listId": 3,
-      "title": "and another task",
-      "id": 71,
-      "position": 1
+      "listId": 2,
+      "title": "Transitions iwth new action element",
+      "id": 61,
+      "position": 2
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(191, 69%, 44%)",
+      "backgroundColour": "hsl(340, 100%, 50%)",
       "width": 340,
       "height": 576,
-      "title": "New NEw New",
+      "title": "This is a new list",
       "id": 3
     },
     {
-      "backgroundColour": "hsl(43, 100%, 51%)",
+      "backgroundColour": "hsl(0, 100%, 24%)",
       "width": 340,
       "height": 576,
       "title": "New list",

@@ -1,9 +1,9 @@
 <template>  
   <nav class="navigation">
     <Icon
-      type="list"
+      type="adjust"
       class="icon icon--hide"
-      :bgColor="`hsl(0, 0%, 0%)`"
+      :class="rotateIcon"
       :width="`0.9rem`"
       :height="`0.9rem`"
       :borderStyles="true"
@@ -26,10 +26,10 @@
 
 import ListCollection from "../components/ListCollection.vue";
 import { defineComponent } from "vue";
-import { faList } from "@fortawesome/free-solid-svg-icons";
+import { faAdjust } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import Icon from "../common/components/Icon.vue";
-library.add([faList] as any);
+library.add([faAdjust] as any);
 export default defineComponent({
   name: "Homepage",
   components: {
@@ -57,7 +57,24 @@ export default defineComponent({
       localStorage.setItem('theme', this.theme); // stores theme value on local storage
     }
   },
-});
+  computed: {
+    rotateIcon: function(): string {
+      let styleObj: string;
+      switch (this.theme == 'darkMode'){
+        case true:
+          styleObj=  "rotateIcon";
+          break
+        case false:
+          styleObj = "noRotateIcon";
+          break
+      }
+      return styleObj
+      }
+      
+
+    }
+  }
+);
 </script>
 
 <style scoped>
@@ -103,9 +120,17 @@ export default defineComponent({
 
 .icon{ 
   color: white;
+  animation: transform .3s ease;
 }
 .right_align{ 
   text-align: right;
   margin-right: 2rem;
+}
+
+.rotateIcon {
+  transform: rotate(180deg)
+}
+.noRotateIcon {
+  transform: rotate(0)
 }
 </style>
