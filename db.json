@@ -4,51 +4,39 @@
       "listId": 3,
       "title": "Scrolling functionlity on lists",
       "id": 71,
-      "position": 0
+      "position": 1
     },
     {
-      "listId": 3,
+      "listId": 2,
       "title": "New ",
       "id": 84,
-      "position": 1
-    },
-    {
-      "listId": 3,
-      "title": "New action",
-      "id": 45,
-      "position": 2
-    },
-    {
-      "listId": 2,
-      "title": "atk",
-      "id": 50,
       "position": 0
-    },
-    {
-      "listId": 2,
-      "title": "New action",
-      "id": 47,
-      "position": 1
     },
     {
       "listId": 3,
       "title": "New one tion",
       "id": 17,
-      "position": 3
+      "position": 0
+    },
+    {
+      "listId": 2,
+      "title": "New at",
+      "id": 57,
+      "position": 1
     }
   ],
   "lists": [
     {
       "backgroundColour": "hsl(355, 84%, 41%)",
       "width": 340,
-      "height": 930,
+      "height": 576,
       "title": "List One",
       "id": 3
     },
     {
       "backgroundColour": "hsl(86, 9%, 85%)",
       "width": 340,
-      "height": 930,
+      "height": 576,
       "title": "New list",
       "id": 2
     }

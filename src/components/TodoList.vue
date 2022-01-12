@@ -12,7 +12,7 @@
       direction="horizontal"
       :draggable="`.todo`"
       delay="10"
-      :emptyInsertThreshold="100"
+      :emptyInsertThreshold="150"
       :swapThreshold="100"
       v-bind="dragOptions"
       :component-data="{

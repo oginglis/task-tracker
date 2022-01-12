@@ -3,7 +3,7 @@
   <div class="section_wrap">
     <section class="schedule_section">
       <h1 class="collection_title right_align">Schedule</h1>
-      
+      <Schedule />
     </section> 
     <section class="list_section">
       <h1 class="collection_title">Lists</h1>
@@ -17,12 +17,14 @@
 import ListCollection from "../components/ListCollection.vue";
 import NavBar from "../common/components/NavBar.vue"
 import { defineComponent } from "vue";
+import Schedule from "../components/Schedule.vue"
 
 export default defineComponent({
   name: "Homepage",
   components: {
     NavBar,
-    ListCollection
+    ListCollection,
+    Schedule
   },
   beforeMount(){
     if(localStorage.getItem('theme')){
