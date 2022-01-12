@@ -1,7 +1,7 @@
 {
   "todos": [
     {
-      "listId": 2,
+      "listId": 3,
       "title": "Scrolling functionlity on lists",
       "id": 71,
       "position": 0
@@ -10,25 +10,25 @@
       "listId": 2,
       "title": "Error when pressing enter on list",
       "id": 77,
-      "position": 1
+      "position": 0
     },
     {
-      "listId": 2,
+      "listId": 3,
       "title": "Transitions iwth new action element",
       "id": 61,
-      "position": 2
+      "position": 1
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(340, 100%, 50%)",
+      "backgroundColour": "hsl(355, 84%, 41%)",
       "width": 340,
       "height": 576,
-      "title": "This is a new list",
+      "title": "List One",
       "id": 3
     },
     {
-      "backgroundColour": "hsl(0, 100%, 24%)",
+      "backgroundColour": "hsl(181, 87%, 31%)",
       "width": 340,
       "height": 576,
       "title": "New list",

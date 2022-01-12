@@ -60,7 +60,7 @@ console.log(`
 </script>
 
 <style>
-@import url("https://use.typekit.net/saf3ibf.css");
+
 
 :root {
     --background-color: hsl(0, 0%, 96%);
@@ -75,7 +75,7 @@ console.log(`
 }
 
 #app {
-  font-family: aktiv-grotesk, sans-serif;
+  font-family: MonumentGrotesk, sans-serif;
   font-weight: 200;
   font-style: normal;
   font-size: 15px;

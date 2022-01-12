@@ -1,15 +1,5 @@
 <template>  
-  <nav class="navigation">
-    <Icon
-      type="adjust"
-      class="icon icon--hide"
-      :class="rotateIcon"
-      :width="`0.9rem`"
-      :height="`0.9rem`"
-      :borderStyles="true"
-      @click="toggleTheme"
-    />
-  </nav>
+  <NavBar v-model:themeColor="theme" @updateTheme="themeUpdate"/>
   <div class="section_wrap">
     <section class="schedule_section">
       <h1 class="collection_title right_align">Schedule</h1>
@@ -25,17 +15,14 @@
 <script  lang="ts">
 
 import ListCollection from "../components/ListCollection.vue";
+import NavBar from "../common/components/NavBar.vue"
 import { defineComponent } from "vue";
-import { faAdjust } from "@fortawesome/free-solid-svg-icons";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import Icon from "../common/components/Icon.vue";
-library.add([faAdjust] as any);
+
 export default defineComponent({
   name: "Homepage",
   components: {
-    // VueNavigationBar,
-    ListCollection,
-    Icon
+    NavBar,
+    ListCollection
   },
   beforeMount(){
     if(localStorage.getItem('theme')){
@@ -44,35 +31,18 @@ export default defineComponent({
     }
 
   },
+  methods: {
+    themeUpdate: function(payload: string):void {
+      this.theme = payload;
+    },
+  },
   created() {},
   data: function () {
     return {
       theme: '',
     };
   },
-  methods: {
-    toggleTheme: function(): void {
-      this.theme = this.theme == 'darkMode' ? '' : 'darkMode'; //toggles theme value
-      document.documentElement.setAttribute('data-theme', this.theme); // sets the data-theme attribute
-      localStorage.setItem('theme', this.theme); // stores theme value on local storage
-    }
-  },
-  computed: {
-    rotateIcon: function(): string {
-      let styleObj: string;
-      switch (this.theme == 'darkMode'){
-        case true:
-          styleObj=  "rotateIcon";
-          break
-        case false:
-          styleObj = "noRotateIcon";
-          break
-      }
-      return styleObj
-      }
-      
 
-    }
   }
 );
 </script>
@@ -99,16 +69,7 @@ export default defineComponent({
  flex-basis: 70vw;
 }
 
-.navigation{
-  width: 100%;
-  padding-left: 32px;
-  padding-right: 32px;
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-  background-color: rgb(0, 0, 0);
-  height: 40px;
-}
+
 .schedule_section{
   flex-grow: 1;
   border-right: solid 2px var(--section-divide-color);
@@ -118,19 +79,11 @@ export default defineComponent({
 
 }
 
-.icon{ 
-  color: white;
-  animation: transform .3s ease;
-}
+
 .right_align{ 
   text-align: right;
   margin-right: 2rem;
 }
 
-.rotateIcon {
-  transform: rotate(180deg)
-}
-.noRotateIcon {
-  transform: rotate(0)
-}
+
 </style>
