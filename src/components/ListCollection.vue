@@ -69,8 +69,8 @@ export default defineComponent({
       creatorDimensionsNumber: { width: 304, height: 528 },
       creatorDimensionsPixels: { width: "304px", height: "528px" },
       showColorPicker: false,
-showNewList: false,
-newListBgColor: "hsl(33, 52%, 69%)"
+      showNewList: false,
+      newListBgColor: "hsl(33, 52%, 69%)"
     };
   },
   watch: {

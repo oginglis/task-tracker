@@ -2,12 +2,6 @@
   "todos": [
     {
       "listId": 3,
-      "title": "Scrolling functionlity on lists",
-      "id": 71,
-      "position": 1
-    },
-    {
-      "listId": 2,
       "title": "New ",
       "id": 84,
       "position": 0
@@ -16,25 +10,25 @@
       "listId": 3,
       "title": "New one tion",
       "id": 17,
-      "position": 0
+      "position": 1
     },
     {
       "listId": 2,
       "title": "New at",
       "id": 57,
-      "position": 1
+      "position": 0
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(355, 84%, 41%)",
+      "backgroundColour": "hsl(6, 81%, 38%)",
       "width": 340,
       "height": 576,
-      "title": "List One",
+      "title": "And another list",
       "id": 3
     },
     {
-      "backgroundColour": "hsl(86, 9%, 85%)",
+      "backgroundColour": "hsl(190, 100%, 23%)",
       "width": 340,
       "height": 576,
       "title": "New list",

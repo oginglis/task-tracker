@@ -17,7 +17,9 @@
 import ListCollection from "../components/ListCollection.vue";
 import NavBar from "../common/components/NavBar.vue"
 import { defineComponent } from "vue";
-import Schedule from "../components/Schedule.vue"
+import Schedule from "../components/Schedule.vue";
+import { ListType } from "@/types/List";
+import ListService from '../services/ListService';
 
 export default defineComponent({
   name: "Homepage",
@@ -37,11 +39,29 @@ export default defineComponent({
     themeUpdate: function(payload: string):void {
       this.theme = payload;
     },
+      createNewList: function(listinfo: {colour: string, title: string}):void {
+   
+      if (!listinfo.title){
+        return
+      }
+      let  newList = {
+        backgroundColour: listinfo.colour as string,
+        width: 500,
+        height: 500,
+        title: listinfo.title as string,
+        id: (this.lists.length+1),
+      }
+      ListService.postList(newList).catch(function (error) {
+        console.log(error);
+      });
+      this.lists = [...this.lists, newList]
+    },
   },
   created() {},
   data: function () {
     return {
       theme: '',
+      lists: [] as Array<ListType>,
     };
   },
 
@@ -64,11 +84,14 @@ export default defineComponent({
   display: flex;
   padding-left: 1rem;
   min-height: inherit;
+  height: calc(100vh - 40px);
 }
 .list_section{
   flex-grow: 3;
   padding-left: 3rem;
  flex-basis: 70vw;
+   height: calc(100vh - 40px);
+  overflow: scroll;
 }
 
 
@@ -78,6 +101,8 @@ export default defineComponent({
   transition: border-right 500ms;
   flex-basis: 400px;
   min-width: 300px;
+  height: calc(100vh - 40px);
+  overflow: scroll;
 
 }
 

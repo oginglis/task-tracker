@@ -89,7 +89,7 @@ export default defineComponent({
       p.draw = () => {
         p.background(this.hslTorbg(this.bgColor));
         p.textAlign("center");
-        p.textFont("MonumentGrotesk");
+        p.textFont("MonumentGrotesk-Regular");
         p.textSize(15);
         p.fill(this.textColor!.color);
         p.text(this.title, width / 2, height / 2);
