@@ -9,9 +9,9 @@
       <div>
         <div class="text-inline">
           <ListHeader
-            :title="localList.title"
-            @updateTitle="updateTaskTrackerTitle"
-            :headerColour="localList.backgroundColour"
+            :title="list.title"
+            @updateTitle="askTaskTrackerTitle"
+            :headerColour="list.backgroundColour"
             :startFocused="false"
           />
         </div>
@@ -27,10 +27,10 @@
           @addTempActionToList="addActiontoList"
           @adderLeft="recordHeight"
           @removedActions="recordHeight"
-          :listColour="localList.backgroundColour"
+          :listColour="list.backgroundColour"
           :updateWithThisTask="taskPassUpdate"
           :showActionAdder="showAddTask"
-          :list_id="localList.id"
+          :list_id="list.id"
         />
       </div>
       <p v-if="showEmptyMessage" class="message_animations">You have no Actions on <br />this list yet.</p>
@@ -39,7 +39,7 @@
         <Tooltip position="bottom" :tooltipText="'Delete list'">
           <Icon
             type="trash"
-            :bgColor="this.localList.backgroundColour"
+            :bgColor="this.list.backgroundColour"
             class="hiding__icon"
             :borderStyles="false"
             :style="[iconBGHover, addIconBg()]"
@@ -49,7 +49,7 @@
         <Tooltip position="bottom" :tooltipText="'Create action'">
           <Icon
             type="plus"
-            :bgColor="localList.backgroundColour"
+            :bgColor="list.backgroundColour"
             @iconClicked="toggleActionAdder"
             class="add__action"
             :style="addIconBg()"
@@ -60,7 +60,7 @@
           <Icon
             type="palette"
             class="hiding__icon brighter"
-            :bgColor="localList.backgroundColour"
+            :bgColor="list.backgroundColour"
             :borderStyles="false"
             :style="[iconBGHover, addIconBg()]"
             @iconClicked="toggleP5Canvas"
@@ -71,8 +71,8 @@
     <ColourSelector
       v-else
       :canvasSize="taskTrackDimensions()"
-      :bgColor="localList.backgroundColour"
-      @clickColor="updateColor"
+      :bgColor="list.backgroundColour"
+      @clickColor="askToUpdateColor"
       :title="p5Message"
       :textColor="calculatedTextColor"
     />
@@ -105,25 +105,20 @@ export default defineComponent({
     Icon,
     ColourSelector,
   },
-  beforeMount(){
-this.localList = this.list;
-  },
+
 
   mounted() {
-    this.localTasks = this.tasks;
-    this.localList = this.list;
     let trackerInstance: HTMLElement | null = this.$refs.taskTrackerInstance as HTMLElement;
     let trackerSize = trackerInstance!.getBoundingClientRect();
-    this.localList.width = Math.trunc(trackerSize.width);
-    this.localList.height = Math.trunc(trackerSize.height);
+    this.askToUpdateDimensions({width:Math.trunc(trackerSize.width), height: Math.trunc(trackerSize.height)});
     this.initObserver();
   },
   updated() {
     this.$nextTick(() => {
-
       this.recordHeight();
     });
   },
+
   props: {
     list: {
       type: Object as PropType<ListType>,
@@ -152,7 +147,6 @@ this.localList = this.list;
 
   data: function () {
     return {
-      localList: {} as ListType,
       buttonText: "Add a Task",
       localTasks: [] as Array<TodoType>,
       task: {} as TodoType,
@@ -176,7 +170,8 @@ this.localList = this.list;
       trackerInstance.style.filter =  "brightness(100%)";
     },
     deleteList: function():void{
-      this.$emit("requestDeleteList",this.localList.id )
+      console.log("Start delete request with ", this.list.id)
+      this.$emit("requestDeleteList",this.list.id )
     },
     initObserver() {
       const tracker: HTMLElement | null = this.$refs.taskTrackerInstance as HTMLElement,
@@ -188,8 +183,8 @@ this.localList = this.list;
         mutations.forEach(function (mutation) {
           if (mutation.type === "attributes") {
             let { width, height } = tracker!.style;
-            vm.localList.width = parseInt(width, 10);
-            vm.localList.height = parseInt(height, 10);
+            vm.askToUpdateDimensions({width:parseInt(width, 10), height: parseInt(height, 10)})
+
             vm.recordHeight();
           }
         });
@@ -202,20 +197,19 @@ this.localList = this.list;
         if (this.$refs.taskTrackerInstance != null) {
           let trackerInstance: HTMLElement  = this.$refs
             .taskTrackerInstance as HTMLElement;
-          this.localList.width = trackerInstance!.clientWidth;
-          this.localList.height = trackerInstance!.clientHeight;
+          this.askToUpdateDimensions({width:trackerInstance!.clientWidth, height: trackerInstance!.clientHeight})
           this.saveList();
         }
-        this.$emit("sizingUpdate", this.localList.height);
+        this.$emit("sizingUpdate", this.list.height);
       });
     },
     saveList: function (): void {
-      ListService.patchList(this.localList.id, {
-        title: this.localList.title,
-        width: this.localList.width,
-        height: this.localList.height,
-        backgroundColour: this.localList.backgroundColour,
-        id: this.localList.id,
+      ListService.patchList(this.list.id, {
+        title: this.list.title,
+        width: this.list.width,
+        height: this.list.height,
+        backgroundColour: this.list.backgroundColour,
+        id: this.list.id,
       }).catch(function (error) {
           console.log(error);
         });
@@ -229,18 +223,22 @@ this.localList = this.list;
     },
     addIconBg: function (): object {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
-      let hsl: string[] = hslReg.exec(this.localList.backgroundColour!)!.slice(1, 4);
+      let hsl: string[] = hslReg.exec(this.list.backgroundColour!)!.slice(1, 4);
       return {
         backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 10}%)`,
       };
     },
-    updateTaskTrackerTitle: function (newTitle: string): void {
-      this.localList.title = newTitle;
+    askToUpdateDimensions: function(dimensions: {width: number, height: number}): void {
+    this.$emit("askToUpdateListDimensions", this.list.id,dimensions )
+    },
+    
+    askTaskTrackerTitle: function (newTitle: string): void {
+      this.$emit("askToUpdateListTitle", this.list.id, newTitle);
       this.saveList();
     },
-    updateColor: function (newColor: string): void {
+    askToUpdateColor: function(newColor: string): void {
       let hslNewColor = tinyColor(newColor).toHslString();
-      this.localList.backgroundColour = hslNewColor;
+      this.$emit("askToUpdateListColour", this.list.id, hslNewColor);
       this.saveList();
       this.toggleP5Canvas();
       this.taskTrackDimensions();
@@ -275,7 +273,7 @@ this.localList = this.list;
       });
     },
     changeTaskTrackerColour: function (colour: string): void {
-      this.localList.backgroundColour = colour;
+      this.askToUpdateColor(colour)
     },
     calculateTaskPosition: function (id: number): TaskPosition {
       return this.taskPositionsObjectParent[id];
@@ -344,7 +342,7 @@ this.localList = this.list;
       return show
     },
     p5Message: function (): string {
-      return "Choose a colour for " + this.localList.title;
+      return "Choose a colour for " + this.list.title;
     },
     emptyMessage: function (): Boolean {
       if (this.localTasks.length == 0) {
@@ -355,7 +353,7 @@ this.localList = this.list;
     },
     iconBGHover: function (): object {
       let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
-      let hsl: string[] = hslReg.exec(this.localList.backgroundColour!)!.slice(1, 4);
+      let hsl: string[] = hslReg.exec(this.list.backgroundColour!)!.slice(1, 4);
       if (this.showAddTask) {
         return {
           "--bg-hov-color": `hsl(${hsl[0]},${hsl[1]}%,${
@@ -381,11 +379,11 @@ this.localList = this.list;
     },
     calculatedBackgroundColor: function (): object {
       return {
-        backgroundColor: this.localList.backgroundColour,
+        backgroundColor: this.list.backgroundColour,
       };
     },
     calculatedTextColor: function (): object {
-      if (tinyColor(this.localList.backgroundColour).isLight()) {
+      if (tinyColor(this.list.backgroundColour).isLight()) {
         return {
           color: "black",
         };

@@ -8,13 +8,16 @@
           :tasks="checkForTasks(list.todos)"
           :key="index"
           @sizingUpdate="setCreatorToListHeight"
-          @requestDeleteList="deleteList"
+          @requestDeleteList="askToDeleteList"
+          @askToUpdateListTitle="askToUpdateListTitle2"
+          @askToUpdateListColour="askToUpdateListColour2"
+          @askToUpdateListDimensions="askToUpdateListDimensions2"
         >
         </List>
       </template>
       <template v-if="showNewList">
         <li> 
-          <ListCreator :bgColour="newListBgColor" @createNewListNow="createNewList"/>
+          <ListCreator :bgColour="newListBgColor" @createNewListNow="askToCreateNewList"/>
         </li>
       </template>
       <template v-if="!showColorPicker">
@@ -42,16 +45,15 @@
 </template>
 
 <script  lang="ts">
-import { defineComponent } from "vue";
-import ListService from "@/services/ListService";
+import { defineComponent, PropType } from "vue";
 import List from "./List.vue";
 import { ListType } from "@/types/List";
 import ListPlaceholder from "./ListPlaceholder.vue";
 import ColourSelector from "./ColourSelector.vue";
+import { TodoType } from "@/types/Todo";
 import { TrackerDimensions } from "@/types/Dimensions";
 import ListCreator from "./ListCreator.vue"
 import tinyColor from "tinycolor2";
-import { TodoType } from "@/types/Todo";
 export default defineComponent({
   name: "ListCollection",
   components: {
@@ -60,12 +62,17 @@ export default defineComponent({
     ColourSelector,
     ListCreator
   },
-  created() {
-    this.getAllLists();
+  props: {
+     lists: {type: Array as PropType<Array<ListType>>,default: ()=>[  {
+      "backgroundColour": "hsl(2, 73%, 43%)",
+      "width": 340,
+      "height": 576,
+      "title": "Things to do",
+      "id": 1}]}
   },
+
   data: function () {
     return {
-      lists: [] as Array<ListType>,
       creatorDimensionsNumber: { width: 304, height: 528 },
       creatorDimensionsPixels: { width: "304px", height: "528px" },
       showColorPicker: false,
@@ -79,16 +86,24 @@ export default defineComponent({
     },
   },
   methods: {
-
+askToUpdateListDimensions2: function (listId: number, dimensions: {width: number, height: number}):void {
+  this.$emit("askToUpdateDimensions3", listId, dimensions)
+},
+    
+    askToUpdateListColour2: function(listId: number,newColor: string): void {
+      this.$emit("askToUpdateListColour3", listId, newColor)
+    },
+    askToUpdateListTitle2: function( listId: number, newTitle: string): void {
+      this.$emit("updateListTitle", listId, newTitle)
+    },
     checkForTasks: function(todos: Array<TodoType> | undefined): Array<TodoType>{
       if (todos == undefined){
-  return []
+        return []
+        }
+        else {
+          todos.sort(({position:a}, {position:b}) => a-b);
+        return todos
       }
-    else {
-    todos.sort(({position:a}, {position:b}) => a-b);
-    return todos
-    }
-
     },
     handleclickColor: function (payload: string): void {
       this.toggleColorPicker();
@@ -96,42 +111,19 @@ export default defineComponent({
       this.newListBgColor = HSLcol.toHslString();
       this.toggleNewList();
     },
-    createNewList: function(listinfo: {colour: string, title: string}):void {
+    askToCreateNewList: function(listinfo: {colour: string, title: string}):void {
       this.showNewList = false;
-      if (!listinfo.title){
-        return
-      }
-      let  newList = {
-        backgroundColour: listinfo.colour as string,
-        width: this.creatorDimensionsNumber.width,
-        height: this.creatorDimensionsNumber.height,
-        title: listinfo.title as string,
-        id: (this.lists.length+1),
-      }
-      ListService.postList(newList).catch(function (error) {
-        console.log(error);
-      });
-      this.lists = [...this.lists, newList]
+      this.$emit("askToCreateNewList2", listinfo)
     },
+
     toggleNewList: function():void {
     this.showNewList = !this.showNewList
     },
-    getAllLists: function (): void {
-      ListService.getList().then((response): void => {
-        this.lists = response.data as Array<ListType>;
-      }).catch(function (error) {
-          console.log(error);
-        });
+    askToDeleteList: function(listID: number): void {
+       console.log("Second delte with ", listID);
+      this.$emit("askToDeleteList2", listID)
     },
-    deleteList: function(listID: number): void {
-      ListService.deleteList(listID).catch(function (error) {
-          console.log(error);
-      });
-      var index = this.lists.findIndex(function(o){
-        return o.id === listID;
-      })
-      if (index !== -1) this.lists.splice(index, 1);
-    },
+  
     toggleColorPicker: function (): void {
       this.showColorPicker = !this.showColorPicker;
     },

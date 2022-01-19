@@ -1,26 +1,19 @@
 <template>
 <div>
     <ul>
-        <li v-for="(day, index) in currentWeek" :key="index">
-            <h3 class="day_header">{{checkIfToday(day,index)}}</h3><br>
-            <p class="month_header">{{day.format("MMMM D") }}</p>
-            <Tooltip position="bottom" :tooltipText="'Create action'">
-                <Icon
-                type="plus"
-                class="add__action"
-                />
-            </Tooltip>
-        </li>     
+        <ScheduleItem v-for="(day, index) in currentWeek" :key="index" :tasksForDay=findTasksForDay(day) :dayOfWeek="checkIfToday(day, index)" :date="day.format(`MMMM D`)" />
     </ul>
 </div>
 </template>
 
 <script lang="ts">
 
-import { defineComponent} from "vue";
+import { defineComponent, PropType} from "vue";
 import dayjs from 'dayjs';
-import Tooltip from "../common/components/Tooltip.vue";
-import Icon from "../common/components/Icon.vue";
+
+import { TodoType } from "@/types/Todo";
+import ScheduleItem from "./ScheduleItem.vue";
+
 
 export default defineComponent({
   name: "Schedule",
@@ -28,26 +21,41 @@ export default defineComponent({
       this.currentWeek = this.createArrayOfDays();
   },
   components: {
-    Tooltip,
-    Icon,
+    ScheduleItem
   },
   data: function() {
       return {
           currentWeek: []  as Array<any> ,
       }
   },
-  computed: {
-
+  props: {  
+      tasks: {
+          type: Array as PropType<Array<TodoType>>,
+          default: ()=> [  {
+            "backgroundColour": "hsl(2, 73%, 43%)",
+            "width": 340,
+            "height": 576,
+            "title": "Things to do",
+            "id": 1}]
+        }
   },
+
   methods: {
-      createArrayOfDays: function(): Object[]{
-          let dayArray: Object[] =[];
+      createArrayOfDays: function(): dayjs.Dayjs[]{
+          let dayArray: dayjs.Dayjs[] =[];
           for(let i=0; i<=7; i++){
               dayArray.push(dayjs().add(i, 'day'));
           }
           return dayArray
       },
-        checkIfToday: function(day: any, index: number): String {
+      findTasksForDay: function(day:dayjs.Dayjs): Array<TodoType> {
+          let selectedTasks: Array<TodoType> = [];
+            selectedTasks = this.tasks.filter((task)=>{
+               return task.date === day.format("D,MMMM,YYYY")
+          });
+          return selectedTasks
+      },
+      checkIfToday: function(day: any, index: number): String {
         let dayHumanised= "";
         switch (index){
             case 0:
@@ -59,10 +67,8 @@ export default defineComponent({
             default: 
                 dayHumanised = day.format("dddd")
         }
-
-        return dayHumanised
-        }
-  }
+        return dayHumanised;
+  }}
 });
 </script>
 

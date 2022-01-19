@@ -39,6 +39,11 @@ export default defineComponent({
   created(){
     this.isFocus = this.startFocused;
   },
+  updated(){
+    if(this.title){
+      this.headerTitle = this.title;
+    }
+  },
   beforeMount(){
     if(this.title){
  this.headerTitle = this.title;

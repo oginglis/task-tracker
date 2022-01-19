@@ -62,6 +62,7 @@ export default defineComponent({
       if (this.action.title != "") {
         this.$emit("addNewAction",  this.action);
         this.action.id = parseInt((Math.random()*100 +1).toFixed(3));
+        this.action.date = "unsheduled"
         TaskService.postTask(this.action)
           .catch(function (error) {
             console.log(error);

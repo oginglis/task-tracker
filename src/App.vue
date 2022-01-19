@@ -49,7 +49,7 @@ console.log(`
   },
   setup() {
     useMeta({
-      title: "Actions",
+      title: "Steps",
       htmlAttrs: { lang: "en", amp: true },
     });
   },
