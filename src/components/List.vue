@@ -40,7 +40,7 @@
           <Icon
             type="trash"
             :bgColor="this.list.backgroundColour"
-            class="hiding__icon"
+            class="hiding__icon icon_padding"
             :borderStyles="false"
             :style="[iconBGHover, addIconBg()]"
             @click="deleteList"
@@ -53,13 +53,13 @@
             @iconClicked="toggleActionAdder"
             class="add__action"
             :style="addIconBg()"
-            v-if="!showAddTask"
+            v-show="!showAddTask"
           />
         </Tooltip>
         <Tooltip position="bottom" :tooltipText="'Choose list colour'">
           <Icon
             type="palette"
-            class="hiding__icon brighter"
+            class="hiding__icon brighter icon_padding"
             :bgColor="list.backgroundColour"
             :borderStyles="false"
             :style="[iconBGHover, addIconBg()]"
@@ -436,6 +436,9 @@ transition: filter .1s ease;
 
 }
 
+.icon_padding {
+  padding: 15px;
+}
 .text-inline {
   display: flex;
   flex-direction: column;
