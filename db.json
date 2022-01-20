@@ -1,26 +1,48 @@
 {
-  "todos": [],
-  "lists": [
+  "todos": [
     {
-      "backgroundColour": "hsl(340, 100%, 50%)",
-      "width": 340,
-      "height": 576,
-      "title": "List 1 pink",
-      "id": 8373
+      "listId": 8373,
+      "title": "New list",
+      "id": 16,
+      "position": 0,
+      "date": "unsheduled"
     },
     {
-      "backgroundColour": "hsl(174, 64%, 47%)",
+      "listId": 8373,
+      "title": "New action",
+      "id": 30,
+      "position": 0,
+      "date": "unsheduled"
+    },
+    {
+      "listId": 1100,
+      "title": "New action",
+      "id": 15,
+      "position": 0,
+      "date": "unsheduled"
+    }
+  ],
+  "lists": [
+    {
+      "backgroundColour": "hsl(39, 100%, 47%)",
       "width": 340,
       "height": 576,
-      "title": "List 2\n\n",
-      "id": 2318
+      "title": "List 1 Oranga",
+      "id": 8373
     },
     {
       "backgroundColour": "hsl(13, 80%, 43%)",
       "width": 340,
       "height": 576,
-      "title": "List 4",
+      "title": "List 2  Red",
       "id": 1100
+    },
+    {
+      "backgroundColour": "hsl(39, 100%, 47%)",
+      "width": 340,
+      "height": 576,
+      "title": "list 4 orane",
+      "id": 9801
     }
   ],
   "comments": [],
