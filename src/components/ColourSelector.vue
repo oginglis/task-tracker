@@ -72,12 +72,10 @@ export default defineComponent({
       let height = this.canvasSize!.height;
 
       let balls: any = [];
-      let myFont: any;
+  
       let maxSpeed = 5;
 
-      p.preload = () => {
-        myFont = p.loadFont("public/assets/fonts/MonumentGrotesk-Regular.otf");
-      };
+ 
 
       p.setup = () => {
         let ctx = p.createCanvas(width || 400, height || 400);
@@ -94,7 +92,7 @@ export default defineComponent({
       p.draw = () => {
         p.background(this.hslTorbg(this.bgColor));
         p.textAlign("center");
-        p.textFont(myFont);
+
         p.textSize(15);
         p.fill(this.textColor!.color);
         p.text(this.title, width / 2, height / 2);

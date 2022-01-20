@@ -3,10 +3,10 @@
     <ul class="tracker_collection__list">
       <template v-if="lists.length >= 0">
         <List
-          v-for="(list, index)  in lists"
+          v-for="(list)  in lists"
           :list="list"
           :tasks="checkForTasks(list.todos)"
-          :key="index"
+          :key="list.id"
           @sizingUpdate="setCreatorToListHeight"
           @requestDeleteList="askToDeleteList"
           @askToUpdateListTitle="askToUpdateListTitle2"
@@ -80,6 +80,7 @@ export default defineComponent({
       newListBgColor: "hsl(33, 52%, 69%)"
     };
   },
+
   watch: {
     creatorDimensionsPixels: function (old, newHeight) {
       this.creatorDimensionsPixels.height = newHeight;

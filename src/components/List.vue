@@ -106,13 +106,18 @@ export default defineComponent({
     ColourSelector,
   },
 
-
+unmounted(){
+  console.log("THIS LIST WAS REMOVED", this.list.title, " TASKS ", this.tasks)
+},
   mounted() {
+    console.log("Compoonent about to mount");
     let trackerInstance: HTMLElement | null = this.$refs.taskTrackerInstance as HTMLElement;
     let trackerSize = trackerInstance!.getBoundingClientRect();
     this.askToUpdateDimensions({width:Math.trunc(trackerSize.width), height: Math.trunc(trackerSize.height)});
     this.initObserver();
+    this.localTasks = this.tasks;
   },
+
   updated() {
     this.$nextTick(() => {
       this.recordHeight();
@@ -137,6 +142,7 @@ export default defineComponent({
     },]}
   },
   watch: {
+
     localTasks: {
       deep: true,
       handler: function (): void {
