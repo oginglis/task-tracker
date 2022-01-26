@@ -2,8 +2,11 @@
 <div>
     <li >
         <h3 class="day_header">{{dayOfWeek}}</h3><br>
-        <p class="month_header">{{date}}</p>
-        <TodoCreator v-if="showAdder"  class="brightnessAdjust"/>
+        <p class="month_header">{{date}}</p> 
+        <p v-for="(task, index) in tasksForDay" :key="index">{{task.title}} {{task.date}} </p>
+        <transition >
+            <TodoCreator v-if="showAdder" :newTodoDate="day.format(`D,MMMM,YYYY`)" class="scheduleAdderStyles" @clickOutsideActionAdder="showAdder = !showAdder" @addNewAction="addActionFromSchedule"/>
+        </transition>
         <Tooltip position="bottom" :tooltipText="'Create action'">
             <Icon
             @iconClicked="toggleActionAdd"
@@ -20,10 +23,11 @@
 
 import { defineComponent, PropType} from "vue";
 import {TodoType} from "@/types/Todo";
+
 import Tooltip from "../common/components/Tooltip.vue";
 import Icon from "../common/components/Icon.vue";
 import TodoCreator from "./TodoCreator.vue";
-
+import dayjs from 'dayjs';
 export default defineComponent({
   name: "ScheduleItem",
   created(){
@@ -45,6 +49,10 @@ export default defineComponent({
       date: {
         type: String,
         default: "Sat Jan 12"
+      },
+      day: {
+          type: dayjs.Dayjs,
+          default: dayjs()
       }
   },
   data: function() {
@@ -63,6 +71,9 @@ export default defineComponent({
   methods: {
       toggleActionAdd: function(): void{
           this.showAdder = !this.showAdder;
+      },
+      addActionFromSchedule: function(newAction: TodoType):void {
+          this.$emit("addThisFromSchedule",newAction )
       },
 
   }
@@ -106,7 +117,17 @@ transform: scale(1.1);
   cursor: pointer;
 }
 
-.brightnessAdjust{ 
-    filter: brightness(.9)
+
+
+.scheduleAdderStyles{
+
+    line-height: 2.2rem;
+    white-space: nowrap;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    box-sizing: border-box;
+    background-color: var(--placeholder-color);
 }
 </style>

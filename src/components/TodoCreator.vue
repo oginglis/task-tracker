@@ -1,7 +1,7 @@
 <template>
   <transition :name="transitonName">
     <div
-      class="New-action"
+      class="new-action"
       :style="newBGColor"
       v-click-outside="clickOutsideHandler"
     >
@@ -35,6 +35,10 @@ export default defineComponent({
       type: String,
       default: "",
     },
+    newTodoDate: {
+      type: String,
+      default: ""
+    },
     list_id: Number
     
   },
@@ -60,9 +64,10 @@ export default defineComponent({
       this.action.title = (e.target as HTMLInputElement).innerText;
       
       if (this.action.title != "") {
-        this.$emit("addNewAction",  this.action);
+     
         this.action.id = parseInt((Math.random()*100 +1).toFixed(3));
-        this.action.date = "unsheduled";
+        this.action.date = this.newTodoDate ? this.newTodoDate : "unsheduled";
+        this.$emit("addNewAction",  this.action);
         TaskService.postTask(this.action)
           .catch(function (error) {
             console.log(error);
@@ -83,7 +88,7 @@ export default defineComponent({
         }
       } else {
         return {
-        backgroundColor: `var(--background-color)`,
+        backgroundColor: `var(--placeholder-color)`,
       }
       }
 
@@ -93,9 +98,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.New-action {
-  margin: 0px auto;
-  border-radius: 10px;
+.new-action {
+  margin: 2.5px auto;
+  border-radius: 8px;
+  padding: 0.5rem;
   padding: 0.5rem;
   display: flex;
   align-items: center;
@@ -108,9 +114,8 @@ export default defineComponent({
   width: 100%;
   position: relative;
 }
-.New-action:hover {
+.new-action:hover {
   cursor: text;
-  filter: brightness(0.95);
 }
 
 .slide-fade-enter-active {
@@ -130,11 +135,8 @@ export default defineComponent({
 .faded-text {
   opacity: 50%;
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   line-height: 2.2rem;
+  z-index: 2;
 }
 
 .slide-fade-leave-active {

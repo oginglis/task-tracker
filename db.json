@@ -4,14 +4,14 @@
       "listId": 8373,
       "title": "New NEw",
       "id": 85,
-      "position": 4,
+      "position": 2,
       "date": "unsheduled"
     },
     {
-      "listId": 8373,
+      "listId": 6414,
       "title": "ajaj",
       "id": 94,
-      "position": 1,
+      "position": 0,
       "date": "unsheduled"
     },
     {
@@ -20,11 +20,43 @@
       "id": 79,
       "position": 0,
       "date": "unsheduled"
+    },
+    {
+      "title": "fsddfhs",
+      "id": 54,
+      "date": "unsheduled"
+    },
+    {
+      "listId": 8373,
+      "title": "Neq aacrtion",
+      "id": 5,
+      "position": 1,
+      "date": "unsheduled"
+    },
+    {
+      "title": "sa",
+      "id": 53,
+      "date": "unsheduled"
+    },
+    {
+      "title": "New date this shoudl appear",
+      "id": 61,
+      "date": "26,January,2022"
+    },
+    {
+      "title": "New action with date",
+      "id": 64,
+      "date": "27,January,2022"
+    },
+    {
+      "title": "New actions ",
+      "id": 90,
+      "date": "27,January,2022"
     }
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(160, 41%, 70%)",
+      "backgroundColour": "hsl(200, 97%, 14%)",
       "width": 340,
       "height": 576,
       "title": "List 1 Oranga",

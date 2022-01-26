@@ -11,7 +11,6 @@
       item-key="id"
       direction="horizontal"
       :draggable="`.todo`"
-    
       :emptyInsertThreshold="150"
       :swapThreshold="100"
       v-bind="dragOptions"

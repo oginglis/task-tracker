@@ -3,7 +3,7 @@
   <div class="section_wrap">
     <section class="schedule_section">
       <h1 class="collection_title right_align">Schedule</h1>
-      <Schedule :tasks="extractAllTasks"/>
+      <Schedule :tasks="extractTasksWithDate" @sendTaskFromSchedule="addScheduleTaskToTasks"/>
     </section> 
     <section class="list_section">
       <h1 class="collection_title">Lists</h1>
@@ -21,6 +21,7 @@ import Schedule from "../components/Schedule.vue";
 import { ListType } from "@/types/List";
 import { TodoType } from "@/types/Todo";
 import ListService from '../services/ListService';
+import TaskService from "@/services/TaskService";
 
 export default defineComponent({
   name: "Homepage",
@@ -37,6 +38,29 @@ export default defineComponent({
 
   },
   methods: {
+    addScheduleTaskToTasks: function(todo:TodoType): void {
+      this.orphanTasks.splice(-1, 0, todo);
+    },
+    placeTaskInList: function(todo: TodoType): void | null{
+      let parentList: ListType;
+      let findListAttempt = this.lists.find((list)=>{
+        return list.id === todo.listId
+      })
+      if(findListAttempt != undefined){
+        parentList = findListAttempt;
+        parentList.todos?.push(todo) 
+        const index = this.lists.findIndex(list => list.id === todo.listId);
+        this.lists.splice(index, 1, parentList);
+      }
+    },
+    getOrphanTasks: function(): void {
+      TaskService.getTasks().then((response): void => {
+        this.orphanTasks = response.data.filter( (task: TodoType)=>{
+           return task.listId === undefined
+        })
+        }).catch(function (error) {
+      console.log(error);
+    })},
       updateListDimensionsNow: function (listId: number, dimensions: {width: number, height: number}):void {
         let {width, height} = dimensions;
       let listToUpdateDimensionsOf = this.lists.find(list => list.id === listId);
@@ -110,11 +134,18 @@ export default defineComponent({
     var index = this.lists.findIndex(function(o){
       return o.id === listID;
     })
-    console.log("index to detlee ", index)
+
     if (index !== -1) this.lists.splice(index, 1);
   },
   },
   computed: {
+    extractTasksWithDate: function(): Array<TodoType> {
+      let datedTasks= this.extractAllTasks.filter((todo) =>{
+              return todo.date != "unsheduled"
+            })
+
+        return datedTasks 
+    },
     extractAllTasks: function(): Array<TodoType> {
       let taskArray: Array<TodoType> = [];
       this.lists.forEach((list)=> {
@@ -124,17 +155,21 @@ export default defineComponent({
         list.todos.forEach((task)=> {
           taskArray.push(task);
         })
-      })
-      return taskArray    
+      });
+      let combined: Array<TodoType> = [...taskArray, ...this.orphanTasks];
+ 
+      return combined    
     }
   },
   created() {
     this.getAllLists();
+    this.getOrphanTasks()
   },
   data: function () {
     return {
       theme: '',
       lists: [] as Array<ListType>,
+      orphanTasks: [] as Array<TodoType>
     };
   },
 

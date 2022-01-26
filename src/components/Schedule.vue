@@ -1,7 +1,7 @@
 <template>
 <div>
     <ul>
-        <ScheduleItem v-for="(day, index) in currentWeek" :key="index" :tasksForDay=findTasksForDay(day) :dayOfWeek="checkIfToday(day, index)" :date="day.format(`MMMM D`)" />
+        <ScheduleItem v-for="(day, index) in currentWeek" :key="index" :tasksForDay=findTasksForDay(day) :dayOfWeek="checkIfToday(day, index)" :date="day.format(`MMMM D`)" :day="day" @addThisFromSchedule="addTaskFromHome" />
     </ul>
 </div>
 </template>
@@ -36,11 +36,15 @@ export default defineComponent({
             "width": 340,
             "height": 576,
             "title": "Things to do",
+            "date": "Saturday",
             "id": 1}]
         }
   },
 
   methods: {
+      addTaskFromHome: function (todo: TodoType):void {
+          this.$emit("sendTaskFromSchedule", todo)
+      },
       createArrayOfDays: function(): dayjs.Dayjs[]{
           let dayArray: dayjs.Dayjs[] =[];
           for(let i=0; i<=7; i++){
