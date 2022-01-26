@@ -40,7 +40,7 @@
           <Icon
             type="trash"
             :bgColor="this.list.backgroundColour"
-            class="hiding__icon icon_padding"
+            class="hiding__icon icon_padding icon_left_margin"
             :borderStyles="false"
             :style="[iconBGHover, addIconBg()]"
             @click="deleteList"
@@ -59,7 +59,7 @@
         <Tooltip position="bottom" :tooltipText="'Choose list colour'">
           <Icon
             type="palette"
-            class="hiding__icon brighter icon_padding"
+            class="hiding__icon brighter icon_padding icon_right_margin"
             :bgColor="list.backgroundColour"
             :borderStyles="false"
             :style="[iconBGHover, addIconBg()]"
@@ -448,10 +448,16 @@ transition: filter .1s ease;
   flex-wrap: nowrap;
   width: 100%;
 }
+.icon_right_margin{
+  margin-right: 1rem;
+}
+.icon_left_margin{
+  margin-left: 1rem;
+}
 
 .task-tracker__bottom-bar {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 100%;
   font-size: 1.5rem;
   font-weight: 0.5rem;

@@ -33,7 +33,7 @@ export default defineComponent({
   props: {
     bgColor: {
       type: String,
-      default: "hsl(39, 81%, 73%)",
+      default: "",
     },
     list_id: Number
     
@@ -62,7 +62,7 @@ export default defineComponent({
       if (this.action.title != "") {
         this.$emit("addNewAction",  this.action);
         this.action.id = parseInt((Math.random()*100 +1).toFixed(3));
-        this.action.date = "unsheduled"
+        this.action.date = "unsheduled";
         TaskService.postTask(this.action)
           .catch(function (error) {
             console.log(error);
@@ -75,11 +75,18 @@ export default defineComponent({
   },
   computed: {
     newBGColor: function () {
-      let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
-      let hsl: string[] = hslReg.exec(this.bgColor!)!.slice(1, 4);
-      return {
-        backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 10}%`,
-      };
+      if(this.bgColor){
+        let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
+        let hsl: string[] = hslReg.exec(this.bgColor!)!.slice(1, 4);
+        return {
+          backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 10}%`,
+        }
+      } else {
+        return {
+        backgroundColor: `var(--background-color)`,
+      }
+      }
+
     },
   },
 });

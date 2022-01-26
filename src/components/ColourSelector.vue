@@ -2,7 +2,7 @@
   <div
     id="canvas"
     ref="canva"
-    class="flexcanvas"
+    class="flexcanvas canvasBG"
     :style="pixelCanvasSize"
   ></div>
 </template>
@@ -90,11 +90,15 @@ export default defineComponent({
       };
 
       p.draw = () => {
-        p.background(this.hslTorbg(this.bgColor));
+          let elem = (this.$refs["canva"] as HTMLElement);
+      
+        let valBG = window.getComputedStyle(elem,null).getPropertyValue('--background-color');
+        let valText = window.getComputedStyle(elem,null).getPropertyValue('--text-color');
+        p.background(this.hslTorbg(valBG));
         p.textAlign("center");
 
         p.textSize(15);
-        p.fill(this.textColor!.color);
+        p.fill(valText);
         p.text(this.title, width / 2, height / 2);
         for (let i = 0; i < balls.length; i++) {
           balls[i].move(
@@ -257,6 +261,11 @@ export default defineComponent({
 <style >
 canvas {
   border-radius: 1rem;
+
+}
+
+.canvasBG{
+  background-color: var(--background-color);
 }
 
 #defaultCanvas0 {

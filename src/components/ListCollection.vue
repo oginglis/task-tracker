@@ -1,5 +1,5 @@
 <template>
-  <div class="tracker_collection">
+  <div class="tracker_collection" ref="bgFind">
     <ul class="tracker_collection__list">
       <template v-if="lists.length >= 0">
         <List
@@ -34,7 +34,7 @@
           <ColourSelector
             :canvasSize="creatorDimensionsNumber"
             :title="`Choose a colour for new list`"
-            :bgColor="`hsl(0, 0%, 96%)`"
+            :bgColor="colorOfBG"
             :textColor="{ color: `hsl(0, 0%, 0%)` }"
             @clickColor="handleclickColor"
           />
@@ -77,10 +77,25 @@ export default defineComponent({
       creatorDimensionsPixels: { width: "304px", height: "528px" },
       showColorPicker: false,
       showNewList: false,
-      newListBgColor: "hsl(33, 52%, 69%)"
+      newListBgColor: "hsl(33, 52%, 69%)",
+      isMounted: false,
+
     };
   },
-
+  mounted() {
+    this.isMounted = true;
+    console.log( );
+  },
+  computed: {
+    colorOfBG():string | null  {
+      if (!this.isMounted) return null;
+      let elem = (this.$refs["bgFind"] as HTMLElement);
+      
+      let val = window.getComputedStyle(elem,null).getPropertyValue('--background-color');
+      console.log("COLOUR OF THE BG ", val)
+      return val
+    }
+  },
   watch: {
     creatorDimensionsPixels: function (old, newHeight) {
       this.creatorDimensionsPixels.height = newHeight;

@@ -1,20 +1,18 @@
 <template>
 <div>
-
     <li >
         <h3 class="day_header">{{dayOfWeek}}</h3><br>
         <p class="month_header">{{date}}</p>
-       <TodoCreator v-if="showAdder" />
-
+        <TodoCreator v-if="showAdder"  class="brightnessAdjust"/>
         <Tooltip position="bottom" :tooltipText="'Create action'">
             <Icon
             @iconClicked="toggleActionAdd"
             type="plus"
             class="add__action"
+            ref="iconBGColor"
             />
         </Tooltip>
     </li>     
-
 </div>
 </template>
 
@@ -53,7 +51,11 @@ export default defineComponent({
       return {
           currentWeek: []  as Array<any> ,
           showAdder: false,
+          isMounted: false,
       }
+  },
+    mounted() {
+    this.isMounted = true;
   },
   computed: {
 
@@ -90,7 +92,7 @@ li {
   padding: 1rem 2.5rem;
   border-radius: 0.8rem;
   background-color: var(--background-color);
-  filter: brightness(1.1);
+  filter: brightness(1.8);
   transition: transform .1s ease;
   margin: 1rem;
   opacity: 0;
@@ -101,5 +103,10 @@ li {
 filter: brightness(1.1);
 transform: scale(1.1);
   opacity: 1;
+  cursor: pointer;
+}
+
+.brightnessAdjust{ 
+    filter: brightness(.9)
 }
 </style>

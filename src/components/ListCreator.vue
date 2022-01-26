@@ -22,7 +22,7 @@ export default defineComponent({
   },
   props: {
     bgColour: {
-      type: String,
+      type: String ,
       default: "hsl(33, 52%, 69%)"
     },
   },

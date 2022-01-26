@@ -66,12 +66,15 @@ console.log(`
     --background-color: hsl(0, 0%, 96%);
     --text-color: black;  
     --section-divide-color: hsl(0, 0%, 92%);
+    --placeholder-color: hsl(0, 0%, 100%);
+   
 }
 
 [data-theme="darkMode"] {
     --background-color: hsl(216, 9%, 10%);
     --text-color: white;   
     --section-divide-color: black;
+    --placeholder-color:hsl(210, 10%, 15%);
 }
 
 #app {
