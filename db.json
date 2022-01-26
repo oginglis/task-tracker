@@ -4,7 +4,7 @@
       "listId": 8373,
       "title": "New NEw",
       "id": 85,
-      "position": 2,
+      "position": 0,
       "date": "unsheduled"
     },
     {
@@ -18,7 +18,7 @@
       "listId": 8373,
       "title": "Rhia XRI",
       "id": 79,
-      "position": 0,
+      "position": 1,
       "date": "unsheduled"
     },
     {
@@ -27,7 +27,7 @@
       "date": "unsheduled"
     },
     {
-      "listId": 8373,
+      "listId": 6414,
       "title": "Neq aacrtion",
       "id": 5,
       "position": 1,
@@ -56,14 +56,14 @@
   ],
   "lists": [
     {
-      "backgroundColour": "hsl(200, 97%, 14%)",
+      "backgroundColour": "hsl(31, 100%, 49%)",
       "width": 340,
       "height": 576,
       "title": "List 1 Oranga",
       "id": 8373
     },
     {
-      "backgroundColour": "hsl(190, 100%, 23%)",
+      "backgroundColour": "hsl(42, 66%, 53%)",
       "width": 340,
       "height": 576,
       "title": "Green List",

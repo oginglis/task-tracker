@@ -64,7 +64,7 @@ export default defineComponent({
     },
     bgColor: {
       type: String,
-      default: "hsl(39, 81%, 73%)",
+      default: "",
     },
   },
   computed: {
@@ -76,16 +76,25 @@ export default defineComponent({
       }
     },
     styleIcon: function (): object {
-      let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
-      let hsl: string[] = hslReg.exec(this.bgColor!)!.slice(1, 4);
-      return {
-        backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 20}%`,
-        border: `0.4rem solid hsl(${hsl[0]},${hsl[1]}%,${
-          parseInt(hsl[2]) + 10
-        }% `,
-        "--color-hover": `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 45}%`,
-      };
-    },
+      let obj = {};
+      if (this.bgColor){
+        let hslReg: RegExp = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
+        let hsl: string[] = hslReg.exec(this.bgColor!)!.slice(1, 4);
+        obj = {
+          backgroundColor: `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 20}%`,
+          border: `0.4rem solid hsl(${hsl[0]},${hsl[1]}%,${
+            parseInt(hsl[2]) + 10
+          }% `,
+          "--color-hover": `hsl(${hsl[0]},${hsl[1]}%,${parseInt(hsl[2]) + 45}%`,
+      }}else {
+          obj = {
+            backgroundColor: "var(--placeholder-color)",
+            filter: "brightness(.9)"
+          }
+        }
+      return obj
+    }
+    ,
     momentDate: function (): string {
       return moment(this.task.date).format("MMM Do YYYY");
     },
@@ -93,7 +102,6 @@ export default defineComponent({
       return `Task=${this.task.position}`;
     },
   },
-  beforeMount() {},
   methods: {
     askToDeleteTask: function (id: number): void {
       this.$emit("askToDeleteTask2", id);

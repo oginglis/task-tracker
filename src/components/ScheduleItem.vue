@@ -3,7 +3,7 @@
     <li >
         <h3 class="day_header">{{dayOfWeek}}</h3><br>
         <p class="month_header">{{date}}</p> 
-        <p v-for="(task, index) in tasksForDay" :key="index">{{task.title}} {{task.date}} </p>
+        <TodoItem v-for="(task, index) in tasksForDay" :key="index" :task="task" @askToDeleteTask2="deleteTask"></TodoItem>
         <transition >
             <TodoCreator v-if="showAdder" :newTodoDate="day.format(`D,MMMM,YYYY`)" class="scheduleAdderStyles" @clickOutsideActionAdder="showAdder = !showAdder" @addNewAction="addActionFromSchedule"/>
         </transition>
@@ -23,7 +23,7 @@
 
 import { defineComponent, PropType} from "vue";
 import {TodoType} from "@/types/Todo";
-
+import TodoItem from "./TodoItem.vue";
 import Tooltip from "../common/components/Tooltip.vue";
 import Icon from "../common/components/Icon.vue";
 import TodoCreator from "./TodoCreator.vue";
@@ -36,7 +36,8 @@ export default defineComponent({
   components: {
     Tooltip,
     Icon,
-    TodoCreator
+    TodoCreator,
+    TodoItem
   },
   props: {
       tasksForDay: {
